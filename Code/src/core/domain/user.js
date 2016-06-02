@@ -85,7 +85,9 @@ function User ( data ) {
         'ranktitle'             : '',
         'notifications'         : [],
         'resetPasswordToken'    : '',
-        'resetPasswordExpires'  : null
+        'resetPasswordExpires'  : null,
+        'boloConfirmationToken' : null,
+        'boloTokenExpiration'   : null
     };
 
     this.data = _.extend( {}, defaults, data );
