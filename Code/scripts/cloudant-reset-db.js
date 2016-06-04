@@ -56,6 +56,12 @@ var bolo_indexer = function (doc) {
     if (typeof(doc.hairColor) !== 'undefined') {
         index("hairColor", doc.hairColor);
     }
+    if (typeof(doc.additional) !== 'undefined') {
+        index("additional", doc.additional);
+    }
+    if (typeof(doc.summary) !== 'undefined') {
+        index("summary", doc.summary);
+    }
     if (typeof(doc.Type) !== 'undefined') {
         index("Type", doc.Type);
     }
