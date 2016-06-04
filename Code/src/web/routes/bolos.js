@@ -407,23 +407,31 @@ router.post('/bolo/search', function(req, res, next) {
     parseFormData(req, attachmentFilter).then(function(formDTO) {
 
         var query_obj = formDTO.fields;
+        var wildcard=query_obj['wildcard'];
+        query_obj['additional']=wildcard;
+        query_obj['summary']=wildcard;
         console.log(query_obj);
-        var query_string = '( ';
+        var query_string = '(( ';
         var key = '';
         var value = '';
         var MATCH_EXPR = ' OR ';
+        var WILDCARD_EXPR = ' OR ';
         var expression = false;
 
         if (query_obj['matchFields'] === "on") {
             MATCH_EXPR = ' AND ';
         }
-
         for (var i = 0; i < Object.keys(query_obj).length; i++) {
             key = Object.keys(query_obj)[i];
             value = query_obj[Object.keys(query_obj)[i]];
             console.log(key + ':' + value);
-
-            if (key !== "status" && key !== 'matchFields' && value !== "" && value != 'N/A') {
+            //-----------------------------------
+            if (query_obj['wildcard'] !== '' || query_obj['wildcard'] !==null) {
+                if(value===null || value==='' || value ==='N/A')
+                  value=wildcard;
+            }
+            //------------------------------------
+            if (key !== "status" && key !== 'matchFields' && value !== "" && value !== 'N/A' && value !== wildcard && key !== 'wildcard') {
                 if (expression === true) {
                     query_string += MATCH_EXPR;
                     expression = false;
@@ -433,8 +441,33 @@ router.post('/bolo/search', function(req, res, next) {
             }
 
         }
-        if (query_string !== '( ')
-            query_string += ') AND Type:bolo';
+        expression = false;
+        if (query_string !== '(( ' && wildcard!=='')
+          query_string += ' ) ' + MATCH_EXPR + '  ( ';
+        if(wildcard!==''){
+          for (var i = 0; i < Object.keys(query_obj).length; i++) {
+              key = Object.keys(query_obj)[i];
+              value = query_obj[Object.keys(query_obj)[i]];
+              console.log(key + ':' + value);
+              if (query_obj['wildcard'] !== '' || query_obj['wildcard'] !==null) {
+                  if(value===null || value==='' || value ==='N/A')
+                    value=wildcard;
+              }
+              //-----------------------------------
+              //------------------------------------
+              if (key !== "status" && key !== 'matchFields' && value !== "" && value !== 'N/A' && value === wildcard && key !== 'wildcard') {
+                  if (expression === true) {
+                      query_string += WILDCARD_EXPR;
+                      expression = false;
+                  }
+                  query_string += key + ':' + value;
+                  expression = true;
+              }
+
+          }
+        }
+        if (query_string !== '(( ')
+            query_string += ' )) AND Type:bolo';
         //form was empty, return empty object
         else
             query_string = {};
