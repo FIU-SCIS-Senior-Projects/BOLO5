@@ -28,6 +28,7 @@ block content
         +input_text( "height", "Height - Feet-Inches (e.g. 05-09)", "e.g. 05-09", false, "" )
         +input_text( "weight", "Weight - Pounds", "", false, "" )
         +select_options( "hairColor", "Hair Color", hair_colors, false, "" )
+        +input_text( "wildcard", "Wildcard Search", "", false, "" )
         +check_box("matchFields","Match Fields",true)
         .form-group
             button.btn.btn-primary( type="submit" value="save") Search
