@@ -39,17 +39,6 @@ passport.use(new LocalStrategy(
       // if account returned is not empty
       if (account) {
 
-        /*If account expires is less than five days send a reminder email*/
-        if (account.passwordLifetime - fivedays <= Date.now()){
-
-            // time left until expiration
-            var timeLeft = Date.now() - account.passwordLifetime;
-
-            // send email notification to change password
-            sendExpirationReminder(account, timeLeft);
-            // continue with authentication
-        }
-
         /*If account is expired, deny login, send password reset email*/
         if (account.passwordLifetime <= Date.now()){
 
@@ -65,6 +54,17 @@ passport.use(new LocalStrategy(
                 // send email
             });
         }
+        else if (account.passwordLifetime - fivedays <= Date.now()){ /*If account expires is less than five days send a reminder email*/
+
+            // time left until expiration
+            var timeLeft = Date.now() - account.passwordLifetime;
+
+            // send email notification to change password
+            sendExpirationReminder(account, timeLeft);
+            // continue with authentication
+        }
+
+
 
           // check if agency is active
           agencyService.getAgency(account.data.agency).then(function(agency) {
