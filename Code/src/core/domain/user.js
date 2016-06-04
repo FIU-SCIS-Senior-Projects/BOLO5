@@ -77,6 +77,7 @@ function User ( data ) {
         'fname'                 : '',
         'lname'                 : '',
         'password'              : null,
+        'passwordLifetime'      : null,
         'tier'                  : 1,
         'agency'                : null,
         'agencyName'             : '',
