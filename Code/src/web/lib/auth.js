@@ -42,8 +42,6 @@ passport.use(new LocalStrategy(
         /*If account is expired, deny login, send password reset email*/
         if (account.passwordLifetime <= Date.now()){
 
-             console.log("called expiration")
-
             // send email for password change
             sendPasswordExpiredEmail(account)
 
@@ -57,7 +55,7 @@ passport.use(new LocalStrategy(
         else if (account.passwordLifetime - fivedays <= Date.now()){ /*If account expires is less than five days send a reminder email*/
 
             // time left until expiration
-            var timeLeft = Date.now() - account.passwordLifetime;
+            var timeLeft =account.passwordLifetime - Date.now() ;
 
             // send email notification to change password
             sendExpirationReminder(account, timeLeft);
@@ -106,7 +104,7 @@ var sendExpirationReminder  = function(user, timeLeft){
   crypto.randomBytes(20, function(err, buf) {
 
       var token = buf.toString('hex');
-    //  console.log(token);
+
       user.resetPasswordToken = token;
       // token expires in 5 or less
       user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
@@ -138,7 +136,7 @@ var sendPasswordExpiredEmail  = function(user){
   crypto.randomBytes(20, function(err, buf) {
 
       var token = buf.toString('hex');
-    //  console.log(token);
+
       user.resetPasswordToken = token;
       // Token will expire in 24 hours
       user.resetPasswordExpires = Date.now() + 24 * 60 * 60;
