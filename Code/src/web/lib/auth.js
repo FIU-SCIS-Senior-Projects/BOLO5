@@ -127,7 +127,7 @@ var sendExpirationReminder  = function(user, timeLeft){
         'subject': 'BOLO Alert: Password Expiration',
         'text': 'Your password is expiring in less than '+ daysLeft + '. Change it to avoid a password reset. \n' +
           'To change your password, follow this link: \n\n' +
-          config.appURL + '/changepassword/' + token + '\n\n'
+          config.appURL + '/expiredpassword/' + token + '\n\n'
       })
     });
 }
@@ -149,7 +149,7 @@ var sendPasswordExpiredEmail  = function(user){
         'subject': 'BOLO Alert: Password Expiration',
         'text': 'Your password has expired. \n' +
           'To change your password, follow this link: \n\n' +
-          config.appURL + '/changepassword/' + token + '\n\n'
+          config.appURL + '/expiredpassword/' + token + '\n\n'
       })
     });
 }
@@ -319,6 +319,65 @@ router.post('/changepassword/:userID',
         res.redirect('back');
       });
   });
+
+  router.get('/expiredpassword/:token',
+    function(req, res) {
+      userService.getByToken(req.params.token).then(function(user) {
+        if (!user || (user.resetPasswordExpires < Date.now())) {
+          req.flash(FERR, 'Error: Reset Token is invalid or may have expired.');
+          return res.redirect('/forgotPassword');
+        }
+        res.render('change-password', {
+          userID: user.id,
+          "url": "/expiredpassword",
+          'form_errors': req.flash('form-errors')
+        });
+      });
+
+    });
+
+  router.post('/expiredpasswrd/:userID',
+    function(req, res) {
+      var userID = req.params.userID;
+      parseFormData(req).then(function(formDTO) {
+          var validationErrors = passwordUtil.validatePassword(
+            formDTO.fields.password, formDTO.fields.confirm
+          );
+
+          if (validationErrors) {
+            req.flash('form-errors', validationErrors);
+            throw new FormError();
+          }
+
+          return userService.resetPassword(userID, formDTO.fields.password);
+        }, function(error) {
+          console.error('Error at /users/:id/reset-password >>> ', error.message);
+          req.flash(FERR, 'Error processing form, please try again.');
+          res.redirect('back');
+        })
+        .then(function() {
+          req.flash(FMSG, 'Password reset successful.');
+          res.redirect('/login');
+        })
+        .catch(function(error) {
+          var patt = new RegExp("matches previous");
+          var res = patt.test(error.message);
+
+          if (res) {
+            req.flash(FERR, 'New password must not match previous.');
+            res.redirect('back');
+          }
+
+          if ('FormError' !== error.name) throw error;
+
+          console.error('Error at /users/:id/reset-password >>> ', error.message);
+          req.flash(FERR, 'Error occurred, please try again.');
+          res.redirect('back');
+        })
+        .catch(function(error) {
+          res.redirect('back');
+        });
+    });
 
 module.exports.passport = passport;
 module.exports.router = router;
