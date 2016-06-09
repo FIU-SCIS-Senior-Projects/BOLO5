@@ -148,7 +148,7 @@ var BOLO_DESIGN_DOC = {
   "views": {
     "by_token": {
       "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.boloToken, null ); }"
-    }
+    },
     "all_active": {
       "map": "function (doc) { if ( 'bolo' === doc.Type && true === doc.isActive ) {emit( doc.lastUpdatedOn,1);} }"
     },

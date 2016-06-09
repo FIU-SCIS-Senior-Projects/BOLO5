@@ -602,10 +602,10 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     if (pData[1].fields.option === "submit") {
       if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
 
-      sendBoloConfirmationEmail(req.user.email, pData[0], token)
+      sendBoloConfirmationEmail(req.user.email, pData[0], token).catch(function(err){console.log(err)})
 
 
-      req.flash(GFMSG, 'BOLO successfully created.');
+      req.flash(GFMSG, 'BOLO successfully created, Please check your email in order to confirm it.');
       res.redirect('/bolo');
     }
     if (pData[1].fields.option === "pdf") {
@@ -701,7 +701,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
         // update the bolo
         boloService.updateBolo(bolo, att)
           .then(function() {
-
+            req.flash(GFMSG, 'BOLO successfully confirmed.');
             res.redirect("/bolo");
           }).catch(function(error) {
             console.log(error)
