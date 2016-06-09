@@ -320,7 +320,7 @@ router.post('/changepassword/:userID',
       });
   });
 
-  router.get('/expiredpassword/:token',
+router.get('/expiredpassword/:token',
     function(req, res) {
       userService.getByToken(req.params.token).then(function(user) {
         if (!user || (user.resetPasswordExpires < Date.now())) {
@@ -336,7 +336,7 @@ router.post('/changepassword/:userID',
 
     });
 
-  router.post('/expiredpasswrd/:userID',
+router.post('/expiredpasswrd/:userID',
     function(req, res) {
       var userID = req.params.userID;
       parseFormData(req).then(function(formDTO) {

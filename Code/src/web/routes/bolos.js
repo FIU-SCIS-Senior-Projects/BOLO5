@@ -13,6 +13,7 @@ var PDFDocument = require('pdfkit');
 var blobStream = require('blob-stream'); // added blobstream dependency
 var iframe = require('iframe');
 var fs = require('fs');
+var crypto = require('crypto');
 var bodyParser = require('body-parser');
 var _bodyparser = bodyParser.urlencoded({
     'extended': true
@@ -129,6 +130,22 @@ function sendBoloNotificationEmail(bolo, template) {
                 bolo.agency, bolo.id, error.message
             );
         });
+}
+
+/*
+Send email to confirm bolos
+*/
+function sendBoloConfirmationEmail (email, bolo, token){
+
+  emailService.send({
+    'to':  email,
+    'from': config.email.from,
+    'fromName': config.email.fromName,
+    'subject': 'BOLO Alert: Confirm BOLO ' + bolo.firstName + " " +  bolo.lastName,
+    'text': 'You BOLO has been created but not confirmed. \n' +
+      'Please click on the link below to confirm: \n\n' +
+      config.appURL + '/bolo/confirmBolo/' + token + '\n\n'
+  })
 }
 
 /**
@@ -496,7 +513,7 @@ router.get('/bolo/create', function(req, res) {
 // process bolo creation user form input
 // if the user slected preview mode, a view of the current form is rendered.
 router.post('/bolo/create', _bodyparser, function(req, res, next) {
-
+    var token;
     parseFormData(req, attachmentFilter).then(function(formDTO) {
 
         var boloDTO = boloService.formatDTO(formDTO.fields);
@@ -514,7 +531,19 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
         boloDTO.lastUpdatedBy.firstName = req.user.fname;
         boloDTO.lastUpdatedBy.lastName = req.user.lname;
         boloDTO.agencyName = req.user.agencyName;
+        boloDTO.confirmed = false;
         boloDTO.status = 'New';
+
+
+        // generate token synchronously
+        var buf  = crypto.randomBytes(20)
+        token = buf.toString('hex');
+
+        boloDTO.boloToken = token;
+        console.log("Token generated: " + token);
+
+
+
 
         if (formDTO.fields.featured_image) {
             fi = formDTO.fields.featured_image;
@@ -573,7 +602,10 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         if (pData[1].fields.option === "submit") {
             if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
-            sendBoloNotificationEmail(pData[0], 'new-bolo-notification');
+
+            sendBoloConfirmationEmail(req.user.email, pData[0], token)
+
+
             req.flash(GFMSG, 'BOLO successfully created.');
             res.redirect('/bolo');
         }
@@ -649,6 +681,41 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
         next(error);
     });
 });
+
+router.get( '/bolo/confirmBolo/:token', function( req, res, next){
+
+  // call the bolo service to return the bolo
+  boloService.getBoloByToken(req.params.token)
+    .then(function(bolo) {
+
+      // bolo is confirmed
+      bolo.confirmed = true;
+
+      // send email with bolos
+      sendBoloNotificationEmail(bolo, 'new-bolo-notification');
+
+      var att = [];
+
+      // update the bolo
+      boloService.updateBolo(bolo, att)
+        .then(function(){
+
+        res.redirect("/bolo");
+      }).catch(function(error){
+        console.log(error)
+      })
+
+  })
+    .catch(function(err){
+      req.flash(GFERR,
+          'The BOLO you were trying to edit does not exist.'
+      );
+      res.redirect("/bolo");
+
+    })
+
+
+})
 
 //update bolo status through thumbnail select menu
 router.post( '/bolo/update/:id', function ( req, res, next ) {
