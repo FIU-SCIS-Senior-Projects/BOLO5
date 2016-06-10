@@ -683,7 +683,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
   boloService.getBoloByToken(req.params.token)
     .then(function(bolo) {
 
-      // if the bolo has already been confirmed don't do this stuff
+      // if bolo != null
       if (bolo) {
 
         // bolo is confirmed
