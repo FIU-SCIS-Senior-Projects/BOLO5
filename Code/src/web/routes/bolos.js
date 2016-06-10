@@ -167,7 +167,7 @@ function getAllBoloData(id) {
     throw new Error('Error retrieving all BOLO info.');
   }).then(function(responses) {
 
-    console.log(responses);
+    //console.log(responses);
     data.agency = responses[0];
     data.author = responses[1];
     console.log("finishing get all bolo data");
@@ -540,10 +540,6 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     token = buf.toString('hex');
 
     boloDTO.boloToken = token;
-    console.log("Token generated: " + token);
-
-
-
 
     if (formDTO.fields.featured_image) {
       fi = formDTO.fields.featured_image;
@@ -602,7 +598,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     if (pData[1].fields.option === "submit") {
       if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
 
-      sendBoloConfirmationEmail(req.user.email, pData[0], token).catch(function(err){console.log(err)})
+      sendBoloConfirmationEmail(req.user.email, pData[0], token)
 
 
       req.flash(GFMSG, 'BOLO successfully created, Please check your email in order to confirm it.');
@@ -688,7 +684,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
     .then(function(bolo) {
 
       // if the bolo has already been confirmed don't do this stuff
-      if (bolo.confirmed === false) {
+      if (bolo) {
 
         // bolo is confirmed
         bolo.confirmed = true;
@@ -849,7 +845,7 @@ router.post('/bolo/edit/:id', function(req, res, next) {
       boloDTO.images_deleted = formDTO.fields['image_remove[]'];
     }
 
-    console.log("asda", boloDTO);
+    //console.log("asda", boloDTO);
     var result = boloService.updateBolo(boloDTO, attDTOs);
     return Promise.all([result, formDTO]);
   }).then(function(pData) {

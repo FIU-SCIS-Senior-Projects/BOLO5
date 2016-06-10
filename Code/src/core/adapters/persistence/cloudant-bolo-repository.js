@@ -410,7 +410,6 @@ CloudantBoloRepository.prototype.getArchiveBolosForPurge = function () {
 CloudantBoloRepository.prototype.getBolo = function (id) {
     return db.get(id)
         .then(function (bolo_doc) {
-          console.log(bolo_doc)
             return boloFromCloudant(bolo_doc);
         });
 };
@@ -421,7 +420,12 @@ CloudantBoloRepository.prototype.getBoloByToken = function(token){
       'include_docs': true
       })
       .then( function ( bolo_doc ) {
-          if ( !bolo_doc.rows.length ) { return null; }
+
+          if(bolo_doc.rows[0].doc.confirmed === true){
+            return null;
+          }
+
+
           return boloFromCloudant( bolo_doc.rows[0].doc );
       })
       .catch( function ( error ) {
