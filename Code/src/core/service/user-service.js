@@ -4,7 +4,7 @@
 var _                 = require('lodash');
 var Promise           = require('promise');
 var User              = require('../domain/user');
-
+var NinetyDays        = Date.now() + 90 * 24 * 60 * 60 * 1000
 /** @module core/ports */
 module.exports = UserService;
 
@@ -23,7 +23,6 @@ function UserService ( userRepository , agencyService) {
     this.userRepository = userRepository;
     this.agencyService = agencyService;
 }
-
 /**
  * Authenticate a username and password pair.
  *
@@ -87,6 +86,9 @@ UserService.prototype.registerUser = function ( userDTO ) {
         userDTO.agencyName = response.name;
         userDTO.notifications = [response.name];
 
+        // initial password lifetime = 90 days from creation day
+        userDTO.passwordLifetime = NinetyDays;
+
         var newuser = new User( userDTO );
         if ( userDTO.tier && typeof userDTO.tier === 'string' ) {
             newuser.tier = User[newuser.tier] || newuser.tier;
@@ -143,7 +145,7 @@ UserService.prototype.resetPassword = function ( id, password ) {
       if(user.matchesCurrentPassword(password)){
         throw new Error("Password matches previous password.");
       }
-
+      user.passwordLifetime = NinetyDays;
       user.resetPasswordToken = '';
       user.resetPasswordExpires = null;
       user.password = password;

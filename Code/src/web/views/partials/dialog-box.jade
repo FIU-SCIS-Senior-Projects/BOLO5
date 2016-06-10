@@ -11,7 +11,8 @@ div#dialog(style='display:none;')
                 autoOpen: false,
                 modal: true,
                 buttons: {
-                    "Confirm": function () {
+                    "Confirm": function (e) {
+                    e.preventDefault();
                         $.ajax({
                             url: '/bolo/archive/purge',
                             type: 'POST',
@@ -36,6 +37,3 @@ div#dialog(style='display:none;')
             $("#dialog").dialog("open");
 
         });
-
-
-
