@@ -1,0 +1,47 @@
+include ./includes/mixins.jade
+include ../routes/bolos.js
+extends ./layout.jade
+
+block jumbo
+    .jumbotron
+        .container
+            p Create a BOLO
+
+block content
+    include ./partials/global-alerts.jade
+    include ./partials/bolo-options.jade
+
+    form#create-bolo-form(action= "/bolo/create" enctype="multipart/form-data" method="post")
+        input( type = "hidden" name="status" value="new")
+
+        +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
+
+        +input_text( "boatMake", "Boat Make", "", false, "" )
+        +input_text( "boatModel", "Boat Model", "", false,  "" )
+        +input_text( "boatColor", "Boat Color", "", false, "" )
+        +input_text( "yearBoat", "Year", "", false, "" )
+        +input_text( "typeBoat", "Type", "", false, "" )
+        +input_text( "hullIdNmber", "Hull Identification Number", "", false, "" )
+        +input_text( "registrationNumber", "Registration Number", "", false, "" )
+
+        .form-group.row
+            .col-md-4
+                label.control-label( for="featured_image" ) Featured Image
+                input( name="featured_image" type="file" accept="image/*" )
+
+            .col-md-4
+                label.control-label( for="featured_image" ) Image Upload
+                input( name="image_upload[]" type="file" accept="image/*" )
+
+            .col-md-4
+                label.control-label( for="featured_image" ) Image Upload
+                input( name="image_upload[]" type="file" accept="image/*" )
+
+        +input_text( "video_url", "Video Link", "", false, "", "url" )
+        +input_textarea( "additional", "Additional Info", "", false, "" )
+        +input_textarea( "summary", "Summary", "", false, "" )
+
+        .form-group
+            button.btn.btn-default( name = "option" type = "submit" value = "submit") SUBMIT
+            button.btn.btn-default( name = "option" type = "submit" value = "preview" ) PREVIEW
+            button.btn.btn-default( name = "option" type="submit" value="pdf" ) PDF

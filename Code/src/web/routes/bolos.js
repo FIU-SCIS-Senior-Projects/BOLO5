@@ -548,13 +548,26 @@ router.post('/bolo/search', function(req, res, next) {
 });
 
 // render the bolo create form
-router.get('/bolo/create', function(req, res) {
-
-  var data = {
-    'form_errors': req.flash('form-errors')
-  };
-
-  res.render('bolo-create-form', data);
+router.get('/bolo/create/:type', function(req, res) {
+    var data
+    if(req.params.type === 'auto'){
+        data = {
+            'form_errors': req.flash('form-errors')
+        };
+        res.render('bolo-create-auto-form', data);
+    }
+    else if(req.params.type === 'boat'){
+        data = {
+            'form_errors': req.flash('form-errors')
+        };
+        res.render('bolo-create-boat-form', data);
+    }
+    else{
+        data = {
+            'form_errors': req.flash('form-errors')
+        };
+        res.render('bolo-create-generalbolo-form', data);
+    }
 });
 
 
