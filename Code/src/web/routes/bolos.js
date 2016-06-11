@@ -139,9 +139,7 @@ function sendBoloToDataSubscriber(bolo, template) {
 	console.log('in email function');
   boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
       someData.featured = attDTO.data;
-      return someData;
-  })
- console.log(someData.featured);
+
   return dataSubscriberService.getDataSubscribers('all_active')
       .then(function(dataSubscribers) {
           // filters out Data Subscribers and pushes their emails into array
@@ -179,7 +177,7 @@ function sendBoloToDataSubscriber(bolo, template) {
               bolo.agency, bolo.id, error.message
           );
       });
-
+  })
 
 }
 /*
