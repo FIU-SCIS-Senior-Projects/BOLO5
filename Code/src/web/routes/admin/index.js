@@ -4,6 +4,8 @@
 var router  = require('express').Router();
 var users   = require('./users');
 var agency  = require('./agency');
+var dataSubscriber= require('./dataSubscriber');
+
 
 var config  = require('../../config');
 var User    = require('../../../core/domain/user');
@@ -55,6 +57,15 @@ router.post( pre + '/create'                , agency.postCreateForm );
 router.get(  pre + '/edit/:id'              , agency.getEditForm );
 router.post( pre + '/edit/:id'              , agency.postEditForm );
 router.get(  pre + '/asset/:id/:attname'    , agency.getAttachment );
+
+pre='/admin/dataSubscriber';
+router.use( SETNAV( 'admin-dataSubscriber' ) );
+router.get(  pre                            , dataSubscriber.getList );
+router.post( pre + '/activation'            , dataSubscriber.activationDataSubscriber);
+router.get(  pre + '/create'                , dataSubscriber.getCreateForm );
+router.post( pre + '/create'                , dataSubscriber.postCreateForm );
+router.get(  pre + '/edit/:id'              , dataSubscriber.getEditForm );
+router.post( pre + '/edit/:id'              , dataSubscriber.postEditForm );
 
 
 router.use( SETNAV( 'admin-index' ) );

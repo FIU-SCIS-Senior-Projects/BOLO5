@@ -22,6 +22,7 @@ var _bodyparser = bodyParser.urlencoded({
 var config = require('../config');
 
 var agencyService = new config.AgencyService(new config.AgencyRepository());
+var dataSubscriberService = new config.dataSubscriberService(new config.dataSubscriberRepository());
 var userService = new config.UserService(new config.UserRepository(), agencyService);
 var boloService = new config.BoloService(new config.BoloRepository());
 var emailService = new config.EmailService();
@@ -97,6 +98,7 @@ function sendBoloNotificationEmail(bolo, template) {
         }
         return flag;
       }).map(function(user) {
+        console.log(user.email);
         return user.email;
       });
 
@@ -131,7 +133,53 @@ function sendBoloNotificationEmail(bolo, template) {
       );
     });
 }
+function sendBoloToDataSubscriber(bolo, template) {
+  var someData = {};
 
+	console.log('in email function');
+  boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
+      someData.featured = attDTO.data;
+
+  return dataSubscriberService.getDataSubscribers('all_active')
+      .then(function(dataSubscribers) {
+          // filters out Data Subscribers and pushes their emails into array
+          var subscribers = dataSubscribers.map(function(dataSubscriber) {
+            console.log(dataSubscriber.email);
+              return dataSubscriber.email;
+          });
+
+          var tmp = config.email.template_path + '/' + template + '.jade';
+          var tdata = {
+              'bolo': bolo,
+              'app_url': config.appURL
+          };
+
+        var html = jade.renderFile(tmp, tdata);
+          console.log("SENDING EMAIL TO SUBSCRIBERS SUCCESSFULLY");
+          return emailService.send({
+              'to': subscribers,
+              'from': config.email.from,
+              'fromName': config.email.fromName,
+              'subject': 'BOLO Alert: ' + bolo.category,
+              'html': html,
+              'files': [{
+                  filename: tdata.bolo.id + '.jpg', // required only if file.content is used.
+                  contentType: 'image/jpeg', // optional
+                  content: someData.featured
+              }]
+          });
+
+      })
+      .catch(function(error) {
+          console.error(
+              'Unknown error occurred while sending notifications to subscribers' +
+              'subscribed to agency id %s for BOLO %s\n %s',
+              bolo.agency, bolo.id, error.message
+          );
+      });
+  })
+
+}
 /*
 Send email to confirm bolos
 */
@@ -544,6 +592,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     if (formDTO.fields.featured_image) {
       fi = formDTO.fields.featured_image;
     } else {
+      console.log('getting nopic.png');
       var file_path = path.resolve('src/web/public/img/nopic.png');
       fi = {
         'name': 'nopic.png',
@@ -551,6 +600,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
         'path': file_path
       };
     }
+    console.log(fi.path);
     boloDTO.images.featured = fi.name;
     attDTOs.push(renameFile(fi, 'featured'));
 
@@ -691,12 +741,12 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
 
         // send email with bolos
         sendBoloNotificationEmail(bolo, 'new-bolo-notification');
-
         var att = [];
 
         // update the bolo
         boloService.updateBolo(bolo, att)
           .then(function() {
+            sendBoloToDataSubscriber(bolo, 'new-bolo-subscriber-notification');
             req.flash(GFMSG, 'BOLO successfully confirmed.');
             res.redirect("/bolo");
           }).catch(function(error) {
@@ -712,6 +762,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
       }
 
     }).catch(function(err) {
+	 console.log(err);
       req.flash(GFERR,
         'The BOLO you are trying to confirm does not exist.'
       );
