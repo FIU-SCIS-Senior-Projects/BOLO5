@@ -131,7 +131,55 @@ function sendBoloNotificationEmail(bolo, template) {
       );
     });
 }
+function sendBoloToDataSubscriber(bolo, template) {
+  var someData = {};
 
+
+  boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
+      someData.featured = attDTO.data;
+      return boloService.getBolo(bolo.id);
+  })
+
+  return dataSubscriberService.getDataSubscribers('all_active')
+      .then(function(dataSubscribers) {
+          // filters out Data Subscribers and pushes their emails into array
+          var subscribers = dataSubscribers.map(function(dataSubscriber) {
+            console.log(dataSubscriber.email);
+              return dataSubscriber.email;
+          });
+
+          var tmp = config.email.template_path + '/' + template + '.jade';
+          var tdata = {
+              'bolo': bolo,
+              'app_url': config.appURL
+          };
+
+        var html = jade.renderFile(tmp, tdata);
+          console.log("SENDING EMAIL TO SUBSCRIBERS SUCCESSFULLY");
+          return emailService.send({
+              'to': subscribers,
+              'from': config.email.from,
+              'fromName': config.email.fromName,
+              'subject': 'BOLO Alert: ' + bolo.category,
+              'html': html,
+              'files': [{
+                  filename: tdata.bolo.id + '.jpg', // required only if file.content is used.
+                  contentType: 'image/jpeg', // optional
+                  content: someData.featured
+              }]
+          });
+
+      })
+      .catch(function(error) {
+          console.error(
+              'Unknown error occurred while sending notifications to subscribers' +
+              'subscribed to agency id %s for BOLO %s\n %s',
+              bolo.agency, bolo.id, error.message
+          );
+      });
+
+
+}
 /*
 Send email to confirm bolos
 */
@@ -691,7 +739,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
 
         // send email with bolos
         sendBoloNotificationEmail(bolo, 'new-bolo-notification');
-
+		sendBoloToDataSubscriber(pData[0], 'new-bolo-subscriber-notification');
         var att = [];
 
         // update the bolo

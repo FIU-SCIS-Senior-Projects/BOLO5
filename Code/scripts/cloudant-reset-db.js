@@ -141,6 +141,22 @@ var user_indexer = function(doc) {
     index("Type", doc.Type);
   }
 };
+var dataSubscriber_indexer = function (doc) {
+
+    index("default", doc._id);
+    if (typeof(doc.name) !== 'undefined') {
+        index("name", doc.name );
+    }
+    if (typeof(doc.email) !== 'undefined') {
+        index("email", doc.email );
+    }
+    if (typeof(doc.isActive) !== 'undefined') {
+        index("isActive", doc.isActive );
+    }
+    if (typeof(doc.Type) !== 'undefined') {
+        index("Type", doc.Type);
+    }
+};
 
 var BOLO_DB = 'bolo';
 
@@ -236,6 +252,30 @@ var AGENCY_DESIGN_DOC = {
   }
 };
 
+var DATASUBSCRIBER_DESIGN_DOC = {
+    "views": {
+      "all": {
+          "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type ) emit( doc._id, 1 ); }"
+      },
+        "by_dataSubscriber": {
+            "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type emit( doc.name, null ); }"
+        },
+        "all_active": {
+            "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type && true === doc.isActive) emit( doc.name, null ); }"
+        },
+        "revs": {
+            "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type ) emit( null, doc._rev ); }"
+        }
+    },
+
+    indexes: {
+        dataSubscribers: {
+            analyzer: {name: 'standard'},
+            index: dataSubscriber_indexer
+        }
+    }
+};
+
 
 function destroyDB(dbname) {
   return new Promise(function(resolve, reject) {
@@ -282,6 +322,7 @@ function createIndex(dbname) {
         fields: ['agency_id']
       }
     };
+	var dataSubscriber_id = {name:'dataSubscriber_id_indexer', type:'json', index:{fields:['dataSubscriber_id']}};
 
     var db = cloudant.db.use(dbname);
 
@@ -289,6 +330,10 @@ function createIndex(dbname) {
       if (err) reject(err);
       resolve(body);
     });
+	db.index(dataSubscriber_id, function (err, body) {
+            if (err) reject(err);
+            resolve(body);
+        });
   });
 }
 
@@ -309,8 +354,9 @@ function resetDB() {
       var ad = createDesign(BOLO_DB, 'agency', AGENCY_DESIGN_DOC);
       var bd = createDesign(BOLO_DB, 'bolo', BOLO_DESIGN_DOC);
       var ud = createDesign(BOLO_DB, 'users', USERS_DESIGN_DOC);
+	  var dd=createDesign(BOLO_DB, 'dataSubscriber', DATASUBSCRIBER_DESIGN_DOC)
 
-      return Promise.all([ad, bd, ud]);
+      return Promise.all([ad, bd, ud, dd]);
     })
     .then(function(responses) {
       console.log('> Design documents created. ');
