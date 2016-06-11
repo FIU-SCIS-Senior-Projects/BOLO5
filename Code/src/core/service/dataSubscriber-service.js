@@ -44,7 +44,7 @@ dataSubscriberService.prototype.createDataSubscriber = function ( dataSubscriber
             return Promise.reject(new Error("ERROR: Subscriber ID already registered"));
         }
         else {
-            return context.dataSubscriberRepository.getDataSubscribers().then(function (dataSubscribers){
+            return context.dataSubscriberRepository.getDataSubscribers('by_dataSubscriber').then(function (dataSubscribers){
 
                 dataSubscribers.forEach(function(currentDataSubscriber) {
                     if(currentDataSubscriber.data.name === dataSubscriber.data.name ){

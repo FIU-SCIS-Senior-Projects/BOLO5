@@ -22,6 +22,7 @@ var _bodyparser = bodyParser.urlencoded({
 var config = require('../config');
 
 var agencyService = new config.AgencyService(new config.AgencyRepository());
+var dataSubscriberService = new config.dataSubscriberService(new config.dataSubscriberRepository());
 var userService = new config.UserService(new config.UserRepository(), agencyService);
 var boloService = new config.BoloService(new config.BoloRepository());
 var emailService = new config.EmailService();
@@ -134,7 +135,7 @@ function sendBoloNotificationEmail(bolo, template) {
 function sendBoloToDataSubscriber(bolo, template) {
   var someData = {};
 
-
+	console.log('in email function');
   boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
       someData.featured = attDTO.data;
       return boloService.getBolo(bolo.id);
@@ -739,7 +740,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
 
         // send email with bolos
         sendBoloNotificationEmail(bolo, 'new-bolo-notification');
-		sendBoloToDataSubscriber(pData[0], 'new-bolo-subscriber-notification');
+		sendBoloToDataSubscriber(bolo, 'new-bolo-subscriber-notification');
         var att = [];
 
         // update the bolo
@@ -760,6 +761,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
       }
 
     }).catch(function(err) {
+	 console.log(err);
       req.flash(GFERR,
         'The BOLO you are trying to confirm does not exist.'
       );

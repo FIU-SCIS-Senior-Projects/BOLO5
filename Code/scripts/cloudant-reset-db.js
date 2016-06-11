@@ -258,7 +258,7 @@ var DATASUBSCRIBER_DESIGN_DOC = {
           "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type ) emit( doc._id, 1 ); }"
       },
         "by_dataSubscriber": {
-            "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type emit( doc.name, null ); }"
+            "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type) emit( doc.name, null ); }"
         },
         "all_active": {
             "map": "function ( doc ) { if ( 'dataSubscriber' === doc.Type && true === doc.isActive) emit( doc.name, null ); }"
