@@ -24,7 +24,7 @@ block content
 
     .row
         for bolo in bolos
-            if bolo
+            if bolo && bolo.confirmed === true
                 include ./partials/bolo-thumbnail.jade
                     .actions
                         a.btn.btn-default( href="/bolo/edit/" + bolo.id, role="button" ) Edit
