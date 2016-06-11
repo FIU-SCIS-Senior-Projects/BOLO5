@@ -47,8 +47,8 @@ passport.use(new LocalStrategy(
 
             // deny logon
             return done(null, false, {
-              'message': 'You password has expired. ' +
-                'You have been sent an email to reset your password'
+              'message': 'Your password has expired. ' +
+                'An email was sent to reset your password'
                 // send email
             });
         }
@@ -125,7 +125,7 @@ var sendExpirationReminder  = function(user, timeLeft){
         'from': config.email.from,
         'fromName': config.email.fromName,
         'subject': 'BOLO Alert: Password Expiration',
-        'text': 'Your password is expiring in less than '+ daysLeft + '. Change it to avoid a password reset. \n' +
+        'text': 'Your password will expire in less than '+ daysLeft + '. Change it to avoid a password reset. \n' +
           'To change your password, follow this link: \n\n' +
           config.appURL + '/expiredpassword/' + token + '\n\n'
       })

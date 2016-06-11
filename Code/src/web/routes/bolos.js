@@ -190,8 +190,8 @@ function sendBoloConfirmationEmail(email, bolo, token) {
     'from': config.email.from,
     'fromName': config.email.fromName,
     'subject': 'BOLO Alert: Confirm BOLO ' + bolo.firstName + " " + bolo.lastName,
-    'text': 'You BOLO has been created but not confirmed. \n' +
-      'Please click on the link below to confirm: \n\n' +
+    'text': 'You BOLO was created but not confirmed. \n' +
+      'Click on the link below to confirm: \n\n' +
       config.appURL + '/bolo/confirmBolo/' + token + '\n\n'
   })
 }
