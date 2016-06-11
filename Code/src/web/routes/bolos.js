@@ -98,6 +98,7 @@ function sendBoloNotificationEmail(bolo, template) {
         }
         return flag;
       }).map(function(user) {
+        console.log(user.email);
         return user.email;
       });
 
@@ -138,9 +139,9 @@ function sendBoloToDataSubscriber(bolo, template) {
 	console.log('in email function');
   boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
       someData.featured = attDTO.data;
-      return boloService.getBolo(bolo.id);
+      return someData;
   })
-
+ console.log(someData.featured);
   return dataSubscriberService.getDataSubscribers('all_active')
       .then(function(dataSubscribers) {
           // filters out Data Subscribers and pushes their emails into array
@@ -593,6 +594,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     if (formDTO.fields.featured_image) {
       fi = formDTO.fields.featured_image;
     } else {
+      console.log('getting nopic.png');
       var file_path = path.resolve('src/web/public/img/nopic.png');
       fi = {
         'name': 'nopic.png',
@@ -600,6 +602,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
         'path': file_path
       };
     }
+    console.log(fi.path);
     boloDTO.images.featured = fi.name;
     attDTOs.push(renameFile(fi, 'featured'));
 
@@ -740,12 +743,12 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
 
         // send email with bolos
         sendBoloNotificationEmail(bolo, 'new-bolo-notification');
-		sendBoloToDataSubscriber(bolo, 'new-bolo-subscriber-notification');
         var att = [];
 
         // update the bolo
         boloService.updateBolo(bolo, att)
           .then(function() {
+            sendBoloToDataSubscriber(bolo, 'new-bolo-subscriber-notification');
             req.flash(GFMSG, 'BOLO successfully confirmed.');
             res.redirect("/bolo");
           }).catch(function(error) {
