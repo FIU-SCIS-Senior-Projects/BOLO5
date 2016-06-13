@@ -414,6 +414,25 @@ CloudantBoloRepository.prototype.getBolo = function (id) {
         });
 };
 
+CloudantBoloRepository.prototype.getBoloByToken = function(token){
+  return db.view( 'bolo', 'by_token', {
+      'key': token,
+      'include_docs': true
+      })
+      .then( function ( bolo_doc ) {
+
+          if(bolo_doc.rows[0].doc.confirmed === true){
+            return null;
+          }
+
+
+          return boloFromCloudant( bolo_doc.rows[0].doc );
+      })
+      .catch( function ( error ) {
+          var msg = error.reason || error.mesage || error;
+          throw new Error( "Unable to retrive bolo data: " + msg );
+      });
+}
 
 CloudantBoloRepository.prototype.getAttachment = function (id, attname) {
     var bufferPromise = db.getAttachment(id, attname);

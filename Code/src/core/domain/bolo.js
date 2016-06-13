@@ -68,7 +68,9 @@ function Bolo( data ) {
         isActive        : true,
         status          : '',
         record          : '',
-        images          : {}
+        images          : {},
+        boloToken       : null,
+        confirmed       : false
     };
 
     this.data = _.defaults( {}, data, defaults );

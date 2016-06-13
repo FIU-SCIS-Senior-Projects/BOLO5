@@ -75,6 +75,7 @@ function postChangePassword ( req, res ) {
         );
 
         if ( validationErrors ) {
+          console.log("account.js postChangePassword func")
             req.flash( 'form-errors', validationErrors );
             throw new FormError();
         }

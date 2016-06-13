@@ -25,10 +25,14 @@ config.AgencyRepository = require( path.join( core, 'adapters/persistence/clouda
 config.UserService      = require( path.join( core, 'service/user-service' ) );
 config.UserRepository   = require( path.join( core, 'adapters/persistence/cloudant-user-repository' ) );
 
+config.dataSubscriberService    = require( path.join( core, 'service/dataSubscriber-service') );
+config.dataSubscriberRepository = require( path.join( core, 'adapters/persistence/cloudant-dataSubscriber-repository' ) );
+
 config.EmailService     = require( path.join( core, 'service/email-service' ) );
 
 config.PDFService       = require( path.join( core, 'service/pdf-service' ) );
 config.CommonService    = require( path.join( core, 'service/common-service' ) );
+
 
 
 

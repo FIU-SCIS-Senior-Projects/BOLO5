@@ -63,7 +63,7 @@ var session = expressSession({
         path: '/',
         httpOnly: true,
         secure: false,
-        maxAge: 5* 10 * 6000
+        maxAge: 10 * 10 * 6000
     },
     'rolling': true
     /**
