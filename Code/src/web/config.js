@@ -65,7 +65,9 @@ config.const = config.constants = {
 
 };
 
+// # of days a bolo can remain unconfirmed before expiring
 config.days = 30;
+
 config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
 
 
