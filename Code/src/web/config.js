@@ -65,6 +65,9 @@ config.const = config.constants = {
 
 };
 
+config.days = 30;
+config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
+
 
 /**
  * This configuration is a good candidate for a system admin controlled

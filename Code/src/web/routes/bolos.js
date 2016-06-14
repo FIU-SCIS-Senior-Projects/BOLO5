@@ -749,6 +749,16 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
       // if bolo != null
       if (bolo) {
 
+        if(bolo === 'expired'){
+
+          req.flash(GFERR,
+            'This BOLO has expired.'
+          );
+          res.redirect("/bolo");
+
+        }
+
+
         // bolo is confirmed
         bolo.confirmed = true;
 
