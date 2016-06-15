@@ -9,7 +9,10 @@ var path = require('path');
 
 var db = require('../../lib/cloudant-promise').db.use('bolo');
 var Agency = require('../../domain/agency.js');
+var ImageService = require('../../service/image-service');
+var imageService = new ImageService();
 
+var config          = require('../../../web/config');
 var DOCTYPE = 'agency';
 
 
@@ -114,11 +117,12 @@ function CloudantAgencyRepository() {
  */
 CloudantAgencyRepository.prototype.insert = function (agency, attachments) {
     var context = this;
+    console.log('calling insert');
     var atts = attachments || [];
     var newdoc = agencyToCloudant(agency);
     newdoc._id = createAgencyID();
 
-    return Promise.all(atts.map(transformAttachment))
+  /*    return Promise.all(atts.map(transformAttachment))
         .then(function (attDTOs) {
             if (attDTOs.length) {
                 return db.insertMultipart(newdoc, attDTOs, newdoc._id);
@@ -134,8 +138,44 @@ CloudantAgencyRepository.prototype.insert = function (agency, attachments) {
             throw new Error(
                 'Unable to create new document: ' + error.reason
                 );
-        });
-};
+        });*/
+      //  var atts = _.map(attachments, attachmentsToCloudant);
+        return Promise.all(atts.map(transformAttachment)).then(function (attDTOs) {
+            if (attDTOs.length) {
+
+                console.log('in method');
+                var need_comp_attDTOs = [];
+                for (var i = 0; i < attDTOs.length; i++) {
+                    if (attDTOs[i].data.length > config.const.MAX_IMG_SIZE) {
+
+                        Array.prototype.push.apply(need_comp_attDTOs,attDTOs.splice(i));
+
+                    }
+
+                }
+
+                if (need_comp_attDTOs.length) {
+                console.log('need compression');
+                var comp_atts = _.map(need_comp_attDTOs, imageService.compressImageFromBuffer);
+
+                return Promise.all(comp_atts).then(function (comp_attDTOs) {
+
+                    Array.prototype.push.apply(comp_attDTOs,attDTOs);
+
+                    return db.insertMultipart(newdoc, comp_attDTOs, newdoc._id);
+                });
+            }
+                else  return db.insertMultipart(newdoc, attDTOs, newdoc._id);
+            }
+            else {
+                return db.insert(newdoc, newdoc._id);
+            }
+            }).catch(function (error) {
+                throw new Error(
+                    'Unable to create new document: ' + error.reason
+                    );
+            });
+}
 
 /**
  * Updates an agency
