@@ -198,8 +198,31 @@ CloudantAgencyRepository.prototype.update = function ( agency, attachments ) {
             agencyToUpdate._rev = doc._rev;
             agencyToUpdate._attachments = doc._attachments || {};
 
-            if ( attDTOs.length ) {
-                return db.insertMultipart( agencyToUpdate, attDTOs, agencyToUpdate._id );
+            if (attDTOs.length) {
+
+                console.log('in method');
+                var need_comp_attDTOs = [];
+                for (var i = 0; i < attDTOs.length; i++) {
+                    if (attDTOs[i].data.length > config.const.MAX_IMG_SIZE) {
+
+                        Array.prototype.push.apply(need_comp_attDTOs,attDTOs.splice(i));
+
+                    }
+
+                }
+
+                if (need_comp_attDTOs.length) {
+                console.log('need compression');
+                var comp_atts = _.map(need_comp_attDTOs, imageService.compressImageFromBuffer);
+
+                return Promise.all(comp_atts).then(function (comp_attDTOs) {
+
+                    Array.prototype.push.apply(comp_attDTOs,attDTOs);
+
+                    return db.insertMultipart(agencyToUpdate, comp_attDTOs, agencyToUpdate._id);
+                });
+            }
+                else  return db.insertMultipart(agencyToUpdate, attDTOs, agencyToUpdate._id);
             } else {
                 return db.insert( agencyToUpdate );
             }
