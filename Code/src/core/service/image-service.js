@@ -137,23 +137,6 @@ var compress = function(file,compression_level) {
         var img_name = file.name;
         console.log("original image length is " + img_buffer.length + " for image: " +img_name);
           console.log('ready to call jimp');
-        //var compression = img_type == 'png'  || img_type == 'bmp'? 'Lossless':'JPEG;
-
-    /*    gm(img_buffer, img_name + '.' + img_type).quality(compression_level)
-                .compress(compression).toBuffer(function(err, buffer) {
-
-                         if (err)
-                         {
-                            console.log(err);
-                            reject(new Error(err));
-                         }
-
-                        else
-                        {
-                        console.log("Successfuly compressed...Image now has a size of: " + buffer.length);
-                        resolve(buffer);
-                        }
-                });*/
 
               jimp.read(img_buffer, function(err, img){
                 if(err)
@@ -172,7 +155,6 @@ var compress = function(file,compression_level) {
                    resolve(buffer);
                    }
                   });
-                console.log('jimp in action');
               }).then(function(testbuffer){
                   console.log(testbuffer);
                   resolve(testbuffer);
@@ -186,7 +168,7 @@ var compress = function(file,compression_level) {
 
 ImageService.prototype.compressImageFromBufferOutToFile = function (file) {
 
-    console.log('compressing');
+
     // A buffer can be passed instead of a filepath as well
     if (!file.content_type)
         throw new Error('no file content specified');
@@ -203,15 +185,13 @@ ImageService.prototype.compressImageFromBufferOutToFile = function (file) {
     var img_name = file.name;
 
 
-    gm(img_buffer, img_name + '.' + img_type).quality(25).compress(compression)
-        .write('C:/Users/Ed/WebstormProjects/BOLO4-Dev/Code/src/core/Images/Compressed/' + img_name + '_compressed.' + img_type
-            , function (err) {
-                if (!err) {
-                    console.log("compressed image!!")
-                }
-                else console.log(err);
+    jimp.read(img_buffer, function(err, img){
+      if(err)
+        throw err;
+      img.quality(compression_level)
+        .rite("picture.jpg");
 
-            });
+    });
 
 
 };
