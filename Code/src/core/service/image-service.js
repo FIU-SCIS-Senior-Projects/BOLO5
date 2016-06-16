@@ -141,7 +141,8 @@ var compress = function(file,compression_level) {
               jimp.read(img_buffer, function(err, img){
                 if(err)
                   throw err;
-                img.quality(compression_level)//resize(256, 256)
+                img.resize(300,300)
+                  .quality(compression_level)
                   .getBuffer(jimp.MIME_JPEG,function(err, buffer){
                     if (err)
                     {
