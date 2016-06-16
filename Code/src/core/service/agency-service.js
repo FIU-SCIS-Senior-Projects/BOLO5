@@ -110,13 +110,13 @@ AgencyService.prototype.updateAgency = function ( agencyData, attachments ) {
                         });
 
                         original.data.attachments = atts;
-
                         return context.AgencyRepository.update( original, attachments );
                     })
                     .then( function ( updated ) {
                         return updated;
                     })
                     .catch( function ( error ) {
+                        console.log(error);
                         return Promise.reject( new Error("Agency does not exist.") );
                     });
                 }

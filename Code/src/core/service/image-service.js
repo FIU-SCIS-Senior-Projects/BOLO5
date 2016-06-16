@@ -5,8 +5,8 @@ var Promise = require('promise');
 var fs = require('fs');
 var gm = require('gm').subClass({imageMagick: true});
 var path = require('path');
-
-var config          = require('../../web/config');
+var jimp=require('jimp');
+var config      = require('../../web/config');
 
 function ImageService() {
 }
@@ -34,7 +34,7 @@ ImageService.prototype.createImageFromBuffer = function (file) {
 
 };
 
-ImageService.prototype.compressImageFromBuffer = function (attDTOs) 
+ImageService.prototype.compressImageFromBuffer = function (attDTOs)
 {
 
     if (!attDTOs.data) {
@@ -47,7 +47,7 @@ ImageService.prototype.compressImageFromBuffer = function (attDTOs)
       {
 
           attDTOs.data = content;
-            
+
             var img_size = attDTOs.data.length;
 
             var compression_level = config.const.LOW_COMPRESSION;
@@ -83,7 +83,7 @@ ImageService.prototype.compressImageFromBuffer = function (attDTOs)
                 });
 
       });
-    
+
 };
 
 var convertToJpg = function(file,img_type){
@@ -99,11 +99,11 @@ var convertToJpg = function(file,img_type){
         {
             var img_buffer = file.data;
                 var img_name = file.name;
-                return new Promise(function (resolve, reject) 
+                return new Promise(function (resolve, reject)
                 {
-                    gm(img_buffer, img_name + '.' + img_type).toBuffer('JPEG',function (err, buffer) 
+                    gm(img_buffer, img_name + '.' + img_type).toBuffer('JPEG',function (err, buffer)
                         {
-                            if (err) 
+                            if (err)
                                 {
                                     console.log(err);
                                     reject(new Error(err));
@@ -117,7 +117,7 @@ var convertToJpg = function(file,img_type){
 
                         });
                 });
-          
+
         }
 };
 var compress = function(file,compression_level) {
@@ -136,31 +136,39 @@ var compress = function(file,compression_level) {
         var img_buffer = file.data;
         var img_name = file.name;
         console.log("original image length is " + img_buffer.length + " for image: " +img_name);
-         
-        
-        //var compression = img_type == 'png'  || img_type == 'bmp'? 'Lossless':'JPEG;
-       
-        gm(img_buffer, img_name + '.' + img_type).quality(compression_level)
-                .compress(compression).toBuffer(function(err, buffer) {
+          console.log('ready to call jimp');
 
-                         if (err) 
-                         {
-                            console.log(err);
-                            reject(new Error(err));
-                         }
+              jimp.read(img_buffer, function(err, img){
+                if(err)
+                  throw err;
+                img.quality(compression_level)//resize(256, 256)
+                  .getBuffer(jimp.MIME_JPEG,function(err, buffer){
+                    if (err)
+                    {
+                       console.log(err);
+                       reject(new Error(err));
+                    }
 
-                        else
-                        {
-                        console.log("Successfuly compressed...Image now has a size of: " + buffer.length);
-                        resolve(buffer);
-                        }
-                }); 
+                   else
+                   {
+                   console.log("Successfuly compressed...Image now has a size of: " + buffer.length);
+                   resolve(buffer);
+                   }
+                  });
+              }).then(function(testbuffer){
+                  console.log(testbuffer);
+                  resolve(testbuffer);
+              }).catch(function(err){
+                  console.log(err)
+
+              });
+
      });
 };
 
 ImageService.prototype.compressImageFromBufferOutToFile = function (file) {
 
-    console.log('compressing');
+
     // A buffer can be passed instead of a filepath as well
     if (!file.content_type)
         throw new Error('no file content specified');
@@ -177,15 +185,13 @@ ImageService.prototype.compressImageFromBufferOutToFile = function (file) {
     var img_name = file.name;
 
 
-    gm(img_buffer, img_name + '.' + img_type).quality(25).compress(compression)
-        .write('C:/Users/Ed/WebstormProjects/BOLO4-Dev/Code/src/core/Images/Compressed/' + img_name + '_compressed.' + img_type
-            , function (err) {
-                if (!err) {
-                    console.log("compressed image!!")
-                }
-                else console.log(err);
+    jimp.read(img_buffer, function(err, img){
+      if(err)
+        throw err;
+      img.quality(compression_level)
+        .rite("picture.jpg");
 
-            });
+    });
 
 
 };
