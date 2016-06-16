@@ -296,6 +296,7 @@ CloudantBoloRepository.prototype.getBolos = function (limit, skip) {
         var bolos = _.map(result.rows, function (row) {
             return boloFromCloudant(row.doc);
         });
+
         return {'bolos': bolos, total: result.total_rows};
     });
 };
@@ -414,17 +415,34 @@ CloudantBoloRepository.prototype.getBolo = function (id) {
         });
 };
 
+/*
+Bolo is retrieved by token, if bolo is unconfirmed and older
+than config.unconfirmedBoloLifetime days he will be deleted upon
+confirmation attempt.
+*/
 CloudantBoloRepository.prototype.getBoloByToken = function(token){
+  var dateCreated;
+  var confirmed;
   return db.view( 'bolo', 'by_token', {
       'key': token,
       'include_docs': true
       })
       .then( function ( bolo_doc ) {
 
+          // if bolo has already been confirmed return null
           if(bolo_doc.rows[0].doc.confirmed === true){
             return null;
           }
 
+          dateCreated = Date.parse(bolo_doc.rows[0].doc.createdOn)
+          confirmed = bolo_doc.rows[0].doc.confirmed;
+
+          // if bolo hasnt been confirmed in more than x days delete him from the db
+          if( !confirmed &&  (dateCreated + config.unconfirmedBoloLifetime) < Date.now() ){
+            console.log("deleted old bolo")
+            CloudantBoloRepository.prototype.delete(bolo_doc.rows[0].id);
+            return 'expired';
+          }
 
           return boloFromCloudant( bolo_doc.rows[0].doc );
       })
