@@ -39,33 +39,77 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
     doc.font('Times-Roman')
         .text("Bolo ID: " + data.bolo.id, 300)
         .moveDown();
-    doc.font('Times-Roman')
-        .text("Name: " + data.bolo.firstName + " " + data.bolo.lastName, 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Race: " + data.bolo['race'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("DOB: " + data.bolo['dob'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("License#: " + data.bolo['dlNumber'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Height: " + data.bolo['height'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Weight: " + data.bolo['weight'] + " lbs", 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Sex: " + data.bolo['sex'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Hair Color: " + data.bolo['hairColor'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Tattoos/Scars: " + data.bolo['tattoos'], 300)
-        .moveDown();
+
+    if(data.bolo.category === "THEFT - AUTO"){  //PDF for theft - auto
+            doc.font('Times-Roman')
+                .text("Vehicle: " + data.bolo.vehicleMake + " " + data.bolo.vehicleModel, 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Vehicle Color: " + data.bolo['vehicleColor'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Vehicle Year: " + data.bolo['vehicleYear'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Vehicle Type: " + data.bolo['vehicleType'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Vehicle Tag Number: " + data.bolo['vehicleTagNumber'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Vehicle Identification Number (VIN): " + data.bolo['vehicleIdNumber'], 300)
+                .moveDown();
+        }
+        else if(data.bolo.category === "THEFT - BOAT"){  //PDF for theft - boat
+            doc.font('Times-Roman')
+                .text("Boat: " + data.bolo.boatMake + " " + data.bolo.boatModel, 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Boat Color: " + data.bolo['boatColor'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Boat Year: " + data.bolo['boatYear'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Boat Type: " + data.bolo['boatType'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Boat Hull Identification Number: " + data.bolo['boatHullIdNumber'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Boat Registration Number: " + data.bolo['boatRegistrationNumber'], 300)
+                .moveDown();
+        }
+        else {  //PDF for general bolo
+            doc.font('Times-Roman')
+                .text("Name: " + data.bolo.firstName + " " + data.bolo.lastName, 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Race: " + data.bolo['race'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("DOB: " + data.bolo['dob'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("License#: " + data.bolo['dlNumber'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Height: " + data.bolo['height'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Weight: " + data.bolo['weight'] + " lbs", 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Sex: " + data.bolo['sex'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Hair Color: " + data.bolo['hairColor'], 300)
+                .moveDown();
+            doc.font('Times-Roman')
+                .text("Tattoos/Scars: " + data.bolo['tattoos'], 300)
+                .moveDown();
+        }//end ofspecific data
+
     doc.font('Times-Bold')
         .text("Created: " + data.bolo.createdOn, 15, 360)
         .moveDown(4.15);
@@ -136,33 +180,77 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
             .text("Bolo ID: " + data.bolo.id, 300)
             .moveDown();
     }
-    doc.font('Times-Roman')
-        .text("Name: " + data.bolo.firstName + " " + data.bolo.lastName, 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Race: " + data.bolo['race'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("DOB: " + data.bolo['dob'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("License#: " + data.bolo['dlNumber'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Height: " + data.bolo['height'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Weight: " + data.bolo['weight'] + " lbs", 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Sex: " + data.bolo['sex'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Hair Color: " + data.bolo['hairColor'], 300)
-        .moveDown();
-    doc.font('Times-Roman')
-        .text("Tattoos/Scars: " + data.bolo['tattoos'], 300)
-        .moveDown();
+
+    if(data.bolo.category === "THEFT - AUTO"){  //PDF for theft - auto
+        doc.font('Times-Roman')
+            .text("Vehicle: " + data.bolo.vehicleMake + " " + data.bolo.vehicleModel, 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Vehicle Color: " + data.bolo['vehicleColor'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Vehicle Year: " + data.bolo['vehicleYear'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Vehicle Type: " + data.bolo['vehicleType'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Vehicle Tag Number: " + data.bolo['vehicleTagNumber'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Vehicle Identification Number (VIN): " + data.bolo['vehicleIdNumber'], 300)
+            .moveDown();
+    }
+    else if(data.bolo.category === "THEFT - BOAT"){  //PDF for theft - boat
+        doc.font('Times-Roman')
+            .text("Boat: " + data.bolo.boatMake + " " + data.bolo.boatModel, 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Boat Color: " + data.bolo['boatColor'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Boat Year: " + data.bolo['boatYear'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Boat Type: " + data.bolo['boatType'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Boat Hull Identification Number: " + data.bolo['boatHullIdNumber'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Boat Registration Number: " + data.bolo['boatRegistrationNumber'], 300)
+            .moveDown();
+    }
+    else {  //PDF for general bolo
+        doc.font('Times-Roman')
+            .text("Name: " + data.bolo.firstName + " " + data.bolo.lastName, 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Race: " + data.bolo['race'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("DOB: " + data.bolo['dob'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("License#: " + data.bolo['dlNumber'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Height: " + data.bolo['height'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Weight: " + data.bolo['weight'] + " lbs", 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Sex: " + data.bolo['sex'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Hair Color: " + data.bolo['hairColor'], 300)
+            .moveDown();
+        doc.font('Times-Roman')
+            .text("Tattoos/Scars: " + data.bolo['tattoos'], 300)
+            .moveDown();
+    }//end ofspecific data
+
     doc.font('Times-Bold')
         .text("Created: " + data.bolo.createdOn, 15, 360)
         .moveDown(4.15);
