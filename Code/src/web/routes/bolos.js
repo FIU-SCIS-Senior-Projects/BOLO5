@@ -726,11 +726,23 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         if (pData[0].image === "none") {
           pData[0].buffer;
-          res.render('bolo-preview-details', pData[0]);
+
+          if(pData[1].fields.category === "THEFT - AUTO"){
+              res.render('bolo-preview-auto-details', pData[0]);
+          } else if (pData[1].fields.category === "THEFT - BOAT"){
+              res.render('bolo-preview-boat-details', pData[0]);
+          } else
+                res.render('bolo-preview-details', pData[0]);
         } else {
           readFile(pData[0].image).then(function(buffer) {
             pData[0].buffer = buffer.toString('base64');
-            res.render('bolo-preview-details', pData[0]);
+
+            if(pData[1].fields.category === "THEFT - AUTO"){
+                res.render('bolo-preview-auto-details', pData[0]);
+            } else if (pData[1].fields.category === "THEFT - BOAT"){
+                res.render('bolo-preview-boat-details', pData[0]);
+            } else
+                  res.render('bolo-preview-details', pData[0]);
           });
         }
       });
