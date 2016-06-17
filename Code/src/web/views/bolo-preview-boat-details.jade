@@ -1,0 +1,101 @@
+include includes/mixins
+extends layout
+
+
+block jumbo
+  .jumbotron
+    .container
+      div#wrapper.row
+          p BOLO Details Preview
+          a.btn.btn-default( type = "button" value = "back" onClick="history.go(-1);return true;") Back to Create BOLO
+
+block content
+    include ./partials/global-alerts.jade
+
+    div.container-fluid#boloPage
+        div.row
+            - var att_route = '/agency/' + bolo.data.agency + '/img';
+            div.col-xs-2.col-md-2
+              img#logo.img-fluid( src=att_route + '/logo' alt="", width=150, height=175 )
+            div.col-xs-8
+              p.text-danger.strong #{"UNCLASSIFIED// FOR OFFICIAL USE ONLY// LAW ENFORCEMENT SENSITIVE"}
+              p.strong #{agency_name} Police Department
+              p
+                em #{agency_address}
+              p
+                em #{agency_city}, #{agency_state}. #{agency_zip}
+              p
+                em #{agency_phone}
+            div.col-xs-2#badge
+              img#badge.img-fluid( src=att_route + '/shield' alt="", width=150, height=180)
+        div.text-center
+          h1.text-danger.strong #{bolo.data.category}
+        | &nbsp;
+        | &nbsp;
+        div.row
+            div.col-xs-4#featured
+                p.text-center.text-danger.strong #{bolo.data.status}
+                if(buffer)
+                  img#featured.img-fluid( src='data:image/jpg;base64,#{buffer}' width=400 )
+                else
+                  img#featured.img-fluid( src="/img/nopic.png" alt="", width=400 )
+                p.strong Created: #{bolo.data.createdOn}
+
+
+            div.col-xs-8#boloDetails
+                form.form-horizontal
+                +form_labels_row("Bolo ID", "XYZ000" )
+                if bolo.data.authorFName != null || bolo.data.authorLName != null
+                  +form_labels_row("Author", bolo.data.authorFName + " " +  bolo.data.authorLName )
+                else
+                  +form_labels_row("Author", "N/A")
+                if bolo.data.boatMake.length || bolo.data.boatModel.length
+                  +form_labels_row("Boat", bolo.data.boatMake + " " +  bolo.data.boatModel)
+                else
+                  +form_labels_row("Boat", "N/A" )
+                if bolo.data.boatColor.length
+                   +form_labels_row("Boat Color", bolo.data.boatColor, bolo.data.boatColor?"":"hidden")
+                else
+                   +form_labels_row("Boat Color", "N/A" )
+                if bolo.data.boatYear.length
+                   +form_labels_row("Boat Year", bolo.data.boatYear, bolo.data.boatYear?"":"hidden")
+                else
+                   +form_labels_row("Boat Year", "N/A" )
+                if bolo.data.boatType.length
+                   +form_labels_row("Boat Type", bolo.data.boatType, bolo.data.boatType?"":"hidden")
+                else
+                   +form_labels_row("Boat Type", "N/A" )
+                if bolo.data.boatHullIdNumber.length
+                   +form_labels_row("Boat Hull Id Number", bolo.data.boatHullIdNumber, bolo.data.boatHullIdNumber?"":"hidden")
+                else
+                   +form_labels_row("Boat Hull Id Number", "N/A" )
+                if bolo.data.boatRegistrationNumber.length
+                   +form_labels_row("Boat Registration Number", bolo.data.boatRegistrationNumber, bolo.data.boatRegistrationNumber?"":"hidden")
+                else
+                   +form_labels_row("Boat Registration Number", "N/A" )
+
+            div.row
+              div.col-xs-8
+            div.row
+              div.col-xs-4
+            form.form-horizontal
+            | &nbsp;
+            p.strong Additional Info:
+            if bolo.data.additional.length
+              p #{bolo.data.additional}
+            else
+              | &nbsp;
+            | &nbsp;
+            if bolo.data.video_url.length
+              p.strong Video Link:
+              a(href=bolo.data.video_url) #{bolo.data.video_url}
+              p
+            | &nbsp;
+            p.strong Summary:
+            if bolo.data.summary.length
+              p #{bolo.data.summary}
+            else
+              | &nbsp;
+            if bolo.data.authorFName != null || bolo.data.authorLName != null
+                  p.strong This BOLO was created by #{sectunit}  #{ranktitle} #{bolo.data.authorFName} #{bolo.data.authorLName}.
+                  p.strong Please contact the agency should clarification be required.
