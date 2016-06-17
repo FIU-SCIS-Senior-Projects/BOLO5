@@ -605,13 +605,31 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     if (formDTO.fields.featured_image) {
       fi = formDTO.fields.featured_image;
     } else {
-      console.log('getting nopic.png');
-      var file_path = path.resolve('src/web/public/img/nopic.png');
-      fi = {
-        'name': 'nopic.png',
-        'content_type': 'image/png',
-        'path': file_path
-      };
+        if(boloDTO.category === "THEFT - AUTO"){
+            console.log('getting nopicautos.png');
+            var file_path = path.resolve('src/web/public/img/nopicautos.png');
+            fi = {
+              'name': 'nopicautos.png',
+              'content_type': 'image/png',
+              'path': file_path
+              };
+          } else if(boloDTO.category === "THEFT - BOAT"){
+              console.log('getting nopicboats.png');
+              var file_path = path.resolve('src/web/public/img/nopicboats.png');
+              fi = {
+                'name': 'nopicboats.png',
+                'content_type': 'image/png',
+                'path': file_path
+                };
+          }else{
+              console.log('getting nopic.png');
+              var file_path = path.resolve('src/web/public/img/nopic.png');
+              fi = {
+                'name': 'nopic.png',
+                'content_type': 'image/png',
+                'path': file_path
+                };
+          }
     }
     console.log(fi.path);
     boloDTO.images.featured = fi.name;
@@ -683,10 +701,19 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         /** @todo must handle when featured image is empty **/
         if (pData[0].image === "none") {
-
-          doc.image("src/web/public/img/nopic.png", 15, 150, {
-            height: 200
-          });
+            if(boloDTO.category === "THEFT - AUTO"){
+              doc.image("src/web/public/img/nopicautos.png", 15, 150, {
+                height: 200
+                });
+            } else if (boloDTO.category === "THEFT - BOAT"){
+                doc.image("src/web/public/img/nopicboats.png", 15, 150, {
+                  height: 200
+                  });
+            }else{
+                doc.image("src/web/public/img/nopic.png", 15, 150, {
+                  height: 200
+                  });
+            }
         } else {
           someData.featured = pData[0].image;
           doc.image(someData.featured, 15, 150, {
