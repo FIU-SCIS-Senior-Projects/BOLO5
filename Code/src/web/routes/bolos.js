@@ -1078,7 +1078,13 @@ router.get('/bolo/details/:id', function(req, res, next) {
 
   }).then(function(user) {
     data.user = user;
-    res.render('bolo-details', data);
+
+    if (data.bolo.category === "THEFT - AUTO"){
+        res.render('bolo-details-auto', data);
+    }else if (data.bolo.category === "THEFT - BOAT"){
+        res.render('bolo-details-boat', data);
+    } else
+        res.render('bolo-details', data);
 
   }).catch(function(error) {
     next(error);
