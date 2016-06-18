@@ -900,7 +900,14 @@ router.get('/bolo/edit/:id', function(req, res, next) {
       var auth = new BoloAuthorize(data.bolo, data.author, req.user);
 
       if (auth.authorizedToEdit()) {
-        res.render('bolo-edit-form', data);
+
+          if (data.bolo.category === "THEFT - AUTO"){
+              res.render('bolo-edit-auto-form', data);
+          }else if (data.bolo.category === "THEFT - BOAT"){
+              res.render('bolo-edit-boat-form', data);
+          } else
+              res.render('bolo-edit-form', data);
+              
       }
 
     },
