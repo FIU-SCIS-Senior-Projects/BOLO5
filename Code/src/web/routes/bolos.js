@@ -907,7 +907,7 @@ router.get('/bolo/edit/:id', function(req, res, next) {
               res.render('bolo-edit-boat-form', data);
           } else
               res.render('bolo-edit-form', data);
-              
+
       }
 
     },
@@ -943,7 +943,7 @@ router.post('/bolo/edit/:id', function(req, res, next) {
     boloDTO.lastUpdatedBy.firstName = req.user.fname;
     boloDTO.lastUpdatedBy.lastName = req.user.lname;
     boloDTO.agencyName = req.user.agencyName;
-
+    boloDTO.confirmed = true;
 
     boloDTO.record = boloDTO.record + 'Edited on ' + boloDTO.lastUpdatedOn + '\nBy ' + req.user.fname + ' ' + req.user.lname + '\nFrom ' + req.user.agencyName + '\n\n';
 
