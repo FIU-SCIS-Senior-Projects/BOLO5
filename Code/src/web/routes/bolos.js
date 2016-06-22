@@ -809,7 +809,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
         boloService.updateBolo(bolo, att)
           .then(function() {
             sendBoloToDataSubscriber(bolo, 'new-bolo-subscriber-notification');
-            req.flash(GFMSG, 'BOLO successfully confirmed.');
+            req.flash(GFMSG, 'BOLO confirmed.');
             res.redirect("/bolo");
           }).catch(function(error) {
             console.log(error)
@@ -817,7 +817,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
       }else{
 
         req.flash(GFERR,
-          'This BOLO has already been confirmed .'
+          'This BOLO is already confirmed .'
         );
         res.redirect("/bolo");
 
@@ -826,7 +826,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
     }).catch(function(err) {
 	 console.log(err);
       req.flash(GFERR,
-        'The BOLO you are trying to confirm does not exist.'
+        'No record of BOLO found.'
       );
       res.redirect("/bolo");
 
