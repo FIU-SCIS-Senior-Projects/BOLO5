@@ -1,5 +1,7 @@
 /* jshint node: true */
+module.exports = ImageService;
 'use strict';
+
 var _ = require('lodash');
 var Promise = require('promise');
 var fs = require('fs');
@@ -7,6 +9,8 @@ var gm = require('gm').subClass({imageMagick: true});
 var path = require('path');
 var jimp=require('jimp');
 var config      = require('../../web/config');
+
+
 
 function ImageService() {
 }
@@ -86,6 +90,39 @@ ImageService.prototype.compressImageFromBuffer = function (attDTOs)
 
 };
 
+ImageService.prototype.compressImageFromBufferOutToFile = function (file) {
+
+
+    // A buffer can be passed instead of a filepath as well
+    if (!file.content_type)
+        throw new Error('no file content specified');
+
+    var img_type = file.content_type.substring(file.content_type.lastIndexOf("/") + 1);
+    console.log(img_type);
+
+    var compression = img_type.toUpperCase();
+    if (img_type === 'jpeg')
+        img_type = 'jpg';
+
+
+    var img_buffer = file.data;
+    var img_name = file.name;
+
+
+    jimp.read(img_buffer, function(err, img){
+      if(err)
+        throw err;
+      img.quality(compression_level)
+        .write("picture.jpg");
+
+    });
+
+
+};
+
+
+
+
 var convertToJpg = function(file,img_type){
 
             console.log(img_type);
@@ -141,9 +178,9 @@ var compress = function(file,compression_level) {
               jimp.read(img_buffer, function(err, img){
                 if(err)
                   throw err;
-                img.resize(300,300)
+              img.resize(650, jimp.AUTO)
                   .quality(compression_level)
-                  .getBuffer(jimp.MIME_JPEG,function(err, buffer){
+                  .getBuffer(jimp.MIME_PNG,function(err, buffer){
                     if (err)
                     {
                        console.log(err);
@@ -166,35 +203,3 @@ var compress = function(file,compression_level) {
 
      });
 };
-
-ImageService.prototype.compressImageFromBufferOutToFile = function (file) {
-
-
-    // A buffer can be passed instead of a filepath as well
-    if (!file.content_type)
-        throw new Error('no file content specified');
-
-    var img_type = file.content_type.substring(file.content_type.lastIndexOf("/") + 1);
-    console.log(img_type);
-
-    var compression = img_type.toUpperCase();
-    if (img_type === 'jpeg')
-        img_type = 'jpg';
-
-
-    var img_buffer = file.data;
-    var img_name = file.name;
-
-
-    jimp.read(img_buffer, function(err, img){
-      if(err)
-        throw err;
-      img.quality(compression_level)
-        .rite("picture.jpg");
-
-    });
-
-
-};
-
-module.exports = ImageService;
