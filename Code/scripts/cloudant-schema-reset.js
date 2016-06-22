@@ -74,6 +74,9 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.record) !== 'undefined') {
     index("record", doc.record);
   }
+  if (typeof(doc.testField) !== 'undefined') {
+    index("record", doc.testField);
+  }
 };
 
 
@@ -296,9 +299,8 @@ function updateDesign(dbname, designname, doc){
     if(err)
       console.log(err);
 
-    docFromCloudant['views']=doc['views'];
+    docFromCloudant['views']=doc['views'];//insert new information into old design document
     docFromCloudant['indexes']=doc['indexes'];
-    //    console.log(oldDoc);
      db.insert(docFromCloudant, docFromCloudant.id, function(err, body) {
         if (err) { console.log(err);reject(err)};
         resolve(body);
@@ -364,8 +366,8 @@ function updateDB() {
 
 function authorizeReset() {
   process.stdout.write(
-    ' This script will destroy the "' + BOLO_DB + '" database and set it' +
-    ' up to a default state.\n\n CONTINUE?  [y/n]  '
+    ' This script will update the "' + BOLO_DB + '" database and set it' +
+    ' up to a new state.\n\n CONTINUE?  [y/n]  '
   );
 
   process.stdin.resume();
