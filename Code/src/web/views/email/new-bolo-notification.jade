@@ -5,3 +5,8 @@ block content
         |&nbsp;has been posted.&nbsp;
         a( href=app_url ) Login
         |&nbsp;to view other BOLOs.
+    br
+    br
+    p Click;
+      a(href=app_url + '/account/notifications/unsubscribe/'+bolo.author+'/'+ bolo.agencyName ) here
+      |&nbsp;to unsubscribe from #{bolo.agencyName} notifications.
