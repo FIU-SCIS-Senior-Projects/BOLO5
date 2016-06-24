@@ -62,6 +62,7 @@ function Bolo( data ) {
         hairColor       : '',
         tattoos         : '',
         address         : '',
+        zipCode         : '',
         additional      : '',
         summary         : '',
         attachments     : {},
