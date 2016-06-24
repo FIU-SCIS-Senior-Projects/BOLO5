@@ -41,7 +41,7 @@ block content
                   img#featured.img-fluid( src="/img/nopic.png" alt="", width=400 )
                 p.strong Created: #{bolo.data.createdOn}
 
-            
+
             div.col-xs-8#boloDetails
                 form.form-horizontal
                 +form_labels_row("Bolo ID", "XYZ000" )
@@ -65,6 +65,14 @@ block content
                   +form_labels_row("License #", bolo.data.dlNumber, bolo.data.dlNumber?"":"hidden")
                 else
                   +form_labels_row("License #", "N/A" )
+                if bolo.data.address.length
+                  +form_labels_row("Address", bolo.data.address, bolo.data.address?"":"hidden")
+                else
+                  +form_labels_row("Address", "N/A" )
+                if bolo.data.zipCode.length
+                  +form_labels_row("Zip Code", bolo.data.zipCode, bolo.data.zipCode?"":"hidden")
+                else
+                  +form_labels_row("Zip Code", "N/A" )
                 if bolo.data.height.length
                   +form_labels_row("Height", bolo.data.height, bolo.data.height?"":"hidden")
                 else
@@ -73,10 +81,6 @@ block content
                   +form_labels_row("Weight", bolo.data.weight + "lbs", bolo.data.weight?"":"hidden")
                 else
                   +form_labels_row("Weight", "N/A" )
-                if bolo.data.address.length
-                  +form_labels_row("Address", bolo.data.address, bolo.data.address?"":"hidden")
-                else
-                  +form_labels_row("Address", "N/A" )
                 if bolo.data.sex != "Select an option..."
                   +form_labels_row("Sex", bolo.data.sex, bolo.data.sex?"":"hidden")
                 else
