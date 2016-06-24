@@ -9,7 +9,7 @@ var validate        = require('validate.js');
 var config          = require('../config.js');
 var agencyService   = new config.AgencyService( new config.AgencyRepository() );
 var userService     = new config.UserService( new config.UserRepository(), agencyService);
-var emailService    = config.EmailService;
+var emailService    = new config.EmailService;
 
 var formUtil        = require('../lib/form-util');
 var passwordUtil    = require('../lib/password-util');
@@ -75,6 +75,7 @@ function postChangePassword ( req, res ) {
         );
 
         if ( validationErrors ) {
+          console.log("account.js postChangePassword func")
             req.flash( 'form-errors', validationErrors );
             throw new FormError();
         }
