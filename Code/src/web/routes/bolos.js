@@ -277,7 +277,7 @@ router.get('/bolo', function(req, res, next) {
         var minutes = parseInt(d.asMinutes());
         console.log(minutes);
         if (minutes > minutes_in_week) {
-          curr.data.status = 'Ongoing';
+          curr.data.status = '';
 
         }
       }
