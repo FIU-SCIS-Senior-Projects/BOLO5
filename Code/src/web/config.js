@@ -79,7 +79,7 @@ config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
  * administrator (but not an agency administrator)
  */
 config.email = {
-    'from'              : 'bolo.flyer@gmail.com',
+    'from'              : 'noreply@boloflyer.com',
     'fromName'          : 'BOLO Flier Creator',
     'template_path'     : path.resolve( __dirname, './views/email' )
 };
