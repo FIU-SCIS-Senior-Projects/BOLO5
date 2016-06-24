@@ -167,6 +167,20 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
+        // Display Address only if there is a value in it
+        if(data.bolo['address'] !== ""){
+            doc.font('Times-Roman')
+                .text("Address: " + data.bolo['address'], 300)
+                .moveDown();
+        }
+
+        // Display Zip Code only if there is a value in it
+        if(data.bolo['zipCode'] !== ""){
+            doc.font('Times-Roman')
+                .text("Zip Code: " + data.bolo['zipCode'], 300)
+                .moveDown();
+        }
+
         // Display Height only if there is a value in it
         if(data.bolo['height'] !== ""){
             doc.font('Times-Roman')
@@ -407,6 +421,20 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
+        // Display Address only if there is a value in it
+        if(data.bolo['address'] !== ""){
+            doc.font('Times-Roman')
+                .text("Address: " + data.bolo['address'], 300)
+                .moveDown();
+        }
+
+        // Display Zip Code only if there is a value in it
+        if(data.bolo['zipCode'] !== ""){
+            doc.font('Times-Roman')
+                .text("Zip Code: " + data.bolo['zipCode'], 300)
+                .moveDown();
+        }
+        
         // Display Height only if there is a value in it
         if(data.bolo['height'] !== ""){
             doc.font('Times-Roman')
