@@ -194,7 +194,7 @@ function getUnsubscribeNotificationsFromEmail ( req, res ) {
         } else {
             req.flash( GFMSG, 'Subscriptions successfully updated.' );
         }
-        res.redirect( 'back' );
+        res.redirect('/account/notifications');
     })
     .catch( function ( error ) {
         console.error( 'Error at ', req.originalUrl, ' >>> ', error.message );
