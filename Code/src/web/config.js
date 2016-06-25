@@ -37,7 +37,7 @@ config.CommonService    = require( path.join( core, 'service/common-service' ) )
 
 
 /* Application Config */
-config.appURL           = process.env.APP_URL || 'httP://localhost:3000';
+config.appURL           = process.env.APP_URL || 'http://localhost:3000';
 
 var bootswatch_theme    = 'yeti-custom';
 config.bootstrap        = '/css/vendor/bootswatch/' +

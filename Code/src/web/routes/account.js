@@ -29,6 +29,7 @@ router.get(  '/account/password'        , getChangePassword );
 router.post( '/account/password'        , postChangePassword );
 router.get(  '/account/notifications'   , getUserNotifications );
 router.post( '/account/notifications/unsubscribe'   , postUnsubscribeNotifications );
+router.get( '/account/notifications/unsubscribe/:agencyId'   , getUnsubscribeNotificationsFromEmail);
 router.get(  '/account/notifications/subscribe'     , getAvailableAgencyNotifications );
 router.post( '/account/notifications/subscribe'     , postSubscribeNotifications );
 
@@ -164,7 +165,7 @@ function postUnsubscribeNotifications ( req, res ) {
         if ( ! selected.length ) {
             return null;
         }
-
+        console.log(req.user.id);
         return userService.removeNotifications( req.user.id, selected );
     })
     .then( function ( user ) {
@@ -174,6 +175,25 @@ function postUnsubscribeNotifications ( req, res ) {
             req.flash( GFMSG, 'Subscriptions successfully updated.' );
         }
         res.redirect( 'back' );
+    })
+    .catch( function ( error ) {
+        console.error( 'Error at ', req.originalUrl, ' >>> ', error.message );
+        req.flash( GFERR, 'Unknown error occurred, please try again.' );
+        res.redirect( 'back' );
+    });
+}
+
+function getUnsubscribeNotificationsFromEmail ( req, res ) {
+
+        var selected = [req.params.agencyId];
+
+       userService.removeNotifications( req.user.id, selected ).then( function ( user ) {
+        if ( ! user ) {
+            req.flash( GFERR, 'Subscriptions update error occured.' );
+        } else {
+            req.flash( GFMSG, 'Subscriptions successfully updated.' );
+        }
+        res.redirect('/account/notifications');
     })
     .catch( function ( error ) {
         console.error( 'Error at ', req.originalUrl, ' >>> ', error.message );

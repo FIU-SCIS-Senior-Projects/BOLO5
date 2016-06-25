@@ -190,12 +190,16 @@ router.post('/login',
   function(req, res) {
     var login_redirect = null;
     if (req.session.login_redirect) {
+      console.log(req.session.login_redirect);
       login_redirect = req.session.login_redirect;
       req.session.login_redirect = null;
     }
 
     console.log("Session:" + login_redirect);
-    res.redirect('/bolo' || '/');
+    if(login_redirect!==null){
+      res.redirect(config.appURL+login_redirect);}
+    else
+      res.redirect('/bolo' || '/');
   }
 );
 
