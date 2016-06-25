@@ -325,7 +325,7 @@ CloudantBoloRepository.prototype.getBolosByAgency = function (id, limit, skip) {
 
         bolos.agency = id ;
 
-        return {'bolos': bolos, total: result.total_rows};
+        return {'bolos': bolos, total: index};
     });
 };
 
