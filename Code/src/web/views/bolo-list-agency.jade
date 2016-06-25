@@ -1,0 +1,38 @@
+extends layout
+
+
+block jumbo
+    .jumbotron
+        .container
+            div#wrapper
+                div.col-xs-1.col-md-10
+                    p Active BOLOs
+                div.col-xs-1.dropdown
+                    button.dropbtn.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown") Filter By Agency
+                        span.caret
+                    ul.dropdown-menu
+                        -var dimensions = "width: 210px; margin: 0 auto;"
+                        a.btn.btn-default(href="/bolo/" style=dimensions) View all
+                        for agency in agencies
+                            a.btn.btn-default(href="/bolo/agency/"+agency.id name="agencyID" value=agency.id style=dimensions) #{agency.name}
+
+block content
+    include ./partials/global-alerts.jade
+
+    if bolos && 0 === bolos.length
+        p.lead No active BOLOs at this time.
+
+    .row
+        for bolo in bolos
+            if bolo && bolo.confirmed === true
+                include ./partials/bolo-thumbnail.jade
+                    .actions
+                        a.btn.btn-default( href="/bolo/edit/" + bolo.id, role="button" ) Edit
+                        a.btn.btn-default( href="/bolo/details/" + bolo.id role="button" ) Details
+                        a.btn.btn-warning( href="/bolo/archive/" + bolo.id role="button" onclick="return confirm('Are you sure you want to archive this bolo?')"
+                        ) Archive
+
+
+    .row.text-center
+        - var route = '/bolo/agency/'+agency
+        include ./partials/paging-byAgency.jade

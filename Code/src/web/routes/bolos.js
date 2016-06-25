@@ -297,7 +297,9 @@ router.get('/bolo', function(req, res, next) {
 router.get('/bolo/agency/:id', function(req, res, next) {
   var agency = req.params.id;
   var page = parseInt(req.query.page) || 1;
+  console.log('page: '+page);
   var limit = config.const.BOLOS_PER_PAGE;
+  console.log('limit: '+limit);
   var skip = (1 <= page) ? (page - 1) * limit : 0;
   var data = {
     'paging': {
@@ -305,13 +307,15 @@ router.get('/bolo/agency/:id', function(req, res, next) {
       'current': page
     }
   };
-
+  data.agency=agency;
   boloService.getBolosByAgency(agency, limit, skip).then(function(results) {
     data.bolos = results.bolos;
+    console.log('total: '+results.total);
     data.paging.last = Math.ceil(results.total / limit);
+    console.log('paging: '+data.paging.last);
     agencyService.getAgencies().then(function(agencies) {
       data.agencies = agencies;
-      res.render('bolo-list', data);
+      res.render('bolo-list-agency', data);
     });
   }).catch(function(error) {
     next(error);

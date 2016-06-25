@@ -296,43 +296,53 @@ CloudantBoloRepository.prototype.getBolos = function (limit, skip) {
         var bolos = _.map(result.rows, function (row) {
             return boloFromCloudant(row.doc);
         });
-
         return {'bolos': bolos, total: result.total_rows};
     });
 };
 
 CloudantBoloRepository.prototype.getBolosByAgency = function (id, limit, skip) {
-
     var opts = {
         'include_docs': true,
-        'limit': limit,
-        'skip': skip,
+      //  'limit': limit,
+      //  'skip': skip,
         'descending': true,
     };
-
     return db.view('bolo', 'all_active', opts).then(function (result) {
         var bolos = _.map(result.rows, function (row) {
             return boloFromCloudant(row.doc);
         });
         var index = 0;
-
+        var countLimit=0;
+        var total=0;
+        var countSkip=0;
         bolos.forEach(function(bolo){
             if(bolo.data.agency !== id){
                 delete bolos[index];
             }
+            else if(countSkip<skip){
+                total++;
+                countSkip++;
+                delete bolos[index];
+            }
+            else if(countLimit>limit){
+                  total++;
+                  delete bolos[index];
+            }
+            else{
+              total++;
+              countLimit++}
             index++;
         });
 
         bolos.agency = id ;
-
-        return {'bolos': bolos, total: index};
+        return {'bolos': bolos, total: total};
     });
 };
 
 CloudantBoloRepository.prototype.searchBolos = function (limit, query_string, bookmark) {
     var query_obj =
     {
-        q: query_string,
+        q: query_string+' AND isActive:true',
         limit: limit,
         bookmark: bookmark,
         include_docs: true
