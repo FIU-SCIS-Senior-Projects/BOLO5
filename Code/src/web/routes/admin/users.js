@@ -27,10 +27,16 @@ var BoloAuthorize   = require('../../lib/authorization.js').BoloAuthorize;
 function validateFields (fields){
   var fieldValidator = true;
 
+  if(fields.tier !== '3' && fields.email.indexOf('@') > -1){
+    fieldValidator = "IncorrectEmail"
+  }
   if(fields.fname == ""){
     fieldValidator = false;
   }
   if(fields.lname == ""){
+    fieldValidator = false;
+  }
+  if(fields.email == ""){
     fieldValidator = false;
   }
   if(fields.badge== ""){
@@ -51,14 +57,25 @@ function validateFields (fields){
  * Responds with a form to create a new user.
  */
 module.exports.getCreateForm = function ( req, res, next ) {
+
     var data = {
         'roles': userService.getRoleNames(),
         'form_errors': req.flash( 'form-errors' )
     };
 
+
     agencyService.getAgencies().then( function ( agencies ) {
         data.agencies = agencies;
         data.user = req.user;
+
+        var agency;
+        for( agency in agencies){
+
+          if(req.user.agencyName === agencies[agency].name)
+
+            data.agencyDomain = agencies[agency].domain;
+        }
+
         res.render( 'user-create-form', data );
     }).catch( next );
 };
@@ -81,7 +98,18 @@ module.exports.postCreateForm = function ( req, res ) {
         );
 
         data.user1 = formDTO.fields.username;
-        data.email1 = formDTO.fields.email;
+
+        // bind agency domain to user email username
+        if(req.user.tier === 4){
+          data.email1 = formDTO.fields.email;
+        }
+        else{
+          //compose email address from the username and agency domain
+          data.email1 = formDTO.fields.email + formDTO.fields.domain;
+          formDTO.fields.email = formDTO.fields.email + formDTO.fields.domain;
+          console.log(data.email1)
+        }
+
         data.fname1 = formDTO.fields.fname;
         data.lname1 = formDTO.fields.lname;
         data.badge1 = formDTO.fields.badge;
@@ -93,6 +121,10 @@ module.exports.postCreateForm = function ( req, res ) {
         if ( validationErrors ) {
             req.flash( 'form-errors', validationErrors );
             throw new FormError();
+        }
+        if(formFields === 'IncorrectEmail' && req.user.tier !== 4){
+          req.flash( FERR, 'Error saving new user, please try again. Email username must not contain any domain information.' );
+          throw new FormError();
         }
 
         if(formFields === false){
@@ -118,12 +150,22 @@ module.exports.postCreateForm = function ( req, res ) {
         res.redirect( '/admin/users' );
     })
     .catch( function ( error ) {
+        console.log(error)
         if ( 'FormError' !== error.name ) throw error;
         agencyService.getAgencies().then( function ( agencies ) {
-                data.agencies = agencies;
-                data.user = req.user;
-                res.render( 'user-create-form', data );
-        });
+            data.agencies = agencies;
+            data.user = req.user;
+            data.email1 = '';
+            var agency;
+            for( agency in agencies){
+
+              if(req.user.agencyName === agencies[agency].name)
+
+                data.agencyDomain = agencies[agency].domain;
+            }
+            res.redirect('back')
+            //res.render('userService', data)
+          })
     })
     .catch( function ( error ) {
         if ( ! /already registered/i.test( error.message ) ) throw error;
