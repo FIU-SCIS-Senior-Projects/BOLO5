@@ -209,13 +209,18 @@ router.post('/login',
  *
  * Destory any sessions belonging to the requesting client.
  */
-router.get('/logout',
-  function(req, res) {
-    req.logout();
+ router.get('/logout',
+  function(req, res, next) {
+    req.logout()
+      next();
+  },
+
+  function(req, res){
+
     req.flash('messages', 'Successfully logged out.');
     res.redirect('/login');
-  });
-
+  }
+ );
 
 router.get('/forgotPassword',
   function(req, res) {
