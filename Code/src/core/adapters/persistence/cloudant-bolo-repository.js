@@ -342,7 +342,7 @@ CloudantBoloRepository.prototype.getBolosByAgency = function (id, limit, skip) {
 CloudantBoloRepository.prototype.searchBolos = function (limit, query_string, bookmark) {
     var query_obj =
     {
-        q: query_string+' AND isActive:true',
+        q: query_string,
         limit: limit,
         bookmark: bookmark,
         include_docs: true
