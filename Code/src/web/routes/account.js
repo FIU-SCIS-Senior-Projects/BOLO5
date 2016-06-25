@@ -29,7 +29,7 @@ router.get(  '/account/password'        , getChangePassword );
 router.post( '/account/password'        , postChangePassword );
 router.get(  '/account/notifications'   , getUserNotifications );
 router.post( '/account/notifications/unsubscribe'   , postUnsubscribeNotifications );
-router.get( '/account/notifications/unsubscribe/:author/:agencyId'   , getUnsubscribeNotificationsFromEmail);
+router.get( '/account/notifications/unsubscribe/:agencyId'   , getUnsubscribeNotificationsFromEmail);
 router.get(  '/account/notifications/subscribe'     , getAvailableAgencyNotifications );
 router.post( '/account/notifications/subscribe'     , postSubscribeNotifications );
 
@@ -186,9 +186,8 @@ function postUnsubscribeNotifications ( req, res ) {
 function getUnsubscribeNotificationsFromEmail ( req, res ) {
 
         var selected = [req.params.agencyId];
-        var author=req.params.author;
 
-       userService.removeNotifications( author, selected ).then( function ( user ) {
+       userService.removeNotifications( req.user.id, selected ).then( function ( user ) {
         if ( ! user ) {
             req.flash( GFERR, 'Subscriptions update error occured.' );
         } else {
