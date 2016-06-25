@@ -73,9 +73,9 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.record) !== 'undefined') {
     index("record", doc.record);
-  }
-  if (typeof(doc.testField) !== 'undefined') {
-    index("record", doc.testField);
+}
+  if (typeof(doc.isActive) !== 'undefined') {
+    index("isActive", doc.isActive);
   }
 };
 
@@ -169,6 +169,9 @@ var BOLO_DESIGN_DOC = {
   "views": {
     "by_token": {
       "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.boloToken, null ); }"
+    },
+    "by_agency": {
+      "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.agency,1); }"
     },
     "all_active": {
       "map": "function (doc) { if ( 'bolo' === doc.Type && true === doc.isActive ) {emit( doc.lastUpdatedOn,1);} }"
