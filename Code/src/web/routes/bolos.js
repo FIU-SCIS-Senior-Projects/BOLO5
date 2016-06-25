@@ -299,7 +299,6 @@ router.get('/bolo/agency/:id', function(req, res, next) {
   var page = parseInt(req.query.page) || 1;
   var limit = config.const.BOLOS_PER_PAGE;
   var skip = (1 <= page) ? (page - 1) * limit : 0;
-
   var data = {
     'paging': {
       'first': 1,
@@ -310,7 +309,6 @@ router.get('/bolo/agency/:id', function(req, res, next) {
   boloService.getBolosByAgency(agency, limit, skip).then(function(results) {
     data.bolos = results.bolos;
     data.paging.last = Math.ceil(results.total / limit);
-
     agencyService.getAgencies().then(function(agencies) {
       data.agencies = agencies;
       res.render('bolo-list', data);
