@@ -374,24 +374,24 @@ function resetDB() {
   });
 }
 
-function authorizeReset() {
-  process.stdout.write(
-    ' This script will destroy the "' + BOLO_DB + '" database and set it' +
-    ' up to a default state.\n\n CONTINUE?  [y/n]  '
-  );
-
-  process.stdin.resume();
-  process.stdin.setEncoding('utf8');
-
-  process.stdin.on('data', function(text) {
-    if (text.match(/^y(es)?\s+$/i)) {
-      resetDB().then(process.exit);
-    } else {
-      console.log('> Cancelled.');
-      process.exit();
-    }
-  });
-}
+// function authorizeReset() {
+//   process.stdout.write(
+//     ' This script will destroy the "' + BOLO_DB + '" database and set it' +
+//     ' up to a default state.\n\n CONTINUE?  [y/n]  '
+//   );
+//
+//   process.stdin.resume();
+//   process.stdin.setEncoding('utf8');
+//
+//   process.stdin.on('data', function(text) {
+//     if (text.match(/^y(es)?\s+$/i)) {
+//       resetDB().then(process.exit);
+//     } else {
+//       console.log('> Cancelled.');
+//       process.exit();
+//     }
+//   });
+// }
 
 /** Start the script **/
-authorizeReset();
+resetDB().then(process.exit);
