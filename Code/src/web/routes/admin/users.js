@@ -100,11 +100,11 @@ module.exports.postCreateForm = function ( req, res ) {
         data.user1 = formDTO.fields.username;
 
         // bind agency domain to user email username
-        if(req.user.tier === '4'){
+        if(req.user.tier === 4){
           data.email1 = formDTO.fields.email;
         }
         else{
-          //compose email
+          //compose email address from the username and agency domain
           data.email1 = formDTO.fields.email + formDTO.fields.domain;
           formDTO.fields.email = formDTO.fields.email + formDTO.fields.domain;
           console.log(data.email1)
