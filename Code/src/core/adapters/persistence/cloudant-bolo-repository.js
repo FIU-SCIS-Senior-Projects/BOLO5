@@ -303,8 +303,6 @@ CloudantBoloRepository.prototype.getBolos = function (limit, skip) {
 CloudantBoloRepository.prototype.getBolosByAgency = function (id, limit, skip) {
     var opts = {
         'include_docs': true,
-      //  'limit': limit,
-      //  'skip': skip,
         'descending': true,
     };
     return db.view('bolo', 'all_active', opts).then(function (result) {
@@ -319,12 +317,15 @@ CloudantBoloRepository.prototype.getBolosByAgency = function (id, limit, skip) {
             if(bolo.data.agency !== id){
                 delete bolos[index];
             }
+            else if(bolo.data.confirmed !== true){
+                delete bolos[index];
+            }
             else if(countSkip<skip){
                 total++;
                 countSkip++;
                 delete bolos[index];
             }
-            else if(countLimit>limit){
+            else if(countLimit>=limit){
                   total++;
                   delete bolos[index];
             }
