@@ -27,8 +27,8 @@ var BoloAuthorize   = require('../../lib/authorization.js').BoloAuthorize;
 function validateFields (fields){
   var fieldValidator = true;
 
-  if(fields.tier !== '3' && fields.email.indexOf('@') > -1){
-    fieldValidator = "IncorrectEmail"
+  if(fields.email.indexOf('@') > -1){
+    fieldValidator = "hasDomain"
   }
   if(fields.fname == ""){
     fieldValidator = false;
@@ -122,7 +122,7 @@ module.exports.postCreateForm = function ( req, res ) {
             req.flash( 'form-errors', validationErrors );
             throw new FormError();
         }
-        if(formFields === 'IncorrectEmail' && req.user.tier !== 4){
+        if(formFields === 'hasDomain' && req.user.tier !== 4){
           req.flash( FERR, 'Error saving new user, please try again. Email username must not contain any domain information.' );
           throw new FormError();
         }
