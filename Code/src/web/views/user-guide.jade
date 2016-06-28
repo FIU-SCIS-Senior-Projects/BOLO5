@@ -1,0 +1,25 @@
+extends ./layout.jade
+include ./includes/mixins.jade
+
+
+block jumbo
+    .jumbotron
+        .container
+            if (tier === 'ROOT')
+                p
+                  | Hello ROOT /* User */
+                  | 1) 
+            if (tier === 'ADMINISTRATOR')
+                p
+                  | ADMINISTRATOR
+                  | hello world
+
+            if (tier === 'SUPERVISOR')
+                p
+                  | SUPERVISOR
+                  | hello world
+
+            if (tier === 'OFFICER')
+                p
+                  | OFFICER
+                  | hello world
