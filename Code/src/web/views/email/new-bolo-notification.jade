@@ -7,6 +7,6 @@ block content
         |&nbsp;to view other BOLOs.
     br
     br
-    p Click;
-      a(href=app_url + '/account/notifications/unsubscribe/'+ bolo.agencyName ) here
+    p Click&nbsp;
+      a(href=encodeURI(app_url + '/account/notifications/unsubscribe/'+  bolo.agencyName )) here
       |&nbsp;to unsubscribe from #{bolo.agencyName} notifications.
