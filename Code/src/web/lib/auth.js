@@ -196,7 +196,7 @@ router.post('/login',
     }
 
     console.log("Session:" + login_redirect);
-    if(login_redirect!==null){
+  if(login_redirect!==null&&login_redirect.indexOf('.') == -1){
       res.redirect(config.appURL+login_redirect);}
     else
       res.redirect('/bolo' || '/');
