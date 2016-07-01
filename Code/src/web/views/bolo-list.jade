@@ -12,6 +12,7 @@ block jumbo
                         span.caret
                     ul.dropdown-menu
                         -var dimensions = "width: 210px; margin: 0 auto;"
+                        a.btn.btn-default(href="/bolo/author" style=dimensions) My Bolos
                         a.btn.btn-default(href="/bolo/" style=dimensions) View all
                         for agency in agencies
                             a.btn.btn-default(href="/bolo/agency/"+agency.id name="agencyID" value=agency.id style=dimensions) #{agency.name}

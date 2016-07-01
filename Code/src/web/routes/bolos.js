@@ -295,6 +295,7 @@ router.get('/bolo', function(req, res, next) {
 
 // list bolos by agency at the root route
 router.get('/bolo/agency/:id', function(req, res, next) {
+
   var agency = req.params.id;
   var page = parseInt(req.query.page) || 1;
   console.log('page: '+page);
@@ -320,7 +321,41 @@ router.get('/bolo/agency/:id', function(req, res, next) {
   }).catch(function(error) {
     next(error);
   });
+
 });
+
+// list bolos by author
+router.get('/bolo/author/', function(req, res, next) {
+  var author = req.user.username;
+  var page = parseInt(req.query.page) || 1;
+  console.log('page: '+page);
+  var limit = config.const.BOLOS_PER_PAGE;
+  console.log('limit: '+limit);
+  var skip = (1 <= page) ? (page - 1) * limit : 0;
+  var data = {
+    'paging': {
+      'first': 1,
+      'current': page
+    }
+  };
+
+
+  boloService.getBolosByAuthor(author).then(function(results) {
+    data.bolos = results;
+
+    console.log('total: '+results.total);
+    data.paging.last = Math.ceil(results.total / limit);
+    console.log('paging: '+data.paging.last);
+    agencyService.getAgencies().then(function(agencies) {
+     data.agencies = agencies;
+
+      res.render('bolo-list', data);
+  });
+  }).catch(function(error) {
+    next(error);
+  });
+});
+
 
 // list archived bolos
 router.get('/bolo/archive', function(req, res, next) {

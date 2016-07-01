@@ -463,6 +463,22 @@ CloudantBoloRepository.prototype.getBoloByToken = function(token){
       });
 }
 
+/*
+ * Get bolos from db by user
+ */
+CloudantBoloRepository.prototype.getBolosByAuthor = function (author) {
+  return db.view( 'bolo', 'by_author', {
+      'key': author,
+      'include_docs': true
+    }).then( function ( result ) {
+        var bolos = result.rows.map( function ( row ) {
+            return boloFromCloudant( row.doc );
+        });
+        return bolos;
+    });
+};
+
+
 CloudantBoloRepository.prototype.getAttachment = function (id, attname) {
     var bufferPromise = db.getAttachment(id, attname);
     var docPromise = db.get(id);
