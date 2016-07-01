@@ -464,7 +464,7 @@ CloudantBoloRepository.prototype.getBoloByToken = function(token){
 }
 
 /*
- * Get bolos from db by user
+ * Get bolos from db by Authors username
  */
 CloudantBoloRepository.prototype.getBolosByAuthor = function (author) {
   return db.view( 'bolo', 'by_author', {
