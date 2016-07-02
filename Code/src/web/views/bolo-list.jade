@@ -8,14 +8,21 @@ block jumbo
                 div.col-xs-1.col-md-10
                     p Active BOLOs
                 div.col-xs-1.dropdown
-                    button.dropbtn.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown") Filter By Agency
+                    button.dropbtn.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown") Filter By:
                         span.caret
-                    ul.dropdown-menu
+                    ul.dropdown-menu.multi-level(role="menu" aria-labelledby="dropdownMenu")
                         -var dimensions = "width: 210px; margin: 0 auto;"
                         a.btn.btn-default(href="/bolo/mybolos" style=dimensions) My Bolos
                         a.btn.btn-default(href="/bolo/" style=dimensions) View all
                         a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) #{userAgency.name}
-                        
+                        li.dropdown-submenu
+                            a.btn.btn-default(tabindex="-1") Agencies
+                            ul.dropdown-menu
+                            for agency in agencies
+                                if(agency.id !== userAgency.id)
+                                      a.btn.btn-default(style = dimensions value = agency.name ) #{agency.name}
+                                
+                            
 
 block content
     include ./partials/global-alerts.jade
