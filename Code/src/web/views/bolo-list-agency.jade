@@ -15,7 +15,13 @@ block jumbo
                         a.btn.btn-default(href="/bolo/mybolos" style=dimensions) My Bolos
                         a.btn.btn-default(href="/bolo/" style=dimensions) View all
                         a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) #{userAgency.name}
-                        
+                        li.dropdown-submenu
+                            a.btn.btn-default(tabindex="-1" style = dimensions) Agencies
+                            ul.dropdown-menu
+                              li
+                                  for agency in agencies
+                                      if(agency.id !== userAgency.id)
+                                          a.btn.btn-default(href="/bolo/agency/" + agency.id style = dimensions value = agency.name ) #{agency.name}
 block content
     include ./partials/global-alerts.jade
         h2 #{filter}

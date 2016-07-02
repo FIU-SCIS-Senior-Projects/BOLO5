@@ -332,7 +332,7 @@ router.get('/bolo/agency/:id', function(req, res, next) {
 
       var i;
       for (i = 0; i < agencies.length; i++) {
-        if (agencies[i].data.id === req.params.id) {
+        if (agencies[i].data.id === req.user.agency) {
           data.filter = agencies[i].data.name;
           data.agency = agencies[i];
           data.userAgency = agencies[i].data;

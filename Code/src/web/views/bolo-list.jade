@@ -16,11 +16,13 @@ block jumbo
                         a.btn.btn-default(href="/bolo/" style=dimensions) View all
                         a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) #{userAgency.name}
                         li.dropdown-submenu
-                            a.btn.btn-default(tabindex="-1") Agencies
+                            a.btn.btn-default(tabindex="-1" style = dimensions) Agencies
                             ul.dropdown-menu
-                            for agency in agencies
-                                if(agency.id !== userAgency.id)
-                                      a.btn.btn-default(style = dimensions value = agency.name ) #{agency.name}
+                              li
+                                  for agency in agencies
+                                      if(agency.id !== userAgency.id)
+                                          a.btn.btn-default(href="/bolo/agency/" + agency.id style = dimensions value = agency.name ) #{agency.name}
+                                      
                                 
                             
 
