@@ -291,8 +291,8 @@ router.get('/bolo', function(req, res, next) {
       // bind agencies to front end
       data.agencies = agencies;
       var i;
-      for(i = 0; i<agencies.length; i++){
-        if(req.user.agency === agencies[i].data.id){
+      for (i = 0; i < agencies.length; i++) {
+        if (req.user.agency === agencies[i].data.id) {
           data.userAgency = agencies[i].data;
         }
       }
@@ -323,6 +323,7 @@ router.get('/bolo/agency/:id', function(req, res, next) {
 
   boloService.getBolosByAgency(agency, limit, skip).then(function(results) {
     data.bolos = results.bolos;
+
     console.log('total: ' + results.total);
     data.paging.last = Math.ceil(results.total / limit);
     console.log('paging: ' + data.paging.last);
@@ -333,9 +334,14 @@ router.get('/bolo/agency/:id', function(req, res, next) {
       var i;
       for (i = 0; i < agencies.length; i++) {
         if (agencies[i].data.id === req.user.agency) {
-          data.filter = agencies[i].data.name;
+          
           data.agency = agencies[i];
           data.userAgency = agencies[i].data;
+
+        }
+        if (agencies[i].data.id === agency) {
+
+          data.filter = agencies[i].data.name;
         }
       }
 
@@ -372,8 +378,8 @@ router.get('/bolo/mybolos/', function(req, res, next) {
     agencyService.getAgencies().then(function(agencies) {
       data.agencies = agencies;
       var i;
-      for(i = 0; i<agencies.length; i++){
-        if(req.user.agency === agencies[i].data.id){
+      for (i = 0; i < agencies.length; i++) {
+        if (req.user.agency === agencies[i].data.id) {
           data.userAgency = agencies[i].data;
         }
       }
