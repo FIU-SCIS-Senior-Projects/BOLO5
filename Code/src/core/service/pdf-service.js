@@ -142,7 +142,7 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
-        // Display Registar Number only if there is a value in it
+        // Display Registration Number only if there is a value in it
         if(data.bolo['boatRegistrationNumberSt'] !== "" || data.bolo['boatRegistrationNumberNu'] !== ""){
             doc.font('Times-Roman')
                 .text("Registration Number: " + data.bolo['boatRegistrationNumberSt'] + data.bolo['boatRegistrationNumberNu'], 300)
@@ -178,14 +178,14 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
-        // Display Color only if there is a value in it
+        // Display Model only if there is a value in it
         if(data.bolo['propulsionModel'] !== ""){
             doc.font('Times-Roman')
                 .text("Model: " + data.bolo['propulsionModel'], 300)
                 .moveDown();
         }
 
-        // Display Color only if there is a value in it
+        // Display Serial Number only if there is a value in it
         if(data.bolo['propulsionSerialNumber'] !== ""){
             doc.font('Times-Roman')
                 .text("Serial Number: " + data.bolo['propulsionSerialNumber'], 300)
@@ -449,7 +449,7 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
-        // Display Registar Number only if there is a value in it
+        // Display Registration Number only if there is a value in it
         if(data.bolo['boatRegistrationNumberSt'] !== "" || data.bolo['boatRegistrationNumberNu'] !== ""){
             doc.font('Times-Roman')
                 .text("Registration Number: " + data.bolo['boatRegistrationNumberSt'] + data.bolo['boatRegistrationNumberNu'], 300)
@@ -485,17 +485,53 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
-        // Display Color only if there is a value in it
+        // Display Propulsion Model only if there is a value in it
         if(data.bolo['propulsionModel'] !== ""){
             doc.font('Times-Roman')
                 .text("Model: " + data.bolo['propulsionModel'], 300)
                 .moveDown();
         }
 
-        // Display Color only if there is a value in it
+        // Display Propulsion Serial Number only if there is a value in it
         if(data.bolo['propulsionSerialNumber'] !== ""){
             doc.font('Times-Roman')
                 .text("Serial Number: " + data.bolo['propulsionSerialNumber'], 300)
+                .moveDown();
+        }
+
+        //Display tittle TRAILER
+        doc.fillColor('red');
+        doc.fontSize(11);
+        doc.font('Times-Roman')
+            .text("TRAILER", 300)
+            .moveDown();
+        doc.fillColor('black');
+
+        // Display Trailer only if there is a value in it
+        if(data.bolo['trailer'] !== ""){
+            doc.font('Times-Roman')
+                .text("Trailer: " + data.bolo['trailer'], 300)
+                .moveDown();
+        }
+
+        // Display Manufacturer only if there is a value in it
+        if(data.bolo['trailerManufacturer'] !== ""){
+            doc.font('Times-Roman')
+                .text("Manufacturer: " + data.bolo['trailerManufacturer'], 300)
+                .moveDown();
+        }
+
+        // Display Vehicle ID Number only if there is a value in it
+        if(data.bolo['trailerVIN'] !== ""){
+            doc.font('Times-Roman')
+                .text("Vehicle ID Number: " + data.bolo['trailerVIN'], 300)
+                .moveDown();
+        }
+
+        // Display Tag License Plate only if there is a value in it
+        if(data.bolo['trailerTagLicenseState'] !== "" || data.bolo['trailerTagLicenseNumber'] !== ""){
+            doc.font('Times-Roman')
+                .text("Tag License Plate: " + data.bolo['trailerTagLicenseState'] + data.bolo['trailerTagLicenseNumber'], 300)
                 .moveDown();
         }
     }
