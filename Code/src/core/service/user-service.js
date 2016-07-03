@@ -4,10 +4,13 @@
 var _                 = require('lodash');
 var Promise           = require('promise');
 var User              = require('../domain/user');
+var dbUserRepository  = require('../adapters/persistence/cloudant-user-repository');
+var config            = require('../../web/config.js')
 var NinetyDays        = Date.now() + 90 * 24 * 60 * 60 * 1000
 /** @module core/ports */
 module.exports = UserService;
 
+var repository = new dbUserRepository();
 
 /**
  * Creates a new instance of {UserService}.
@@ -25,21 +28,57 @@ function UserService ( userRepository , agencyService) {
 }
 /**
  * Authenticate a username and password pair.
- *
+ * protracts agaisnt brute force logins to users
  * @param {String} - the username to authenticate
  * @param {String} - the password to authenticate for the supplied username
  *
  * @returns {Promise|User} the User object matching the supplied username and
- * password. Null if authentication fails.
+ * password as well as information with attempts left.
  */
 UserService.prototype.authenticate = function ( username, password ) {
+    var context = this;
+    var results ={};
     return this.userRepository.getByUsername( username )
     .then( function ( user ) {
+        var authorized = false;
         if ( user && user.matchesCurrentPassword( password ) ) {
-            return user;
+
+
+            authorized = true;
+            user.incorrectLogins = 0;
+        }
+        else{
+
+            authorized = false;
+            user.incorrectLogins += 1;
         }
 
-        return null;
+        // update the users # of inccorect logins
+        context.userRepository.update( user );
+
+        if(user.incorrectLogins >= config.MAX_INCORRECT_LOGINS){
+
+          results.status = "locked";
+          results.attemptsLeft = 0;
+
+
+        }else{
+
+          results.status = "unlocked"
+          results.attemptsLeft = config.MAX_INCORRECT_LOGINS - user.incorrectLogins;
+
+        }
+
+
+        if(authorized){
+
+           results.user = user;
+           console.log("Results:" + results);
+          return results;
+        }
+        console.log("User was incorrect")
+        results.user = null;
+        return results;
     })
     .catch( function ( error ) {
         throw new Error( 'Unable to retrieve user data.' );
