@@ -35,12 +35,18 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     userService.authenticate(username, password)
       .then(function(account) {
+        console.log(account.user)
+        console.log(account.attemptsLeft)
+        console.log(account.status)
+
+      if(account.status === 'unlocked') {
+
 
       // if account returned is not empty
-      if (account) {
+      if (account.user) {
 
         /*If account is expired, deny login, send password reset email*/
-        if (account.passwordLifetime <= Date.now()){
+        if (account.user.passwordLifetime <= Date.now()){
 
             // send email for password change
             sendPasswordExpiredEmail(account)
@@ -52,7 +58,7 @@ passport.use(new LocalStrategy(
                 // send email
             });
         }
-        else if (account.passwordLifetime - fivedays <= Date.now()){ /*If account expires is less than five days send a reminder email*/
+        else if (account.user.passwordLifetime - fivedays <= Date.now()){ /*If account expires is less than five days send a reminder email*/
 
             // time left until expiration
             var timeLeft =account.passwordLifetime - Date.now() ;
@@ -65,7 +71,7 @@ passport.use(new LocalStrategy(
 
 
           // check if agency is active
-          agencyService.getAgency(account.data.agency).then(function(agency) {
+          agencyService.getAgency(account.user.data.agency).then(function(agency) {
             if (agency.data.isActive === true) {
               return done(null, account);
             } else {
@@ -80,15 +86,23 @@ passport.use(new LocalStrategy(
 
         } else {
           return done(null, false, {
-            'message': 'Invalid login credentials.'
+            'message': 'Invalid login credentials. You have ' + account.attemptsLeft + ' attempts left before your account is locked'
           });
         }
+      }else{
+        return done(null, false, {
+          'message': 'You account has been locked. Please contact your system administrator'
+        });
+      }
+
+
+
       });
   }
 ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
+passport.serializeUser(function(account, done) {
+  done(null, account.user.id);
 });
 
 passport.deserializeUser(function(id, done) {
