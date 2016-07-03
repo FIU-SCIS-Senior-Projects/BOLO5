@@ -35,65 +35,69 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     userService.authenticate(username, password)
       .then(function(account) {
-        console.log(account.user)
-        console.log(account.attemptsLeft)
-        console.log(account.status)
 
-      if(account.status === 'unlocked') {
-
-
-      // if account returned is not empty
-      if (account.user) {
-
-        /*If account is expired, deny login, send password reset email*/
-        if (account.user.passwordLifetime <= Date.now()){
-
-            // send email for password change
-            sendPasswordExpiredEmail(account)
-
-            // deny logon
-            return done(null, false, {
-              'message': 'Your password has expired. ' +
-                'An email was sent to reset your password'
-                // send email
-            });
-        }
-        else if (account.user.passwordLifetime - fivedays <= Date.now()){ /*If account expires is less than five days send a reminder email*/
-
-            // time left until expiration
-            var timeLeft =account.passwordLifetime - Date.now() ;
-
-            // send email notification to change password
-            sendExpirationReminder(account, timeLeft);
-            // continue with authentication
-        }
+      
+        // check the status of the account
+        if (account.status) {
 
 
+          // if account returned is not empty
+          if (account.user) {
 
-          // check if agency is active
-          agencyService.getAgency(account.user.data.agency).then(function(agency) {
-            if (agency.data.isActive === true) {
-              return done(null, account);
-            } else {
+            /*If user password is expired, deny login, send password reset email*/
+            if (account.user.passwordLifetime <= Date.now()) {
+
+              // send email for password change
+              sendPasswordExpiredEmail(account)
+
+              // deny logon
               return done(null, false, {
-                'message': 'Agency has been Deactivated.Contact ' +
-                  'your Root Administrator for more information..'
+                'message': 'Your password has expired. ' +
+                  'An email was sent to reset your password'
+                  // send email
               });
+            } else if (account.user.passwordLifetime - fivedays <= Date.now()) { /*If account expires is less than five days send a reminder email*/
+
+              // time left until expiration
+              var timeLeft = account.passwordLifetime - Date.now();
+
+              // send email notification to change password
+              sendExpirationReminder(account, timeLeft);
+              // continue with authentication
             }
-          })
 
 
 
+            // check if agency is active
+            agencyService.getAgency(account.user.data.agency).then(function(agency) {
+              if (agency.data.isActive === true) {
+                return done(null, account);
+              } else {
+                return done(null, false, {
+                  'message': 'Agency has been Deactivated.Contact ' +
+                    'your Root Administrator for more information..'
+                });
+              }
+            })
+
+
+
+          } else {
+            return done(null, false, {
+              'message': 'Invalid login credentials. You have ' + account.attemptsLeft + ' attempts left before your account is locked'
+            });
+          }
         } else {
+
+
+          sendAccountLockedEmail(account);
+          sendAccountLockedEmailToAdmins(account);
+
           return done(null, false, {
-            'message': 'Invalid login credentials. You have ' + account.attemptsLeft + ' attempts left before your account is locked'
+            'message': 'You account has been locked. You have been sent an email to reset your password'
           });
+
         }
-      }else{
-        return done(null, false, {
-          'message': 'You account has been locked. Please contact your system administrator'
-        });
-      }
 
 
 
@@ -112,61 +116,130 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-var sendExpirationReminder  = function(user, timeLeft){
+var sendExpirationReminder = function(user, timeLeft) {
 
   // create token to send to user
   crypto.randomBytes(20, function(err, buf) {
 
-      var token = buf.toString('hex');
+    var token = buf.toString('hex');
 
-      user.resetPasswordToken = token;
-      // token expires in 5 or less
-      user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
-      userService.updateUser(user.id, user);
+    user.resetPasswordToken = token;
+    // token expires in 5 or less
+    user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
+    userService.updateUser(user.id, user);
 
-      var daysLeft;
+    var daysLeft;
 
-      //
-      if(timeLeft / 86400000 < 1){
-          daysLeft = "1 day";
-      }
-      else{
-          daysLeft = Math.floor(timeLeft / 86400000).toString()  + ' days';
-      }
+    //
+    if (timeLeft / 86400000 < 1) {
+      daysLeft = "1 day";
+    } else {
+      daysLeft = Math.floor(timeLeft / 86400000).toString() + ' days';
+    }
 
-      emailService.send({
-        'to': user.email,
-        'from': config.email.from,
-        'fromName': config.email.fromName,
-        'subject': 'BOLO Alert: Password Expiration',
-        'text': 'Your password will expire in less than '+ daysLeft + '. Change it to avoid a password reset. \n' +
-          'To change your password, follow this link: \n\n' +
-          config.appURL + '/expiredpassword/' + token + '\n\n'
-      })
-    });
+    emailService.send({
+      'to': user.email,
+      'from': config.email.from,
+      'fromName': config.email.fromName,
+      'subject': 'BOLO Alert: Password Expiration',
+      'text': 'Your password will expire in less than ' + daysLeft + '. Change it to avoid a password reset. \n' +
+        'To change your password, follow this link: \n\n' +
+        config.appURL + '/expiredpassword/' + token + '\n\n'
+    })
+  });
 }
-var sendPasswordExpiredEmail  = function(user){
+var sendPasswordExpiredEmail = function(user) {
   // create token to send to user
   crypto.randomBytes(20, function(err, buf) {
 
-      var token = buf.toString('hex');
+    var token = buf.toString('hex');
+
+    user.resetPasswordToken = token;
+    // Token will expire in 24 hours
+    user.resetPasswordExpires = Date.now() + 24 * 60 * 60;
+    userService.updateUser(user.id, user);
+
+    emailService.send({
+      'to': user.email,
+      'from': config.email.from,
+      'fromName': config.email.fromName,
+      'subject': 'BOLO Alert: Password Expiration',
+      'text': 'Your password has expired. \n' +
+        'To change your password, follow this link: \n\n' +
+        config.appURL + '/expiredpassword/' + token + '\n\n'
+    })
+  });
+}
+
+var sendAccountLockedEmail = function(account) {
+
+
+  crypto.randomBytes(20, function(err, buf) {
+
+    var token = buf.toString('hex');
+
+    userService.getByEmail(account.email).then(function(user) {
 
       user.resetPasswordToken = token;
-      // Token will expire in 24 hours
-      user.resetPasswordExpires = Date.now() + 24 * 60 * 60;
+      user.resetPasswordExpires = Date.now() + 3600000;
       userService.updateUser(user.id, user);
-
+      console.log("Sending account locked email to %s", account.email)
       emailService.send({
-        'to': user.email,
+        'to': account.email,
         'from': config.email.from,
         'fromName': config.email.fromName,
-        'subject': 'BOLO Alert: Password Expiration',
-        'text': 'Your password has expired. \n' +
-          'To change your password, follow this link: \n\n' +
-          config.appURL + '/expiredpassword/' + token + '\n\n'
+        'subject': 'BOLO Alert: Account Locked',
+        'text': 'Your account has been locked. \n' +
+          'To change your password and activate your account, follow this link: \n\n' +
+          config.appURL + '/changepassword/' + token + '\n\n'
       })
-    });
+
+    })
+  });
 }
+
+var sendAccountLockedEmailToAdmins = function(account) {
+
+
+  userService.getUsersByAgency(account.agency).then(function(users) {
+    var admins = [];
+    //get the admin user emails
+    for (var i in users) {
+
+      // check if user is tier 3 / admin and the user himself is not one of those admins
+      if (users[i].data.tier === 3 && users[i].data.email !== account.email) {
+        admins.push(users[i].data.email);
+      }
+    }
+
+    console.log("Admins were obtained");
+
+    if (admins.length > 0) {
+      console.log("sending email to the following admins " + admins);
+
+      emailService.send({
+        'to': admins,
+        'from': config.email.from,
+        'fromName': config.email.fromName,
+        'subject': 'BOLO Alert: User Account Warning',
+        'text': 'The account of ' + account.username + ' has been locked after attempting ' +
+         config.MAX_INCORRECT_LOGINS + ' incorrect login attempts.'
+
+      }).catch(function(error) {
+
+        console.log(error)
+      })
+    }
+
+  })
+
+
+}
+
+
+
+
+
 /*
  * GET /login
  *
@@ -210,9 +283,9 @@ router.post('/login',
     }
 
     console.log("Session:" + login_redirect);
-  if(login_redirect!==null&&login_redirect.indexOf('.') == -1){
-      res.redirect(config.appURL+login_redirect);}
-    else
+    if (login_redirect !== null && login_redirect.indexOf('.') == -1) {
+      res.redirect(config.appURL + login_redirect);
+    } else
       res.redirect('/bolo' || '/');
   }
 );
@@ -223,18 +296,18 @@ router.post('/login',
  *
  * Destory any sessions belonging to the requesting client.
  */
- router.get('/logout',
+router.get('/logout',
   function(req, res, next) {
     req.logout()
-      next();
+    next();
   },
 
-  function(req, res){
+  function(req, res) {
 
     req.flash('messages', 'Successfully logged out.');
     res.redirect('/login');
   }
- );
+);
 
 router.get('/forgotPassword',
   function(req, res) {
@@ -344,63 +417,63 @@ router.post('/changepassword/:userID',
   });
 
 router.get('/expiredpassword/:token',
-    function(req, res) {
-      userService.getByToken(req.params.token).then(function(user) {
-        if (!user || (user.resetPasswordExpires < Date.now())) {
-          req.flash(FERR, 'Error: Reset Token is invalid or may have expired.');
-          return res.redirect('/forgotPassword');
-        }
-        res.render('change-password', {
-          userID: user.id,
-          "url": "/expiredpassword",
-          'form_errors': req.flash('form-errors')
-        });
+  function(req, res) {
+    userService.getByToken(req.params.token).then(function(user) {
+      if (!user || (user.resetPasswordExpires < Date.now())) {
+        req.flash(FERR, 'Error: Reset Token is invalid or may have expired.');
+        return res.redirect('/forgotPassword');
+      }
+      res.render('change-password', {
+        userID: user.id,
+        "url": "/expiredpassword",
+        'form_errors': req.flash('form-errors')
       });
-
     });
+
+  });
 
 router.post('/expiredpasswrd/:userID',
-    function(req, res) {
-      var userID = req.params.userID;
-      parseFormData(req).then(function(formDTO) {
-          var validationErrors = passwordUtil.validatePassword(
-            formDTO.fields.password, formDTO.fields.confirm
-          );
+  function(req, res) {
+    var userID = req.params.userID;
+    parseFormData(req).then(function(formDTO) {
+        var validationErrors = passwordUtil.validatePassword(
+          formDTO.fields.password, formDTO.fields.confirm
+        );
 
-          if (validationErrors) {
-            req.flash('form-errors', validationErrors);
-            throw new FormError();
-          }
+        if (validationErrors) {
+          req.flash('form-errors', validationErrors);
+          throw new FormError();
+        }
 
-          return userService.resetPassword(userID, formDTO.fields.password);
-        }, function(error) {
-          console.error('Error at /users/:id/reset-password >>> ', error.message);
-          req.flash(FERR, 'Error processing form, please try again.');
+        return userService.resetPassword(userID, formDTO.fields.password);
+      }, function(error) {
+        console.error('Error at /users/:id/reset-password >>> ', error.message);
+        req.flash(FERR, 'Error processing form, please try again.');
+        res.redirect('back');
+      })
+      .then(function() {
+        req.flash(FMSG, 'Password reset successful.');
+        res.redirect('/login');
+      })
+      .catch(function(error) {
+        var patt = new RegExp("matches previous");
+        var res = patt.test(error.message);
+
+        if (res) {
+          req.flash(FERR, 'New password must not match previous.');
           res.redirect('back');
-        })
-        .then(function() {
-          req.flash(FMSG, 'Password reset successful.');
-          res.redirect('/login');
-        })
-        .catch(function(error) {
-          var patt = new RegExp("matches previous");
-          var res = patt.test(error.message);
+        }
 
-          if (res) {
-            req.flash(FERR, 'New password must not match previous.');
-            res.redirect('back');
-          }
+        if ('FormError' !== error.name) throw error;
 
-          if ('FormError' !== error.name) throw error;
-
-          console.error('Error at /users/:id/reset-password >>> ', error.message);
-          req.flash(FERR, 'Error occurred, please try again.');
-          res.redirect('back');
-        })
-        .catch(function(error) {
-          res.redirect('back');
-        });
-    });
+        console.error('Error at /users/:id/reset-password >>> ', error.message);
+        req.flash(FERR, 'Error occurred, please try again.');
+        res.redirect('back');
+      })
+      .catch(function(error) {
+        res.redirect('back');
+      });
+  });
 
 module.exports.passport = passport;
 module.exports.router = router;
