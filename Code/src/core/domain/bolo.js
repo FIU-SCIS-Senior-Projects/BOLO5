@@ -101,7 +101,7 @@ function Bolo( data ) {
         trailerManufacturer     : '',
         trailerVIN              : '',
         trailerTagLicenseState  : '',
-        trailerTagLicenseNuber  : '',
+        trailerTagLicenseNumber  : '',
         //others
         boloToken       : null,
         confirmed       : false
