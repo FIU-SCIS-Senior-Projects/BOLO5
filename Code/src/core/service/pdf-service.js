@@ -323,16 +323,16 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         }
 
         // Display Type only if there is a value in it
-        if(data.bolo['vehicleType'] !== ""){
+        if(data.bolo['vehicleTrim'] !== ""){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['vehicleType'], 300)
+                .text("Type: " + data.bolo['vehicleTrim'], 300)
                 .moveDown();
         }
 
         // Display Tag Number only if there is a value in it
-        if(data.bolo['vehicleTagNumber'] !== ""){
+        if(data.bolo['vehicleLicensePlate'] !== ""){
             doc.font('Times-Roman')
-                .text("Tag Number: " + data.bolo['vehicleTagNumber'], 300)
+                .text("Tag Number: " + data.bolo['vehicleLicensePlate'], 300)
                 .moveDown();
         }
 
@@ -434,7 +434,7 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .text("Zip Code: " + data.bolo['zipCode'], 300)
                 .moveDown();
         }
-        
+
         // Display Height only if there is a value in it
         if(data.bolo['height'] !== ""){
             doc.font('Times-Roman')
