@@ -89,6 +89,7 @@ function User ( data ) {
         'resetPasswordExpires'  : null,
         'boloConfirmationToken' : null,
         'boloTokenExpiration'   : null,
+        "accountStatus"         : true,
         "incorrectLogins"       : 0
     };
 
