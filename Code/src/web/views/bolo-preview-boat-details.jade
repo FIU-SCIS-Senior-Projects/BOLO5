@@ -49,6 +49,10 @@ block content
                   +form_labels_row("Author", bolo.data.authorFName + " " +  bolo.data.authorLName )
                 else
                   +form_labels_row("Author", "N/A")
+
+
+                div.col-xs-12.h5.text-danger.strong VESSEL
+
                 if bolo.data.boatYear.length
                    +form_labels_row("Year", bolo.data.boatYear, bolo.data.boatYear?"":"hidden")
                 else
@@ -73,10 +77,33 @@ block content
                    +form_labels_row("Hull Id Number", bolo.data.boatHullIdNumber, bolo.data.boatHullIdNumber?"":"hidden")
                 else
                    +form_labels_row("Hull Id Number", "N/A" )
-                 if bolo.data.boatRegistrationNumberSt != null || bolo.data.boatRegistrationNumberNu != null
+                if bolo.data.boatRegistrationNumberSt != null || bolo.data.boatRegistrationNumberNu != null
                    +form_labels_row("Registration Number", bolo.data.boatRegistrationNumberSt + " " +  bolo.data.boatRegistrationNumberNu )
-                 else
+                else
                    +form_labels_row("Registration Number", "N/A")
+
+                div.col-xs-12.h5.text-danger.strong PROPULSION
+
+                if bolo.data.propulsion != "Select an option..."
+                   +form_labels_row("Propulsion", bolo.data.propulsion, bolo.data.propulsion?"":"hidden")
+                else
+                   +form_labels_row("Propulsion", "N/A" )
+                if bolo.data.propulsionType != "Select an option..."
+                   +form_labels_row("Type", bolo.data.propulsionType, bolo.data.propulsionType?"":"hidden")
+                else
+                   +form_labels_row("Type", "N/A" )
+                if bolo.data.propulsionMake != "Select an option..."
+                   +form_labels_row("Make", bolo.data.propulsionMake, bolo.data.propulsionMake?"":"hidden")
+                else
+                   +form_labels_row("Make", "N/A" )
+                if bolo.data.propulsionModel.length
+                   +form_labels_row("Model", bolo.data.propulsionModel, bolo.data.propulsionModel?"":"hidden")
+                else
+                   +form_labels_row("Model", "N/A" )
+                if bolo.data.propulsionSerialNumber.length
+                   +form_labels_row("Serial Number", bolo.data.propulsionSerialNumber, bolo.data.propulsionSerialNumber?"":"hidden")
+                else
+                   +form_labels_row("Serial Number", "N/A" )
 
             div.row
               div.col-xs-8
