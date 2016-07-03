@@ -83,11 +83,10 @@ function Bolo( data ) {
         //For theft-boat
          //Vessel
         boatYear                : '',
-        boatManufacturer         : '',
+        boatManufacturer        : '',
         boatType                : '',
         boatLenght              : '',
         boatColor               : '',
-        boatModel               : '',
         boatHullIdNumber        : '',
         boatRegistrationNumberSt: '',
         boatRegistrationNumberNu: '',
@@ -98,11 +97,11 @@ function Bolo( data ) {
         propulsionModel         : '',
         propulsionSerialNumber  : '',
           //Trailer
-        trailer                 : '';
-        trailerManufacturer     : '';
-        trailerVIN              : '';
-        trailerTagLicenseState  : '';
-        trailerTagLicenseNuber  : '';
+        trailer                 : '',
+        trailerManufacturer     : '',
+        trailerVIN              : '',
+        trailerTagLicenseState  : '',
+        trailerTagLicenseNuber  : '',
         //others
         boloToken       : null,
         confirmed       : false
