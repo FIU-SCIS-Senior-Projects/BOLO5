@@ -162,6 +162,9 @@ var BOLO_DB = 'bolo';
 
 var BOLO_DESIGN_DOC = {
   "views": {
+    "by_author": {
+      "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.authorUName, null ); }"
+    },
     "by_token": {
       "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.boloToken, null ); }"
     },

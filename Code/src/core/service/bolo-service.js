@@ -77,6 +77,19 @@ BoloService.prototype.getBolo = function (id) {
     return context.boloRepository.getBolo(id);
 };
 
+
+/*
+ * Get bolos by author
+ */
+BoloService.prototype.getBolosByAuthor = function (author){
+    var context = this;
+    return context.boloRepository.getBolosByAuthor(author);
+
+};
+
+/*
+ * Get bolos by token
+ */
 BoloService.prototype.getBoloByToken = function (token){
     var context = this;
     return context.boloRepository.getBoloByToken(token);

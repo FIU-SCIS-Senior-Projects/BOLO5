@@ -133,49 +133,50 @@ function sendBoloNotificationEmail(bolo, template) {
       );
     });
 }
+
 function sendBoloToDataSubscriber(bolo, template) {
   var someData = {};
 
-	console.log('in email function');
+  console.log('in email function');
   boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
-      someData.featured = attDTO.data;
+    someData.featured = attDTO.data;
 
-  return dataSubscriberService.getDataSubscribers('all_active')
+    return dataSubscriberService.getDataSubscribers('all_active')
       .then(function(dataSubscribers) {
-          // filters out Data Subscribers and pushes their emails into array
-          var subscribers = dataSubscribers.map(function(dataSubscriber) {
-            console.log(dataSubscriber.email);
-              return dataSubscriber.email;
-          });
+        // filters out Data Subscribers and pushes their emails into array
+        var subscribers = dataSubscribers.map(function(dataSubscriber) {
+          console.log(dataSubscriber.email);
+          return dataSubscriber.email;
+        });
 
-          var tmp = config.email.template_path + '/' + template + '.jade';
-          var tdata = {
-              'bolo': bolo,
-              'app_url': config.appURL
-          };
+        var tmp = config.email.template_path + '/' + template + '.jade';
+        var tdata = {
+          'bolo': bolo,
+          'app_url': config.appURL
+        };
 
         var html = jade.renderFile(tmp, tdata);
-          console.log("SENDING EMAIL TO SUBSCRIBERS SUCCESSFULLY");
-          return emailService.send({
-              'to': subscribers,
-              'from': config.email.from,
-              'fromName': config.email.fromName,
-              'subject': 'BOLO Alert: ' + bolo.category,
-              'html': html,
-              'files': [{
-                  filename: tdata.bolo.id + '.jpg', // required only if file.content is used.
-                  contentType: 'image/jpeg', // optional
-                  content: someData.featured
-              }]
-          });
+        console.log("SENDING EMAIL TO SUBSCRIBERS SUCCESSFULLY");
+        return emailService.send({
+          'to': subscribers,
+          'from': config.email.from,
+          'fromName': config.email.fromName,
+          'subject': 'BOLO Alert: ' + bolo.category,
+          'html': html,
+          'files': [{
+            filename: tdata.bolo.id + '.jpg', // required only if file.content is used.
+            contentType: 'image/jpeg', // optional
+            content: someData.featured
+          }]
+        });
 
       })
       .catch(function(error) {
-          console.error(
-              'Unknown error occurred while sending notifications to subscribers' +
-              'subscribed to agency id %s for BOLO %s\n %s',
-              bolo.agency, bolo.id, error.message
-          );
+        console.error(
+          'Unknown error occurred while sending notifications to subscribers' +
+          'subscribed to agency id %s for BOLO %s\n %s',
+          bolo.agency, bolo.id, error.message
+        );
       });
   })
 
@@ -265,6 +266,7 @@ router.get('/bolo', function(req, res, next) {
 
   boloService.getBolos(limit, skip).then(function(results) {
     data.bolos = results.bolos;
+    data.filter = "All Bolos"
     var now = moment().format(config.const.DATE_FORMAT);
     var then = "";
     var minutes_in_week = 10080;
@@ -284,8 +286,17 @@ router.get('/bolo', function(req, res, next) {
     }
     data.paging.last = Math.ceil(results.total / limit);
 
+    console.log(req.user)
     agencyService.getAgencies().then(function(agencies) {
+      // bind agencies to front end
       data.agencies = agencies;
+      var i;
+      for(i = 0; i<agencies.length; i++){
+        if(req.user.agency === agencies[i].data.id){
+          data.userAgency = agencies[i].data;
+        }
+      }
+
       res.render('bolo-list', data);
     });
   }).catch(function(error) {
@@ -295,11 +306,12 @@ router.get('/bolo', function(req, res, next) {
 
 // list bolos by agency at the root route
 router.get('/bolo/agency/:id', function(req, res, next) {
+
   var agency = req.params.id;
   var page = parseInt(req.query.page) || 1;
-  console.log('page: '+page);
+  console.log('page: ' + page);
   var limit = config.const.BOLOS_PER_PAGE;
-  console.log('limit: '+limit);
+  console.log('limit: ' + limit);
   var skip = (1 <= page) ? (page - 1) * limit : 0;
   var data = {
     'paging': {
@@ -307,20 +319,71 @@ router.get('/bolo/agency/:id', function(req, res, next) {
       'current': page
     }
   };
-  data.agency=agency;
+
+
   boloService.getBolosByAgency(agency, limit, skip).then(function(results) {
     data.bolos = results.bolos;
-    console.log('total: '+results.total);
+    console.log('total: ' + results.total);
     data.paging.last = Math.ceil(results.total / limit);
-    console.log('paging: '+data.paging.last);
+    console.log('paging: ' + data.paging.last);
     agencyService.getAgencies().then(function(agencies) {
+
       data.agencies = agencies;
+
+      var i;
+      for (i = 0; i < agencies.length; i++) {
+        if (agencies[i].data.id === req.user.agency) {
+          data.filter = agencies[i].data.name;
+          data.agency = agencies[i];
+          data.userAgency = agencies[i].data;
+        }
+      }
+
       res.render('bolo-list-agency', data);
     });
   }).catch(function(error) {
     next(error);
   });
+
 });
+
+// list bolos by author
+router.get('/bolo/mybolos/', function(req, res, next) {
+  var author = req.user.username;
+  var page = parseInt(req.query.page) || 1;
+  console.log('page: ' + page);
+  var limit = config.const.BOLOS_PER_PAGE;
+  console.log('limit: ' + limit);
+  var skip = (1 <= page) ? (page - 1) * limit : 0;
+  var data = {
+    'paging': {
+      'first': 1,
+      'current': page
+    }
+  };
+  data.filter = "My Bolos";
+
+  boloService.getBolosByAuthor(author).then(function(results) {
+    data.bolos = results;
+
+    console.log('total: ' + results.total);
+    data.paging.last = Math.ceil(results.total / limit);
+    console.log('paging: ' + data.paging.last);
+    agencyService.getAgencies().then(function(agencies) {
+      data.agencies = agencies;
+      var i;
+      for(i = 0; i<agencies.length; i++){
+        if(req.user.agency === agencies[i].data.id){
+          data.userAgency = agencies[i].data;
+        }
+      }
+      res.render('bolo-list', data);
+    });
+  }).catch(function(error) {
+    next(error);
+  });
+});
+
 
 // list archived bolos
 router.get('/bolo/archive', function(req, res, next) {
@@ -551,25 +614,23 @@ router.post('/bolo/search', function(req, res, next) {
 
 // render the bolo create form
 router.get('/bolo/create/:type', function(req, res) {
-    var data
-    if(req.params.type === 'auto'){
-        data = {
-            'form_errors': req.flash('form-errors')
-        };
-        res.render('bolo-create-auto-form', data);
-    }
-    else if(req.params.type === 'boat'){
-        data = {
-            'form_errors': req.flash('form-errors')
-        };
-        res.render('bolo-create-boat-form', data);
-    }
-    else{
-        data = {
-            'form_errors': req.flash('form-errors')
-        };
-        res.render('bolo-create-generalbolo-form', data);
-    }
+  var data
+  if (req.params.type === 'auto') {
+    data = {
+      'form_errors': req.flash('form-errors')
+    };
+    res.render('bolo-create-auto-form', data);
+  } else if (req.params.type === 'boat') {
+    data = {
+      'form_errors': req.flash('form-errors')
+    };
+    res.render('bolo-create-boat-form', data);
+  } else {
+    data = {
+      'form_errors': req.flash('form-errors')
+    };
+    res.render('bolo-create-generalbolo-form', data);
+  }
 });
 
 
@@ -607,31 +668,31 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     if (formDTO.fields.featured_image) {
       fi = formDTO.fields.featured_image;
     } else {
-        if(boloDTO.category === "THEFT - AUTO"){
-            console.log('getting nopicautos.png');
-            var file_path = path.resolve('src/web/public/img/nopicautos.png');
-            fi = {
-              'name': 'nopicautos.png',
-              'content_type': 'image/png',
-              'path': file_path
-              };
-          } else if(boloDTO.category === "THEFT - BOAT"){
-              console.log('getting nopicboats.png');
-              var file_path = path.resolve('src/web/public/img/nopicboats.png');
-              fi = {
-                'name': 'nopicboats.png',
-                'content_type': 'image/png',
-                'path': file_path
-                };
-          }else{
-              console.log('getting nopic.png');
-              var file_path = path.resolve('src/web/public/img/nopic.png');
-              fi = {
-                'name': 'nopic.png',
-                'content_type': 'image/png',
-                'path': file_path
-                };
-          }
+      if (boloDTO.category === "THEFT - AUTO") {
+        console.log('getting nopicautos.png');
+        var file_path = path.resolve('src/web/public/img/nopicautos.png');
+        fi = {
+          'name': 'nopicautos.png',
+          'content_type': 'image/png',
+          'path': file_path
+        };
+      } else if (boloDTO.category === "THEFT - BOAT") {
+        console.log('getting nopicboats.png');
+        var file_path = path.resolve('src/web/public/img/nopicboats.png');
+        fi = {
+          'name': 'nopicboats.png',
+          'content_type': 'image/png',
+          'path': file_path
+        };
+      } else {
+        console.log('getting nopic.png');
+        var file_path = path.resolve('src/web/public/img/nopic.png');
+        fi = {
+          'name': 'nopic.png',
+          'content_type': 'image/png',
+          'path': file_path
+        };
+      }
     }
     console.log(fi.path);
     boloDTO.images.featured = fi.name;
@@ -703,19 +764,19 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         /** @todo must handle when featured image is empty **/
         if (pData[0].image === "none") {
-            if(boloDTO.category === "THEFT - AUTO"){
-              doc.image("src/web/public/img/nopicautos.png", 15, 150, {
-                height: 200
-                });
-            } else if (boloDTO.category === "THEFT - BOAT"){
-                doc.image("src/web/public/img/nopicboats.png", 15, 150, {
-                  height: 200
-                  });
-            }else{
-                doc.image("src/web/public/img/nopic.png", 15, 150, {
-                  height: 200
-                  });
-            }
+          if (boloDTO.category === "THEFT - AUTO") {
+            doc.image("src/web/public/img/nopicautos.png", 15, 150, {
+              height: 200
+            });
+          } else if (boloDTO.category === "THEFT - BOAT") {
+            doc.image("src/web/public/img/nopicboats.png", 15, 150, {
+              height: 200
+            });
+          } else {
+            doc.image("src/web/public/img/nopic.png", 15, 150, {
+              height: 200
+            });
+          }
         } else {
           someData.featured = pData[0].image;
           doc.image(someData.featured, 15, 150, {
@@ -756,22 +817,22 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
         if (pData[0].image === "none") {
           pData[0].buffer;
 
-          if(pData[1].fields.category === "THEFT - AUTO"){
-              res.render('bolo-preview-auto-details', pData[0]);
-          } else if (pData[1].fields.category === "THEFT - BOAT"){
-              res.render('bolo-preview-boat-details', pData[0]);
+          if (pData[1].fields.category === "THEFT - AUTO") {
+            res.render('bolo-preview-auto-details', pData[0]);
+          } else if (pData[1].fields.category === "THEFT - BOAT") {
+            res.render('bolo-preview-boat-details', pData[0]);
           } else
-                res.render('bolo-preview-details', pData[0]);
+            res.render('bolo-preview-details', pData[0]);
         } else {
           readFile(pData[0].image).then(function(buffer) {
             pData[0].buffer = buffer.toString('base64');
 
-            if(pData[1].fields.category === "THEFT - AUTO"){
-                res.render('bolo-preview-auto-details', pData[0]);
-            } else if (pData[1].fields.category === "THEFT - BOAT"){
-                res.render('bolo-preview-boat-details', pData[0]);
+            if (pData[1].fields.category === "THEFT - AUTO") {
+              res.render('bolo-preview-auto-details', pData[0]);
+            } else if (pData[1].fields.category === "THEFT - BOAT") {
+              res.render('bolo-preview-boat-details', pData[0]);
             } else
-                  res.render('bolo-preview-details', pData[0]);
+              res.render('bolo-preview-details', pData[0]);
           });
         }
       });
@@ -790,7 +851,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
       // if bolo != null
       if (bolo) {
 
-        if(bolo === 'expired'){
+        if (bolo === 'expired') {
 
           req.flash(GFERR,
             'This BOLO has expired.'
@@ -816,7 +877,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
           }).catch(function(error) {
             console.log(error)
           })
-      }else{
+      } else {
 
         req.flash(GFERR,
           'This BOLO is already confirmed .'
@@ -826,7 +887,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
       }
 
     }).catch(function(err) {
-	 console.log(err);
+      console.log(err);
       req.flash(GFERR,
         'No record of BOLO found.'
       );
@@ -903,12 +964,12 @@ router.get('/bolo/edit/:id', function(req, res, next) {
 
       if (auth.authorizedToEdit()) {
 
-          if (data.bolo.category === "THEFT - AUTO"){
-              res.render('bolo-edit-auto-form', data);
-          }else if (data.bolo.category === "THEFT - BOAT"){
-              res.render('bolo-edit-boat-form', data);
-          } else
-              res.render('bolo-edit-form', data);
+        if (data.bolo.category === "THEFT - AUTO") {
+          res.render('bolo-edit-auto-form', data);
+        } else if (data.bolo.category === "THEFT - BOAT") {
+          res.render('bolo-edit-boat-form', data);
+        } else
+          res.render('bolo-edit-form', data);
 
       }
 
@@ -1088,12 +1149,12 @@ router.get('/bolo/details/:id', function(req, res, next) {
   }).then(function(user) {
     data.user = user;
 
-    if (data.bolo.category === "THEFT - AUTO"){
-        res.render('bolo-details-auto', data);
-    }else if (data.bolo.category === "THEFT - BOAT"){
-        res.render('bolo-details-boat', data);
+    if (data.bolo.category === "THEFT - AUTO") {
+      res.render('bolo-details-auto', data);
+    } else if (data.bolo.category === "THEFT - BOAT") {
+      res.render('bolo-details-boat', data);
     } else
-        res.render('bolo-details', data);
+      res.render('bolo-details', data);
 
   }).catch(function(error) {
     next(error);
