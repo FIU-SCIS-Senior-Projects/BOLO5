@@ -77,7 +77,7 @@ block content
                    +form_labels_row("Hull Id Number", bolo.data.boatHullIdNumber, bolo.data.boatHullIdNumber?"":"hidden")
                 else
                    +form_labels_row("Hull Id Number", "N/A" )
-                   
+
                 div.row
                    div.col-xs-12
                       if bolo.data.boatRegistrationNumberSt != 'null' || bolo.data.boatRegistrationNumberNu != null
@@ -107,6 +107,27 @@ block content
                    +form_labels_row("Serial Number", bolo.data.propulsionSerialNumber, bolo.data.propulsionSerialNumber?"":"hidden")
                 else
                    +form_labels_row("Serial Number", "N/A" )
+
+                div.col-xs-12.h5.text-danger.strong TRAILER
+
+                if bolo.data.trailer != "Select an option..."
+                   +form_labels_row("Trailer", bolo.data.trailer, bolo.data.trailer?"":"hidden")
+                else
+                   +form_labels_row("Trailer", "N/A" )
+                if bolo.data.trailerManufacturer != "Select an option..."
+                   +form_labels_row("Manufacturer", bolo.data.trailerManufacturer, bolo.data.trailerManufacturer?"":"hidden")
+                else
+                   +form_labels_row("Manufacturer", "N/A" )
+                if bolo.data.trailerVIN.length
+                   +form_labels_row("Vehicle ID Number", bolo.data.trailerVIN, bolo.data.trailerVIN?"":"hidden")
+                else
+                   +form_labels_row("Vehicle ID Number", "N/A" )
+                div.row
+                   div.col-xs-12
+                      if bolo.data.trailerTagLicenseState != 'null' || bolo.data.trailerTagLicenseNumber != null
+                         +form_labels_row("Tag License Plate", bolo.data.trailerTagLicenseState + " " +  bolo.data.trailerTagLicenseNumber )
+                      else
+                         +form_labels_row("Tag License Plate", "N/A")
 
             div.row
               div.col-xs-8

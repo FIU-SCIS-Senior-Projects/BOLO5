@@ -38,6 +38,17 @@ block content
         +input_text( "propulsionModel", "Model", "", false, "" )
         +input_text( "propulsionSerialNumber", "Serial Number", "", false, "" )
 
+        div.h4 TRAILER
+
+        +select_options( "trailer", "Trailer", v_trailer, false, "" )
+        +select_options( "trailerManufacturer", "Manufacturer", v_trailer_manufacturer, false, "" )
+        +input_text( "trailerVIN", "Vehicle ID Number", "", false, "" )
+        .row
+            .col-md-4
+                +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, "" )
+            .col-md-8
+                +input_text( "trailerTagLicenseNumber", "", "", false, "" )
+
         .form-group.row
             .col-md-4
                 label.control-label( for="featured_image" ) Featured Image
