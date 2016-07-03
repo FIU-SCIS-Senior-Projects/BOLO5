@@ -56,7 +56,8 @@ function Agency(data) {
         'phone'         : '',
         'agency_id'     : '',
         'isActive'      : true,
-        'attachments'   : {}
+        'attachments'   : {},
+        'domain'        : ''
     };
 
     this.data = _.extend({}, agencyTemplate, data);

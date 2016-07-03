@@ -25,10 +25,14 @@ config.AgencyRepository = require( path.join( core, 'adapters/persistence/clouda
 config.UserService      = require( path.join( core, 'service/user-service' ) );
 config.UserRepository   = require( path.join( core, 'adapters/persistence/cloudant-user-repository' ) );
 
+config.dataSubscriberService    = require( path.join( core, 'service/dataSubscriber-service') );
+config.dataSubscriberRepository = require( path.join( core, 'adapters/persistence/cloudant-dataSubscriber-repository' ) );
+
 config.EmailService     = require( path.join( core, 'service/email-service' ) );
 
 config.PDFService       = require( path.join( core, 'service/pdf-service' ) );
 config.CommonService    = require( path.join( core, 'service/common-service' ) );
+
 
 
 
@@ -61,6 +65,11 @@ config.const = config.constants = {
 
 };
 
+// # of days a bolo can remain unconfirmed before expiring
+config.days = 30;
+
+config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
+
 
 /**
  * This configuration is a good candidate for a system admin controlled
@@ -70,7 +79,7 @@ config.const = config.constants = {
  * administrator (but not an agency administrator)
  */
 config.email = {
-    'from'              : 'bolo.flyer@gmail.com',
+    'from'              : 'noreply@boloflyer.com',
     'fromName'          : 'BOLO Flier Creator',
     'template_path'     : path.resolve( __dirname, './views/email' )
 };
