@@ -33,13 +33,19 @@ block content
 
         +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
 
-        +input_text( "boatMake", "Boat Make", "", false, bolo.boatMake )
-        +input_text( "boatModel", "Boat Model", "", false,  bolo.boatModel )
-        +input_text( "boatColor", "Boat Color", "", false, bolo.boatColor )
-        +input_text( "boatYear", "Boat Year", "", false, bolo.boatYear )
-        +input_text( "boatType", "Boat Type", "", false, bolo.boatType )
-        +input_text( "boatHullIdNumber", "Boat Hull Identification Number", "", false, bolo.boatHullIdNumber )
-        +input_text( "boatRegistrationNumber", "Boat Registration Number", "", false, bolo.boatRegistrationNumber )
+        div.h3 VESSEL
+
+        +input_text( "boatYear", "Year", "e.g. 2016", false, bolo.boatYear )
+        +input_text( "boatManufacturer", "Manufacturer", "", false, bolo.boatManufacturer )
+        +input_text( "boatType", "Type", "", false, bolo.boatType )
+        +select_options( "boatLength", "Length - Feet", boatFeet, false, bolo.boatLength )
+        +input_text( "boatColor", "Color", "", false, bolo.boatColor )
+        +input_text( "boatHullIdNumber", "Hull Identification Number", "", false, bolo.boatHullIdNumber )
+        .col-md-4
+            +select_options( "boatRegistrationNumberSt", "Registration Number", states, false, bolo.boatRegistrationNumberSt )
+        .col-md-8
+            +input_text( "boatRegistrationNumberNu", "", "e.g. 1234AB", false, bolo.boatRegistrationNumberNu )
+
 
         .form-group.row
             .col-md-4

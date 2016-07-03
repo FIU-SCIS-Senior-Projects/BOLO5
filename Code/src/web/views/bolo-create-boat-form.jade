@@ -16,20 +16,19 @@ block content
 
         +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
 
-        div.h2 VESSEL
+        div.h3 VESSEL
 
-        +input_text( "boatYear", "Year", "", false, "" )
+        +input_text( "boatYear", "Year", "e.g. 2016", false, "" )
         +input_text( "boatManufacturer", "Manufacturer", "", false, "" )
         +input_text( "boatType", "Type", "", false, "" )
-        +select_options( "boatLength", "Lengt - Feet", boatFeet, false, "" )
+        +select_options( "boatLength", "Length - Feet", boatFeet, false, "" )
         +input_text( "boatColor", "Color", "", false, "" )
         +input_text( "boatHullIdNumber", "Hull Identification Number", "", false, "" )
-
-
         .col-md-4
             +select_options( "boatRegistrationNumberSt", "Registration Number", states, false, "" )
         .col-md-8
             +input_text( "boatRegistrationNumberNu", "", "e.g. 1234AB", false, "" )
+            
 
         .form-group.row
             .col-md-4
