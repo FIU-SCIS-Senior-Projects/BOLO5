@@ -55,6 +55,17 @@ block content
         +input_text( "propulsionModel", "Model", "", false, bolo.propulsionModel )
         +input_text( "propulsionSerialNumber", "Serial Number", "", false, bolo.prop )
 
+        div.h4 TRAILER
+
+        +select_options( "trailer", "Trailer", v_trailer, false, bolo.trailer )
+        +select_options( "trailerManufacturer", "Manufacturer", v_trailer_manufacturer, false, bolo.trailerManufacturer )
+        +input_text( "trailerVIN", "Vehicle ID Number", "", false, bolo.trailerVIN )
+        .row
+            .col-md-4
+                +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, bolo.trailerTagLicenseState )
+            .col-md-8
+                +input_text( "trailerTagLicenseNumber", "", "", false, bolo.trailerTagLicenseNumber )      
+
         .form-group.row
             .col-md-4
                 label.control-label( for="featured_image" ) Featured Image
