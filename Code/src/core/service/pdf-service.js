@@ -349,7 +349,14 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
     else if(data.bolo.category === "THEFT - BOAT"){  //PDF for theft - boat
 
     //VESSEL
-    
+        //Display tittle VESSEL
+        doc.fillColor('red');
+        doc.fontSize(11);
+        doc.font('Times-Roman')
+            .text("VESSEL", 300)
+            .moveDown();
+        doc.fillColor('black');
+
         // Display Year only if there is a value in it
         if(data.bolo['boatYear'] !== ""){
             doc.font('Times-Roman')
@@ -396,6 +403,49 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         if(data.bolo['boatRegistrationNumberSt'] !== "" || data.bolo['boatRegistrationNumberNu'] !== ""){
             doc.font('Times-Roman')
                 .text("Registration Number: " + data.bolo['boatRegistrationNumberSt'] + data.bolo['boatRegistrationNumberNu'], 300)
+                .moveDown();
+        }
+
+        //Display tittle PROPULSION
+        doc.fillColor('red');
+        doc.fontSize(11);
+        doc.font('Times-Roman')
+            .text("PROPULSION", 300)
+            .moveDown();
+        doc.fillColor('black');
+
+        // Display Propulsion only if there is a value in it
+        if(data.bolo['propulsion'] !== ""){
+            doc.font('Times-Roman')
+                .text("Propulsion: " + data.bolo['propulsion'], 300)
+                .moveDown();
+        }
+
+        // Display Type only if there is a value in it
+        if(data.bolo['propulsionType'] !== ""){
+            doc.font('Times-Roman')
+                .text("Type: " + data.bolo['propulsionType'], 300)
+                .moveDown();
+        }
+
+        // Display Make only if there is a value in it
+        if(data.bolo['propulsionMake'] !== ""){
+            doc.font('Times-Roman')
+                .text("Make: " + data.bolo['propulsionMake'], 300)
+                .moveDown();
+        }
+
+        // Display Color only if there is a value in it
+        if(data.bolo['propulsionModel'] !== ""){
+            doc.font('Times-Roman')
+                .text("Model: " + data.bolo['propulsionModel'], 300)
+                .moveDown();
+        }
+
+        // Display Color only if there is a value in it
+        if(data.bolo['propulsionSerialNumber'] !== ""){
+            doc.font('Times-Roman')
+                .text("Serial Number: " + data.bolo['propulsionSerialNumber'], 300)
                 .moveDown();
         }
     }
