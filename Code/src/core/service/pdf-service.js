@@ -191,6 +191,42 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .text("Serial Number: " + data.bolo['propulsionSerialNumber'], 300)
                 .moveDown();
         }
+        
+            //Display tittle TRAILER
+            doc.fillColor('red');
+            doc.fontSize(11);
+            doc.font('Times-Roman')
+                .text("TRAILER", 300)
+                .moveDown();
+            doc.fillColor('black');
+
+            // Display Trailer only if there is a value in it
+            if(data.bolo['trailer'] !== ""){
+                doc.font('Times-Roman')
+                    .text("Trailer: " + data.bolo['trailer'], 300)
+                    .moveDown();
+            }
+
+            // Display Manufacturer only if there is a value in it
+            if(data.bolo['trailerManufacturer'] !== ""){
+                doc.font('Times-Roman')
+                    .text("Manufacturer: " + data.bolo['trailerManufacturer'], 300)
+                    .moveDown();
+            }
+
+            // Display Vehicle ID Number only if there is a value in it
+            if(data.bolo['trailerVIN'] !== ""){
+                doc.font('Times-Roman')
+                    .text("Vehicle ID Number: " + data.bolo['trailerVIN'], 300)
+                    .moveDown();
+            }
+
+            // Display Tag License Plate only if there is a value in it
+            if(data.bolo['trailerTagLicenseState'] !== "" || data.bolo['trailerTagLicenseNumber'] !== ""){
+                doc.font('Times-Roman')
+                    .text("Tag License Plate: " + data.bolo['trailerTagLicenseState'] + data.bolo['trailerTagLicenseNumber'], 300)
+                    .moveDown();
+            }
     }
     else {  //PDF for general bolo
 
