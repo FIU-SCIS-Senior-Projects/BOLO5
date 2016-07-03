@@ -11,12 +11,13 @@ block content
     include ./partials/global-alerts.jade
     include ./partials/bolo-options.jade
 
+
     form#create-bolo-form(action= "/bolo/create" enctype="multipart/form-data" method="post")
         input( type = "hidden" name="status" value="new")
 
         +input_text_static( "category", "Category", "", false, "THEFT - AUTO")
 
-        +input_text( "vehicleYear", "Year", "", false,  "" )
+        +input_text( "vehicleYear", "Year", "e.g. 2016", false,  "" )
         +input_text( "vehicleMake", "Make", "", false, "" )
         +input_text( "vehicleModel", "Model", "", false,  "" )
         +input_text( "vehicleTrim", "Trim", "", false,  "" )
