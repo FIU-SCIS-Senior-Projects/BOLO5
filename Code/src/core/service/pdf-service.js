@@ -354,16 +354,23 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         }
 
         // Display Make only if there is a value in it
-        if(data.bolo.vehicleMake !== ""){
+        if(data.bolo.boatManufacturer !== ""){
             doc.font('Times-Roman')
-                .text("Manufacture: " + data.bolo.boatMake, 300)
+                .text("Manufacturer: " + data.bolo.boatManufacturer, 300)
                 .moveDown();
         }
 
         // Display Model only if there is a value in it
-        if(data.bolo.vehicleModel !== ""){
+        if(data.bolo.boatType !== ""){
             doc.font('Times-Roman')
-                .text( "Model:" + data.bolo.boatModel, 300)
+                .text( "Type:" + data.bolo.boatType, 300)
+                .moveDown();
+        }
+
+        // Display Length only if there is a value in it
+        if(data.bolo['boatLength'] !== ""){
+            doc.font('Times-Roman')
+                .text("Length: " + data.bolo['boatLength'], 300)
                 .moveDown();
         }
 
@@ -371,13 +378,6 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         if(data.bolo['boatColor'] !== ""){
             doc.font('Times-Roman')
                 .text("Color: " + data.bolo['boatColor'], 300)
-                .moveDown();
-        }
-
-        // Display Type only if there is a value in it
-        if(data.bolo['boatType'] !== ""){
-            doc.font('Times-Roman')
-                .text("Type: " + data.bolo['boatType'], 300)
                 .moveDown();
         }
 
@@ -389,9 +389,9 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         }
 
         // Display Registar Number only if there is a value in it
-        if(data.bolo['boatRegistrationNumber'] !== ""){
+        if(data.bolo['boatRegistrationNumberSt'] !== "" || data.bolo['boatRegistrationNumberNu'] !== ""){
             doc.font('Times-Roman')
-                .text("Registration Number: " + data.bolo['boatRegistrationNumber'], 300)
+                .text("Registration Number: " + data.bolo['boatRegistrationNumberSt'] + data.bolo['boatRegistrationNumberNu'], 300)
                 .moveDown();
         }
     }

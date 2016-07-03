@@ -85,7 +85,7 @@ function Bolo( data ) {
         boatYear                : '',
         boatManufacturer        : '',
         boatType                : '',
-        boatLenght              : '',
+        boatLength              : '',
         boatColor               : '',
         boatHullIdNumber        : '',
         boatRegistrationNumberSt: '',
