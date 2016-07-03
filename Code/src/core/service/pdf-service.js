@@ -61,6 +61,13 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                     .moveDown();
         }
 
+        // Display trim only if there is a value in it
+        if(data.bolo['vehicleTrim'] !== ""){
+            doc.font('Times-Roman')
+                .text("Type: " + data.bolo['vehicleTrim'], 300)
+                .moveDown();
+        }
+
         // Display color only if there is a value in it
         if(data.bolo['vehicleColor'] !== ""){
             doc.font('Times-Roman')
@@ -68,17 +75,10 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
-        // Display type only if there is a value in it
-        if(data.bolo['vehicleType'] !== ""){
+        // Display License Plate only if there is a value in it
+        if(data.bolo['vehicleLicensePlate'] !== "" ){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['vehicleType'], 300)
-                .moveDown();
-        }
-
-        // Display Tag Number only if there is a value in it
-        if(data.bolo['vehicleTagNumber'] !== "" ){
-            doc.font('Times-Roman')
-                .text("Tag Number: " + data.bolo['vehicleTagNumber'], 300)
+                .text("License Plate: " + data.bolo['vehicleLicensePlate'], 300)
                 .moveDown();
         }
 
@@ -315,6 +315,14 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
+
+        // Display Trim only if there is a value in it
+        if(data.bolo['vehicleTrim'] !== ""){
+            doc.font('Times-Roman')
+                .text("Type: " + data.bolo['vehicleTrim'], 300)
+                .moveDown();
+        }
+
         // Display Color only if there is a value in it
         if(data.bolo['vehicleColor'] !== ""){
             doc.font('Times-Roman')
@@ -322,17 +330,10 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
-        // Display Type only if there is a value in it
-        if(data.bolo['vehicleType'] !== ""){
+        // Display License Plate only if there is a value in it
+        if(data.bolo['vehicleLicensePlate'] !== ""){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['vehicleType'], 300)
-                .moveDown();
-        }
-
-        // Display Tag Number only if there is a value in it
-        if(data.bolo['vehicleTagNumber'] !== ""){
-            doc.font('Times-Roman')
-                .text("Tag Number: " + data.bolo['vehicleTagNumber'], 300)
+                .text("License Plate: " + data.bolo['vehicleLicensePlate'], 300)
                 .moveDown();
         }
 
@@ -434,7 +435,7 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .text("Zip Code: " + data.bolo['zipCode'], 300)
                 .moveDown();
         }
-        
+
         // Display Height only if there is a value in it
         if(data.bolo['height'] !== ""){
             doc.font('Times-Roman')
