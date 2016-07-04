@@ -49,7 +49,7 @@ function Bolo( data ) {
         agency          : null,
         agencyName      : '',
         author          : '',
-        //for generalbolo
+        //For generalbolo
         category        : '',
         firstName       : '',
         lastName        : '',
@@ -67,27 +67,41 @@ function Bolo( data ) {
         summary         : '',
         attachments     : {},
         video_url       : '',
-        //other
+        //Other
         isActive        : true,
         status          : '',
         record          : '',
         images          : {},
-        //for theft-auto
-        vehicleMake     : '',
-        vehicleModel    : '',
-        vehicleColor    : '',
-        vehicleYear     : '',
-        vehicleTrim     : '',
-        vehicleLicensePlate: '',
-        vehicleIdNumber : '',
-        //for theft-boat
-        boatMake          : '',
-        boatModel         : '',
-        boatColor         : '',
-        boatYear          : '',
-        boatType          : '',
-        boatHullIdNumber  : '',
-        boatRegistrationNumber: '',
+        //For theft-auto
+        vehicleMake         : '',
+        vehicleModel        : '',
+        vehicleColor        : '',
+        vehicleYear         : '',
+        vehicleTrim         : '',
+        vehicleLicensePlate : '',
+        vehicleIdNumber     : '',
+        //For theft-boat
+         //Vessel
+        boatYear                : '',
+        boatManufacturer        : '',
+        boatType                : '',
+        boatLength              : '',
+        boatColor               : '',
+        boatHullIdNumber        : '',
+        boatRegistrationNumberSt: '',
+        boatRegistrationNumberNu: '',
+          //Propulsion
+        propulsion              : '',
+        propulsionType          : '',
+        propulsionMake          : '',
+        propulsionModel         : '',
+        propulsionSerialNumber  : '',
+          //Trailer
+        trailer                 : '',
+        trailerManufacturer     : '',
+        trailerVIN              : '',
+        trailerTagLicenseState  : '',
+        trailerTagLicenseNumber  : '',
         //others
         boloToken       : null,
         confirmed       : false
