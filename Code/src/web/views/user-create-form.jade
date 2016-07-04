@@ -16,7 +16,12 @@ block admin-content
 
     form( action="/admin/users/create" enctype="multipart/form-data" method="post" )
         +input_text( "username", "Username ", "", true, user1 )
-        +input_text( "email", "Email", "", true, email1 )
+        if (tier === 'ROOT')
+          +input_text( "email", "Email", "", true, email1 )
+        else
+          +input_text( "email", "Email", "Email Username", true, email1 )
+          +input_text_static( "domain", "Domain", "", false, agencyDomain)
+            
         +input_text( "fname", "First Name", "", true, fname1 )
         +input_text( "lname", "Last Name", "", true,  lname1 )
         +input_text( "password", "Password", "", true,  "", "password" )

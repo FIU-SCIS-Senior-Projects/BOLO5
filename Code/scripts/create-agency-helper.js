@@ -31,7 +31,8 @@ var agencyDTO = agencyService.formatDTO({
     "agency_id": 123,
     "city": "Miami",
     "state": "Florida",
-    "isActive": true
+    "isActive": true,
+    "domain"  : '@pinecrest-fl.gov'
 });
 
 var agencyDTO2 = agencyService.formatDTO({

@@ -1,0 +1,44 @@
+extends layout
+
+
+block jumbo
+    .jumbotron
+        .container
+            div#wrapper
+                div.col-xs-1.col-md-10
+                    p Active BOLOs
+                div.col-xs-1.dropdown
+                    button.dropbtn.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown") Filter By:
+                        span.caret
+                    ul.dropdown-menu
+                        -var dimensions = "width: 210px; margin: 0 auto;"
+                        a.btn.btn-default(href="/bolo/mybolos" style=dimensions) My Bolos
+                        a.btn.btn-default(href="/bolo/" style=dimensions) View all
+                        a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) #{userAgency.name}
+                        li.dropdown-submenu
+                            a.btn.btn-default(tabindex="-1" style = dimensions) Agencies
+                            ul.dropdown-menu
+                              li
+                                  for agency in agencies
+                                      if(agency.id !== userAgency.id)
+                                          a.btn.btn-default(href="/bolo/agency/" + agency.id style = dimensions value = agency.name ) #{agency.name}
+block content
+    include ./partials/global-alerts.jade
+        h2 #{filter}
+    if bolos && 0 === bolos.length
+        p.lead No active BOLOs at this time.
+    
+    .row
+        for bolo in bolos
+            if bolo && bolo.confirmed === true
+                include ./partials/bolo-thumbnail.jade
+                    .actions
+                        a.btn.btn-default( href="/bolo/edit/" + bolo.id, role="button" ) Edit
+                        a.btn.btn-default( href="/bolo/details/" + bolo.id role="button" ) Details
+                        a.btn.btn-warning( href="/bolo/archive/" + bolo.id role="button" onclick="return confirm('Are you sure you want to archive this bolo?')"
+                        ) Archive
+
+
+    .row.text-center
+        - var route = '/bolo/agency/'+agency
+        include ./partials/paging-byAgency.jade
