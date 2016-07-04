@@ -53,7 +53,7 @@ block content
         +select_options( "propulsionType", "Type", v_propulsion_type, false, bolo.propulsionType )
         +select_options( "propulsionMake", "Make", v_propulsion_make, false, bolo.propulsionMake )
         +input_text( "propulsionModel", "Model", "", false, bolo.propulsionModel )
-        +input_text( "propulsionSerialNumber", "Serial Number", "", false, bolo.prop )
+        +input_text( "propulsionSerialNumber", "Serial Number", "", false, bolo.propulsionSerialNumber )
 
         div.h4 TRAILER
 
@@ -64,7 +64,7 @@ block content
             .col-md-4
                 +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, bolo.trailerTagLicenseState )
             .col-md-8
-                +input_text( "trailerTagLicenseNumber", "", "", false, bolo.trailerTagLicenseNumber )      
+                +input_text( "trailerTagLicenseNumber", "", "Only Numbers", false, bolo.trailerTagLicenseNumber )
 
         .form-group.row
             .col-md-4

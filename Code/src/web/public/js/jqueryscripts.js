@@ -104,4 +104,16 @@ jQuery(function(){
         $(this).val( $(this).val().toUpperCase());
     });
 
+//Validations for Theft-Boat TRAILER
+
+    //Transform characters to uppercase Trailer VIN
+    $("#trailerVIN[type=text]").keyup(function(){
+        $(this).val( $(this).val().toUpperCase());
+    });
+
+    //Validate only numbers Traile Tag License Number
+    $("#trailerTagLicenseNumber").keypress(function (e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) return false;
+   });
+
 });
