@@ -36,7 +36,7 @@ passport.use(new LocalStrategy(
     userService.authenticate(username, password)
       .then(function(account) {
 
-      
+
         // check the status of the account
         if (account.status) {
 
@@ -89,7 +89,7 @@ passport.use(new LocalStrategy(
           }
         } else {
 
-
+          // send email to user and admins
           sendAccountLockedEmail(account);
           sendAccountLockedEmailToAdmins(account);
 
@@ -223,7 +223,7 @@ var sendAccountLockedEmailToAdmins = function(account) {
         'fromName': config.email.fromName,
         'subject': 'BOLO Alert: User Account Warning',
         'text': 'The account of ' + account.username + ' has been locked after attempting ' +
-         config.MAX_INCORRECT_LOGINS + ' incorrect login attempts.'
+          config.MAX_INCORRECT_LOGINS + ' incorrect login attempts.'
 
       }).catch(function(error) {
 
@@ -232,13 +232,7 @@ var sendAccountLockedEmailToAdmins = function(account) {
     }
 
   })
-
-
 }
-
-
-
-
 
 /*
  * GET /login
