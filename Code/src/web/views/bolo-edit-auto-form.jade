@@ -34,7 +34,7 @@ block content
         +input_text_static( "category", "Category", "", false, "THEFT - AUTO")
 
         +input_text( "vehicleYear", "Year", "e.g. 2016", false,  bolo.vehicleYear )
-        +input_text( "vehicleMake", "Make", "", false, bolo.vehicleMake )
+        +select_options( "vehicleMake", "Make", vehicles_makes, false, bolo.vehicleMake  )
         +input_text( "vehicleModel", "Model", "", false,  bolo.vehicleModel )
         +input_text( "vehicleTrim", "Trim", "", false,  bolo.vehicleTrim )
         +input_text( "vehicleColor", "Color", "", false, bolo.vehicleColor )

@@ -36,11 +36,6 @@ jQuery(function(){
 
     //Validate numbers, lenght 4 Vehicle Year
     $("#vehicleYear").mask("9999",{placeholder:""});
-    // Uppercase first letter each word Vehicke Make
-    $("#vehicleMake[type='text']").keyup(function(evt){
-        var txt = $(this).val();
-        $(this).val(txt.replace(/^(.)|\s(.)/g, function($1){ return $1.toUpperCase();}));
-    });
     // Uppercase first letter each word Vehicle Model
     $("#vehicleModel[type='text']").keyup(function(evt){
         var txt = $(this).val();
