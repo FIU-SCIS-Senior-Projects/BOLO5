@@ -33,13 +33,38 @@ block content
 
         +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
 
-        +input_text( "boatMake", "Boat Make", "", false, bolo.boatMake )
-        +input_text( "boatModel", "Boat Model", "", false,  bolo.boatModel )
-        +input_text( "boatColor", "Boat Color", "", false, bolo.boatColor )
-        +input_text( "boatYear", "Boat Year", "", false, bolo.boatYear )
-        +input_text( "boatType", "Boat Type", "", false, bolo.boatType )
-        +input_text( "boatHullIdNumber", "Boat Hull Identification Number", "", false, bolo.boatHullIdNumber )
-        +input_text( "boatRegistrationNumber", "Boat Registration Number", "", false, bolo.boatRegistrationNumber )
+        div.h4 VESSEL
+
+        +input_text( "boatYear", "Year", "e.g. 2016", false, bolo.boatYear )
+        +input_text( "boatManufacturer", "Manufacturer", "", false, bolo.boatManufacturer )
+        +input_text( "boatType", "Type", "", false, bolo.boatType )
+        +select_options( "boatLength", "Length - Feet", boatFeet, false, bolo.boatLength )
+        +input_text( "boatColor", "Color", "", false, bolo.boatColor )
+        +input_text( "boatHullIdNumber", "Hull Identification Number", "", false, bolo.boatHullIdNumber )
+        .row
+            .col-md-4
+                +select_options( "boatRegistrationNumberSt", "Registration Number", states, false, bolo.boatRegistrationNumberSt )
+            .col-md-8
+                +input_text( "boatRegistrationNumberNu", "", "e.g. 1234AB", false, bolo.boatRegistrationNumberNu )
+
+        div.h4 PROPULSION
+
+        +select_options( "propulsion", "Propulsion", v_propulsion, false, bolo.propulsion )
+        +select_options( "propulsionType", "Type", v_propulsion_type, false, bolo.propulsionType )
+        +select_options( "propulsionMake", "Make", v_propulsion_make, false, bolo.propulsionMake )
+        +input_text( "propulsionModel", "Model", "", false, bolo.propulsionModel )
+        +input_text( "propulsionSerialNumber", "Serial Number", "", false, bolo.propulsionSerialNumber )
+
+        div.h4 TRAILER
+
+        +select_options( "trailer", "Trailer", v_trailer, false, bolo.trailer )
+        +select_options( "trailerManufacturer", "Manufacturer", v_trailer_manufacturer, false, bolo.trailerManufacturer )
+        +input_text( "trailerVIN", "Vehicle ID Number", "", false, bolo.trailerVIN )
+        .row
+            .col-md-4
+                +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, bolo.trailerTagLicenseState )
+            .col-md-8
+                +input_text( "trailerTagLicenseNumber", "", "Only Numbers", false, bolo.trailerTagLicenseNumber )
 
         .form-group.row
             .col-md-4

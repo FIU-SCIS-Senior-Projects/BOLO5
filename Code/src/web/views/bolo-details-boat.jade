@@ -54,35 +54,90 @@ block content
 
             div.col-xs-8#boloDetails
                 form.form-horizontal
-                +form_labels_row("Bolo ID", "XYZ000" )
+                +form_labels_row("Bolo ID", bolo.data.id )
                 if bolo.data.authorFName != null || bolo.data.authorLName != null
-                  +form_labels_row("AuthorBOAT", bolo.data.authorFName + " " +  bolo.data.authorLName )
+                  +form_labels_row("Author", bolo.data.authorFName + " " +  bolo.data.authorLName )
                 else
                   +form_labels_row("Author", "N/A")
-                if bolo.data.boatMake.length || bolo.data.boatModel.length
-                  +form_labels_row("Boat", bolo.data.boatMake + " " +  bolo.data.boatModel)
-                else
-                  +form_labels_row("Boat", "N/A" )
-                if bolo.data.boatColor.length
-                   +form_labels_row("Boat Color", bolo.data.boatColor, bolo.data.boatColor?"":"hidden")
-                else
-                   +form_labels_row("Boat Color", "N/A" )
+
+
+                div.col-xs-12.h5.text-danger.strong VESSEL
+
                 if bolo.data.boatYear.length
-                   +form_labels_row("Boat Year", bolo.data.boatYear, bolo.data.boatYear?"":"hidden")
+                   +form_labels_row("Year", bolo.data.boatYear, bolo.data.boatYear?"":"hidden")
                 else
-                   +form_labels_row("Boat Year", "N/A" )
+                   +form_labels_row("Year", "N/A" )
+                if bolo.data.boatManufacturer.length
+                   +form_labels_row("Manufacturer", bolo.data.boatManufacturer, bolo.data.boatManufacturer?"":"hidden")
+                else
+                   +form_labels_row("Manufacturer", "N/A" )
                 if bolo.data.boatType.length
-                   +form_labels_row("Boat Type", bolo.data.boatType, bolo.data.boatType?"":"hidden")
+                   +form_labels_row("Type", bolo.data.boatType, bolo.data.boatType?"":"hidden")
                 else
-                   +form_labels_row("Boat Type", "N/A" )
+                   +form_labels_row("Type", "N/A" )
+                if bolo.data.boatLenght != "Select an option..."
+                   +form_labels_row("Length", bolo.data.boatLength, bolo.data.boatLength?"":"hidden")
+                else
+                   +form_labels_row("Length", "N/A" )
+                if bolo.data.boatColor.length
+                   +form_labels_row("Color", bolo.data.boatColor, bolo.data.boatColor?"":"hidden")
+                else
+                   +form_labels_row("Color", "N/A" )
                 if bolo.data.boatHullIdNumber.length
-                   +form_labels_row("Boat Hull Id Number", bolo.data.boatHullIdNumber, bolo.data.boatHullIdNumber?"":"hidden")
+                   +form_labels_row("Hull Id Number", bolo.data.boatHullIdNumber, bolo.data.boatHullIdNumber?"":"hidden")
                 else
-                   +form_labels_row("Boat Hull Id Number", "N/A" )
-                if bolo.data.boatRegistrationNumber.length
-                   +form_labels_row("Boat Registration Number", bolo.data.boatRegistrationNumber, bolo.data.boatRegistrationNumber?"":"hidden")
+                   +form_labels_row("Hull Id Number", "N/A" )
+
+                div.row
+                   div.col-xs-12
+                      if bolo.data.boatRegistrationNumberSt != 'null' || bolo.data.boatRegistrationNumberNu != null
+                         +form_labels_row("Registration Number", bolo.data.boatRegistrationNumberSt + " " +  bolo.data.boatRegistrationNumberNu )
+                      else
+                         +form_labels_row("Registration Number", "N/A")
+
+                div.col-xs-12.h5.text-danger.strong PROPULSION
+
+                if bolo.data.propulsion != "Select an option..."
+                   +form_labels_row("Propulsion", bolo.data.propulsion, bolo.data.propulsion?"":"hidden")
                 else
-                   +form_labels_row("Boat Registration Number", "N/A" )
+                   +form_labels_row("Propulsion", "N/A" )
+                if bolo.data.propulsionType != "Select an option..."
+                   +form_labels_row("Type", bolo.data.propulsionType, bolo.data.propulsionType?"":"hidden")
+                else
+                   +form_labels_row("Type", "N/A" )
+                if bolo.data.propulsionMake != "Select an option..."
+                   +form_labels_row("Make", bolo.data.propulsionMake, bolo.data.propulsionMake?"":"hidden")
+                else
+                   +form_labels_row("Make", "N/A" )
+                if bolo.data.propulsionModel.length
+                   +form_labels_row("Model", bolo.data.propulsionModel, bolo.data.propulsionModel?"":"hidden")
+                else
+                   +form_labels_row("Model", "N/A" )
+                if bolo.data.propulsionSerialNumber.length
+                   +form_labels_row("Serial Number", bolo.data.propulsionSerialNumber, bolo.data.propulsionSerialNumber?"":"hidden")
+                else
+                   +form_labels_row("Serial Number", "N/A" )
+
+                div.col-xs-12.h5.text-danger.strong TRAILER
+
+                if bolo.data.trailer != "Select an option..."
+                   +form_labels_row("Trailer", bolo.data.trailer, bolo.data.trailer?"":"hidden")
+                else
+                   +form_labels_row("Trailer", "N/A" )
+                if bolo.data.trailerManufacturer != "Select an option..."
+                   +form_labels_row("Manufacturer", bolo.data.trailerManufacturer, bolo.data.trailerManufacturer?"":"hidden")
+                else
+                   +form_labels_row("Manufacturer", "N/A" )
+                if bolo.data.trailerVIN.length
+                   +form_labels_row("Vehicle ID Number", bolo.data.trailerVIN, bolo.data.trailerVIN?"":"hidden")
+                else
+                   +form_labels_row("Vehicle ID Number", "N/A" )
+                div.row
+                   div.col-xs-12
+                      if bolo.data.trailerTagLicenseState != 'null' || bolo.data.trailerTagLicenseNumber != null
+                         +form_labels_row("Tag License Plate", bolo.data.trailerTagLicenseState + " " +  bolo.data.trailerTagLicenseNumber )
+                      else
+                         +form_labels_row("Tag License Plate", "N/A")
 
         div.row
             div.col-xs-8
