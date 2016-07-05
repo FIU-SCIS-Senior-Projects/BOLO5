@@ -63,7 +63,7 @@ var session = expressSession({
         path: '/',
         httpOnly: true,
         secure: false,
-        maxAge: 10 * 10 * 6000
+        maxAge: 5* 10 * 6000
     },
     'rolling': true
     /**
@@ -135,8 +135,6 @@ app.use( isAuthenticated, routes.bolos );
 app.use( isAuthenticated, routes.account );
 app.use( isAuthenticated, routes.agency );
 app.use( isAuthenticated, routes.admin );
-app.use( isAuthenticated, routes.userGuide);
-app.use( isAuthenticated, routes.aboutUs);
 app.use( function( req, res, next ) {
     console.error(
         '404 encountered at %s, request ip = %s', req.originalUrl, req.ip

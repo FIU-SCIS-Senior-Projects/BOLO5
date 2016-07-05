@@ -29,7 +29,6 @@ db_wrapper.insert = function ( doc, params ) {
 
 db_wrapper.insertMultipart = function ( doc, attachments, params ) {
     var context = this;
-    console.log('doing insert');
     return new Promise( function ( resolve, reject ) {
         context.db.multipart.insert( doc, attachments, params, function ( err, body ) {
             if ( !err ) resolve( body );

@@ -77,7 +77,6 @@ function User ( data ) {
         'fname'                 : '',
         'lname'                 : '',
         'password'              : null,
-        'passwordLifetime'      : null,
         'tier'                  : 1,
         'agency'                : null,
         'agencyName'             : '',
@@ -86,9 +85,7 @@ function User ( data ) {
         'ranktitle'             : '',
         'notifications'         : [],
         'resetPasswordToken'    : '',
-        'resetPasswordExpires'  : null,
-        'boloConfirmationToken' : null,
-        'boloTokenExpiration'   : null
+        'resetPasswordExpires'  : null
     };
 
     this.data = _.extend( {}, defaults, data );

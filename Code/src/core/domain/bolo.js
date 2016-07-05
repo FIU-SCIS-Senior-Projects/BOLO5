@@ -49,7 +49,6 @@ function Bolo( data ) {
         agency          : null,
         agencyName      : '',
         author          : '',
-        //for generalbolo
         category        : '',
         firstName       : '',
         lastName        : '',
@@ -62,35 +61,14 @@ function Bolo( data ) {
         hairColor       : '',
         tattoos         : '',
         address         : '',
-        zipCode         : '',
         additional      : '',
         summary         : '',
         attachments     : {},
         video_url       : '',
-        //other
         isActive        : true,
         status          : '',
         record          : '',
-        images          : {},
-        //for theft-auto
-        vehicleMake     : '',
-        vehicleModel    : '',
-        vehicleColor    : '',
-        vehicleYear     : '',
-        vehicleType     : '',
-        vehicleTagNumber: '',
-        vehicleIdNumber : '',
-        //for theft-boat
-        boatMake          : '',
-        boatModel         : '',
-        boatColor         : '',
-        boatYear          : '',
-        boatType          : '',
-        boatHullIdNumber  : '',
-        boatRegistrationNumber: '',
-        //others
-        boloToken       : null,
-        confirmed       : false
+        images          : {}
     };
 
     this.data = _.defaults( {}, data, defaults );

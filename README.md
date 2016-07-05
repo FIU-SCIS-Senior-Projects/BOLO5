@@ -1,7 +1,4 @@
-# BOLO Flier Creator Version 5
-
-#
-
+# BOLO Flier Creator Version 4
 
 This project is the fourth iteration of the BOLO Flier Creator application
 conceptualized by the Pinecrest Police Department in Miami, Florida.  The fourth

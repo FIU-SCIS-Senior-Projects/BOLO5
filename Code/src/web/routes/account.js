@@ -9,7 +9,7 @@ var validate        = require('validate.js');
 var config          = require('../config.js');
 var agencyService   = new config.AgencyService( new config.AgencyRepository() );
 var userService     = new config.UserService( new config.UserRepository(), agencyService);
-var emailService    = new config.EmailService;
+var emailService    = config.EmailService;
 
 var formUtil        = require('../lib/form-util');
 var passwordUtil    = require('../lib/password-util');
@@ -47,7 +47,7 @@ function getAccountDetails ( req, res ) {
         res.render( 'account-details', data );
     })
     .catch( function ( error ) {
-        console.error( 'Error at %s >>> %s function getAccountDetails in the account.js', req.originalUrl, error.message );
+        console.error( 'Error at %s >>> %s', req.originalUrl, error.message );
         req.flash( GFERR, 'Unknown error occurred, please try again.' );
         res.redirect( 'back' );
     });
@@ -75,7 +75,6 @@ function postChangePassword ( req, res ) {
         );
 
         if ( validationErrors ) {
-          console.log("account.js postChangePassword func")
             req.flash( 'form-errors', validationErrors );
             throw new FormError();
         }
@@ -92,7 +91,7 @@ function postChangePassword ( req, res ) {
         res.redirect( 'back' );
     })
     .catch( function ( error ) {
-        console.error( 'Error at %s >>> %s in the function postChangePassword in the account.js', req.originalUrl, error.message );
+        console.error( 'Error at %s >>> %s', req.originalUrl, error.message );
         req.flash( GFERR, 'Unknown error occurred, please try again.' );
         res.redirect( 'back' );
     });
@@ -147,7 +146,7 @@ function getAvailableAgencyNotifications ( req, res ) {
         res.render( 'account-notifications-add', data );
     })
     .catch( function ( error ) {
-        console.error( 'Error at %s >>> %s function getAvailableAgencyNotifications in the account.js', req.originalUrl, error.message );
+        console.error( 'Error at ', req.originalUrl, ' >>> ', error.message );
         req.flash( GFERR, 'Unknown error occurred, please try again.' );
         res.redirect( 'back' );
     });
@@ -176,7 +175,7 @@ function postUnsubscribeNotifications ( req, res ) {
         res.redirect( 'back' );
     })
     .catch( function ( error ) {
-        console.error( 'Error at %s >>> %s function postUnsubscribeNotifications in the account.js', req.originalUrl, error.message );
+        console.error( 'Error at ', req.originalUrl, ' >>> ', error.message );
         req.flash( GFERR, 'Unknown error occurred, please try again.' );
         res.redirect( 'back' );
     });
@@ -207,7 +206,7 @@ function postSubscribeNotifications ( req, res ) {
         res.redirect( '/account/notifications' );
     })
     .catch( function ( error ) {
-        console.error( 'Error at %s >>> %s function postSubscribeNotifications in the account.js', req.originalUrl, error.message );
+        console.error( 'Error at ', req.originalUrl, ' >>> ', error.message );
         req.flash( GFERR, 'Unknown error occurred, please try again.' );
         res.redirect( 'back' );
     });

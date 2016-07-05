@@ -1,7 +1,11 @@
+extends ./layout.jade
 
 block content
-    p A recent update to a&nbsp;
-        a( href=app_url + '/bolo/details/' + bolo.id ) #{bolo.category} BOLO
-        |&nbsp;has been made.&nbsp;
-        a( href=app_url ) Login
-        |&nbsp;to view this and other BOLOs.
+    p Hi,
+    p A recent update has been made to a 
+        a( href=app_url + '/bolo/details/' + bolo.id ) #{bolo.category} BOLO 
+        | on the BOLO Flier Creator app. 
+        a( href=app_url ) Login 
+        | to view this and other BOLOs.
+
+    include ./_bolo-details.jade

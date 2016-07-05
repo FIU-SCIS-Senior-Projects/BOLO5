@@ -15,8 +15,7 @@ module.exports.validatePassword = function ( pass, conf ) {
                 'equality': {
                     'attribute': 'password',
                     'message': ' should match password field.'
-                },
-                'presence':true
+                }
             }
         };
 
