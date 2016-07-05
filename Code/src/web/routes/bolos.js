@@ -72,9 +72,11 @@ function sendBoloNotificationEmail(bolo, template) {
     return userService.getByUsername(bolo.authorUName);
   }).then(function(user) {
     data.user = user;
+  if (someData.watermark!==null) {
     doc.image(someData.watermark,0,0,{
       fit:[800,800]
     });
+  }
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });
@@ -779,9 +781,9 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         agencyService.getAttachment(pData[0].agency, 'watermark').then(function(watermarkDTO) {
           someData.watermark = watermarkDTO.data;
-          doc.image(someData.watermark, 0, 0, {
-            fit:[800,800]
-          });
+            doc.image(someData.watermark,0,0,{
+              fit:[800,800]
+            });
         return agencyService.getAttachment(pData[0].agency, 'logo')
           }).then(function(logoDTO) {
           someData.logo = logoDTO.data;
