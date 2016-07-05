@@ -59,6 +59,7 @@ UserService.prototype.authenticate = function(username, password) {
       // if incorrect login attempts is greater than the max allowed lock the account
       if (user.incorrectLogins >= config.MAX_INCORRECT_LOGINS) {
 
+        authenticated = false;
         user.accountStatus = false;
         user.incorrectLogins = config.MAX_INCORRECT_LOGINS;
         account.status = user.accountStatus;
