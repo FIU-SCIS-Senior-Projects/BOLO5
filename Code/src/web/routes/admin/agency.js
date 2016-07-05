@@ -31,6 +31,7 @@ function getAgencyAttachments ( fields ) {
     var fileDTO;
     var validateShield = false;
     var validateLogo = false;
+    var validateWatermark=false;
 
     if ( fields.logo_upload && isImage( fields.logo_upload  ) ) {
         fileDTO = _.assign( {}, fields.logo_upload );
@@ -44,6 +45,12 @@ function getAgencyAttachments ( fields ) {
         fileDTO.name = 'shield';
         result.push( fileDTO );
         validateShield = true;
+    }
+    if ( fields.watermark_upload && isImage( fields.watermark_upload ) ) {
+        fileDTO = _.assign( {}, fields.watermark_upload );
+        fileDTO.name = 'watermark';
+        result.push( fileDTO );
+        validateWatermark = true;
     }
 
     return ( result.length ) ? result : null;

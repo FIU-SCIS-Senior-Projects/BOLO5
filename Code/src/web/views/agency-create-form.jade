@@ -22,7 +22,7 @@ block admin-content
     p  Fill out the form and submit to create a new agency.
 
     form( action=( route + form_action ) enctype="multipart/form-data" method="post" )
-        
+
         +input_text( "agency_id", "Agency ID", "", false, "" )
         +input_text( "name", "Agency Name", "", false, "" )
         +input_text( "domain", "Agency Domain", "@example-fl.gov", false, "" )
@@ -39,6 +39,9 @@ block admin-content
         .form-group
             label.control-label( for="image_upload" ) Shield Image Upload
             input( name="shield_upload" type="file" accept="image/*" )
+        .form-group
+                label.control-label( for="image_upload" ) Watermark Image Upload
+                input( name="watermark_upload" type="file" accept="image/*" )
 
         .form-group
             button.btn.btn-primary( type="submit" value="save" ) Submit

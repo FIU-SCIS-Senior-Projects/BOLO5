@@ -94,6 +94,19 @@ block admin-content
                             img( src=shield_url alt="Shield Image" )
 
         .form-group
+            label.control-label( for="image_upload" ) Upload New Watermark Image
+
+            .row
+                .col-md-4
+                    input( name="watermark_upload" type="file" accept="image/*" )
+
+                .col-md-4.push-md-1.details-image
+                    if agency && agency.attachments.watermark
+                        - var watermark_url = route + "/asset/" + agency.id + "/watermark";s
+                        a( href=watermark_url )
+                            img( src=watermark_url alt="Watermark Image" )
+
+        .form-group
             button.btn.btn-primary( type="submit" value="save" ) Submit
 
 
