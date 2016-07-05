@@ -63,6 +63,7 @@ BoloService.prototype.previewBolo = function ( boloDTO) {
  */
 BoloService.prototype.updateBolo = function ( updateDTO, attachments ) {
     var context = this;
+    //console.log(updateDTO)
     var bolo = new Bolo( updateDTO );
 
     return this.boloRepository.update( bolo, attachments )
@@ -74,6 +75,12 @@ BoloService.prototype.updateBolo = function ( updateDTO, attachments ) {
 BoloService.prototype.getBolo = function (id) {
     var context = this;
     return context.boloRepository.getBolo(id);
+};
+
+BoloService.prototype.getBoloByToken = function (token){
+    var context = this;
+    return context.boloRepository.getBoloByToken(token);
+
 };
 
 /**
@@ -132,4 +139,3 @@ function formatDTO ( dto ) {
 
     return newdto;
 }
-

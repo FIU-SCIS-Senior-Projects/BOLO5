@@ -25,6 +25,9 @@ config.AgencyRepository = require( path.join( core, 'adapters/persistence/clouda
 config.UserService      = require( path.join( core, 'service/user-service' ) );
 config.UserRepository   = require( path.join( core, 'adapters/persistence/cloudant-user-repository' ) );
 
+config.dataSubscriberService    = require( path.join( core, 'service/dataSubscriber-service') );
+config.dataSubscriberRepository = require( path.join( core, 'adapters/persistence/cloudant-dataSubscriber-repository' ) );
+
 config.EmailService     = require( path.join( core, 'service/email-service' ) );
 
 config.PDFService       = require( path.join( core, 'service/pdf-service' ) );
@@ -32,8 +35,9 @@ config.CommonService    = require( path.join( core, 'service/common-service' ) )
 
 
 
+
 /* Application Config */
-config.appURL           = process.env.APP_URL || 'http://localhost:3000';
+config.appURL           = process.env.APP_URL || 'httP://localhost:3000';
 
 var bootswatch_theme    = 'yeti-custom';
 config.bootstrap        = '/css/vendor/bootswatch/' +
@@ -60,6 +64,11 @@ config.const = config.constants = {
     'LOW_COMPRESSION' : 70
 
 };
+
+// # of days a bolo can remain unconfirmed before expiring
+config.days = 30;
+
+config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
 
 
 /**

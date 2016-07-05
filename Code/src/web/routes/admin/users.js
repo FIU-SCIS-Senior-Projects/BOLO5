@@ -150,7 +150,7 @@ module.exports.getList = function ( req, res ) {
     var sort = 'username';
     userService.getUsers(sort).then( function ( users ) {
         data.users = users.filter( function ( oneUser ) {
-            return oneUser.id !== req.user.id && (req.user.tier === 4 || (oneUser.agency === req.user.agency && oneUser.tier < 4 ));
+            return  (req.user.tier === 4 || (oneUser.agency === req.user.agency && oneUser.tier < 4 ));
         });
         res.render( 'user-list', data);
     })
@@ -171,7 +171,7 @@ module.exports.getSortedList = function ( req, res ) {
 
     userService.getUsers(sort).then( function ( users ) {
         data.users = users.filter( function ( oneUser ) {
-            return oneUser.id !== req.user.id;
+            return oneUser.id ;
         });
         res.render( 'user-list', data);
     })
