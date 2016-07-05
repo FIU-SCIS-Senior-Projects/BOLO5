@@ -18,7 +18,7 @@ block content
         +input_text_static( "category", "Category", "", false, "THEFT - AUTO")
 
         +input_text( "vehicleYear", "Year", "e.g. 2016", false,  "" )
-        +input_text( "vehicleMake", "Make", "", false, "" )
+        +select_options( "vehicleMake", "Make", vehicles_makes, false, "" )
         +input_text( "vehicleModel", "Model", "", false,  "" )
         +input_text( "vehicleTrim", "Trim", "", false,  "" )
         +input_text( "vehicleColor", "Color", "", false, "" )
