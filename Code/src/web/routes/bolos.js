@@ -66,10 +66,15 @@ function sendBoloNotificationEmail(bolo, template) {
     return agencyService.getAttachment(data.agency.id, 'shield')
   }).then(function(shield) {
     someData.shield = shield.data;
+    return agencyService.getAttachment(data.agency.id, 'watermark')
+  }).then(function(watermark) {
+    someData.watermark = watermark.data;
     return userService.getByUsername(bolo.authorUName);
   }).then(function(user) {
     data.user = user;
-    pdfService.genDetailsPdf(doc, data);
+    doc.image(someData.watermark,0,0,{
+      fit:[800,800]
+    });
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });
@@ -79,6 +84,7 @@ function sendBoloNotificationEmail(bolo, template) {
     doc.image(someData.shield, 500, 15, {
       height: 100
     });
+    pdfService.genDetailsPdf(doc, data);
     doc.end();
 
   })
@@ -334,7 +340,7 @@ router.get('/bolo/agency/:id', function(req, res, next) {
       var i;
       for (i = 0; i < agencies.length; i++) {
         if (agencies[i].data.id === req.user.agency) {
-          
+
           data.agency = agencies[i];
           data.userAgency = agencies[i].data;
 
@@ -766,31 +772,18 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         var doc = new PDFDocument();
         var someData = {};
-        pdfService.genPreviewPDF(doc, pData[0]);
+
 
         /** @todo must handle when featured image is empty **/
-        if (pData[0].image === "none") {
-          if (boloDTO.category === "THEFT - AUTO") {
-            doc.image("src/web/public/img/nopicautos.png", 15, 150, {
-              height: 200
-            });
-          } else if (boloDTO.category === "THEFT - BOAT") {
-            doc.image("src/web/public/img/nopicboats.png", 15, 150, {
-              height: 200
-            });
-          } else {
-            doc.image("src/web/public/img/nopic.png", 15, 150, {
-              height: 200
-            });
-          }
-        } else {
-          someData.featured = pData[0].image;
-          doc.image(someData.featured, 15, 150, {
-            fit: [260, 200]
-          });
-        }
 
-        agencyService.getAttachment(pData[0].agency, 'logo').then(function(logoDTO) {
+
+        agencyService.getAttachment(pData[0].agency, 'watermark').then(function(watermarkDTO) {
+          someData.watermark = watermarkDTO.data;
+          doc.image(someData.watermark, 0, 0, {
+            fit:[800,800]
+          });
+        return agencyService.getAttachment(pData[0].agency, 'logo')
+          }).then(function(logoDTO) {
           someData.logo = logoDTO.data;
           doc.image(someData.logo, 15, 15, {
             height: 100
@@ -801,6 +794,27 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
           doc.image(someData.shield, 500, 15, {
             height: 100
           });
+          pdfService.genPreviewPDF(doc, pData[0]);
+          if (pData[0].image === "none") {
+            if (boloDTO.category === "THEFT - AUTO") {
+              doc.image("src/web/public/img/nopicautos.png", 15, 150, {
+                height: 200
+              });
+            } else if (boloDTO.category === "THEFT - BOAT") {
+              doc.image("src/web/public/img/nopicboats.png", 15, 150, {
+                height: 200
+              });
+            } else {
+              doc.image("src/web/public/img/nopic.png", 15, 150, {
+                height: 200
+              });
+            }
+          } else {
+            someData.featured = pData[0].image;
+            doc.image(someData.featured, 15, 150, {
+              fit: [260, 200]
+            });
+          }
           doc.end();
           res.contentType("application/pdf");
           doc.pipe(res);
