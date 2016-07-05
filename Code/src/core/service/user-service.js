@@ -55,10 +55,10 @@ UserService.prototype.authenticate = function(username, password) {
         user.incorrectLogins += 1;
       }
 
-
+    //  console.log("the amount of incorrect logins are: "+ user.incorrectLogins)
       // if incorrect login attempts is greater than the max allowed lock the account
-      if (user.incorrectLogins >= config.MAX_INCORRECT_LOGINS) {
-
+      if (user.incorrectLogins + 1>= config.MAX_INCORRECT_LOGINS) {
+    //    console.log("The amount of incorrect logins triggered the if statement");
         authenticated = false;
         user.accountStatus = false;
         user.incorrectLogins = config.MAX_INCORRECT_LOGINS;
@@ -69,6 +69,7 @@ UserService.prototype.authenticate = function(username, password) {
         account.agency  = user.agency;
         account.id      = user.id;
         account.username    = user.fname + " " + user.lname;
+        account.user = null;
 
       } else {
 
