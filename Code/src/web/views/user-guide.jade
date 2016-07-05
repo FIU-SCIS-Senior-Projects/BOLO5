@@ -1,25 +1,101 @@
 extends ./layout.jade
 include ./includes/mixins.jade
 
-
 block jumbo
     .jumbotron
         .container
-            if (tier === 'ROOT')
-                p
-                  | Hello ROOT /* User */
-                  | 1) 
-            if (tier === 'ADMINISTRATOR')
-                p
-                  | ADMINISTRATOR
-                  | hello world
+            h3 Hello #{username}
 
-            if (tier === 'SUPERVISOR')
-                p
-                  | SUPERVISOR
-                  | hello world
+block content
+    if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
+        h3 Introduction
+        p &nbsp;&nbsp;&nbsp;&nbsp;Upon logging in you will be brought to the home
+            | page. This is where you will be able to view your BOLOs. Each BOLO
+            | has several buttons on it that will be explained later. From the
+            | home page, you will see several other links across the top (mobile
+            | will be in a dropdown menu accessible from the top right corner of
+            | your screen). These links will also be explained shortly and include
+            | a drop down menu to Create BOLO, Archive, Agency Directory, Search,
+            | Admin for the Administration and root users, a dropdown for user
+            | setting and a dropdown to Filter by Agency.
 
-            if (tier === 'OFFICER')
-                p
-                  | OFFICER
-                  | hello world
+    if (tier === 'ADMINISTRATOR' || tier === 'ROOT')
+        h3 User Management
+        P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
+        P &nbsp;&nbsp;&nbsp;&nbsp;2) Click on "User Management"
+        P &nbsp;&nbsp;&nbsp;&nbsp;3) Click on "Add New User"
+        P &nbsp;&nbsp;&nbsp;&nbsp;4) Fill in empty fields
+        P &nbsp;&nbsp;&nbsp;&nbsp;5) Click "Submit"
+    if (tier === 'ROOT')
+        h3  Agency management
+        P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
+        P &nbsp;&nbsp;&nbsp;&nbsp;2) Click on "Agency Management"
+        P &nbsp;&nbsp;&nbsp;&nbsp;3) Click on "Add new agency"
+        P &nbsp;&nbsp;&nbsp;&nbsp;4) Fill in empty fields
+        P &nbsp;&nbsp;&nbsp;&nbsp;5) Select new agency logo and shield images
+        P &nbsp;&nbsp;&nbsp;&nbsp;6) Click "Submit"
+        P
+        h3 Data Subscriber
+        P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
+        P &nbsp;&nbsp;&nbsp;&nbsp;2) Click on "Data Subscriber"
+        P &nbsp;&nbsp;&nbsp;&nbsp;3) Click on "Add New Data Subscriber"
+        P &nbsp;&nbsp;&nbsp;&nbsp;4) Fill in data subscriber's ID, Name and email
+        P &nbsp;&nbsp;&nbsp;&nbsp;5) Click "Submit"
+    if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
+        h3 Create BOLO
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Create BOLO" and select the type
+            | of BOLO you would like to create.
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Fill in required fields.
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) Select available images.
+        p &nbsp;&nbsp;&nbsp;&nbsp;4) Add a video link (if available)
+        p &nbsp;&nbsp;&nbsp;&nbsp;5) Add a summery.
+        p &nbsp;&nbsp;&nbsp;&nbsp;6) Click the "Preview" Button to make sure you
+            |have added everything.
+        p &nbsp;&nbsp;&nbsp;&nbsp;7) Click "Back to Create BOLO" to go back to the BOLO.
+        p &nbsp;&nbsp;&nbsp;&nbsp;8) Repeat Steps 2 - 7 until all information is complete.
+        p &nbsp;&nbsp;&nbsp;&nbsp;9) Click "Submit" to submit your BOLO.
+        p &nbsp;&nbsp;&nbsp;&nbsp;10) Goto to your registered email and click on
+            | the confirmation link.
+        p
+        h3 Edit (link at bottom of BOLO)
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Edit"
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Select any field you want to edit
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) Enter any information required
+        p &nbsp;&nbsp;&nbsp;&nbsp;4) Click "Submit"
+        p
+        H3 Details (link at bottom of BOLO)
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Details"
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Review details of a selected BOLO
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) Click "Home" to go back to the BOLOs
+        p
+    if (tier === 'ADMINISTRATOR' || tier === 'ROOT')
+        h3 Archive (link at bottom of BOLO)
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Archive"
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) The Bolo will be moved into the archived BOLOs
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) At this point you may "Restore," "Delete"
+            | or "Purge" the BOLO
+        p
+    if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
+        h3 Archive (link at the top)
+        P You may view archived BOLOs just in case you are looking for someone
+            | who fits the description of another crime.
+    if (tier === 'ADMINISTRATOR' || tier === 'ROOT')
+        P Each BOLO has three options that you may change.
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Status
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Restore
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) Delete
+    if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
+        h3 Agency
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click on agency to view a list of partnering
+            | agencies.
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Select an agency and view contact information
+            | or verify the agency's "Logo" and "Shield."
+        h3 Search
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Select any field(s) you wish to search.
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Enter information value of field(s).
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) Wild card search is for something you can not
+            | search with an optional search.
+        p &nbsp;&nbsp;&nbsp;&nbsp;4) Click "Search"
+        h3 Filter by Agency
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click Filter By Agency
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Select how you would like to view existing BOLO

@@ -7,7 +7,7 @@ mixin dropdown_menu ( label )
             'data-toggle'   : 'dropdown',
             'role'          : 'button',
             'aria-haspopup' : 'true',
-            'aria-expanded' : 'false'
+            'aria-expanded' : 'false',
         };
     li.dropdown
         a( class="dropdown_toggle" )&attributes( atts ) #{label}
@@ -15,7 +15,7 @@ mixin dropdown_menu ( label )
         ul.dropdown-menu
             block
 
-+nav( "BOLO Version 5.0", "bolo-nav" )
++nav( "BOLO", "bolo-nav" )
     if userLoggedIn
         ul.nav.navbar-nav
             li: a( href="/bolo" ) Home
@@ -31,5 +31,6 @@ mixin dropdown_menu ( label )
         ul.nav.navbar-nav.navbar-right
             +dropdown_menu(username)
                 li: a( href="/account" ) Setting
-                li: a(href="/userGuide") User Guide
+                li: a( href="/userGuide" ) User Guide
+                li: a( href="/aboutUs" ) About Us
                 li: a( href="/logout" ) Logout
