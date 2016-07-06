@@ -70,7 +70,8 @@ config.days = 30;
 
 config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
 
-
+// # of tries a user can attempt a login without being locked out of the system.
+config.MAX_INCORRECT_LOGINS = 10;
 /**
  * This configuration is a good candidate for a system admin controlled
  * system configuation property.

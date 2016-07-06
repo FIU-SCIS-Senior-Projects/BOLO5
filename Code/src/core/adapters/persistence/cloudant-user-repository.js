@@ -239,3 +239,22 @@ CloudantUserRepository.prototype.getByToken = function ( token ) {
         throw new Error( "Unable to retrive user data: " + msg );
     });
 };
+
+/*
+ * Get users from db by agency
+ */
+CloudantUserRepository.prototype.getUsersByAgency = function ( agency ) {
+  return db.view( 'users', 'by_agency', {
+      'key': agency,
+      'include_docs': true
+    }).then( function ( docs ) {
+        if ( ! docs.rows.length ) return Promise.resolve( null );
+
+        return docs.rows.map( function ( row ) {
+            return fromCloudant( row.doc );
+        });
+    }).catch( function ( error ) {
+        var msg = error.reason || error.mesage || error;
+        throw new Error( "Unable to retrive user data: " + msg );
+    });
+};
