@@ -66,17 +66,15 @@ function sendBoloNotificationEmail(bolo, template) {
     return agencyService.getAttachment(data.agency.id, 'shield')
   }).then(function(shield) {
     someData.shield = shield.data;
-    return agencyService.getAttachment(data.agency.id, 'watermark')
+    return agencyService.getAttachment(data.agency.id, 'watermark');
   }).then(function(watermark) {
     someData.watermark = watermark.data;
     return userService.getByUsername(bolo.authorUName);
   }).then(function(user) {
     data.user = user;
-  if (someData.watermark!==null) {
     doc.image(someData.watermark,0,0,{
       fit:[800,800]
     });
-  }
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });
@@ -1197,7 +1195,10 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return agencyService.getAgency(bolo.agency);
   }).then(function(agency) {
     data.agency = agency;
-    return agencyService.getAttachment(agency.id, 'logo')
+    return agencyService.getAttachment(agency.id, 'watermark')
+  }).then(function(watermark) {
+    someData.watermark = watermark.data;
+    return agencyService.getAttachment(data.agency.id, 'logo')
   }).then(function(logo) {
     someData.logo = logo.data;
     return agencyService.getAttachment(data.agency.id, 'shield')
@@ -1206,8 +1207,10 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return userService.getByUsername(data.bolo.authorUName);
   }).then(function(user) {
     data.user = user;
+    doc.image(someData.watermark, 0, 0, {
+      fit: [800, 800]
+    });
     pdfService.genDetailsPdf(doc, data);
-
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });

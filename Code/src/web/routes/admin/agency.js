@@ -4,6 +4,7 @@
 var _                   = require('lodash');
 var multiparty          = require('multiparty');
 var Promise             = require('promise');
+var path = require('path');
 
 var config              = require('../../config');
 var agencyRepository    = new config.AgencyRepository();
@@ -52,6 +53,7 @@ function getAgencyAttachments ( fields ) {
         result.push( fileDTO );
         validateWatermark = true;
     }
+  
 
     return ( result.length ) ? result : null;
 }
