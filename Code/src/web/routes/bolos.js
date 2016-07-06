@@ -334,7 +334,7 @@ router.get('/bolo/agency/:id', function(req, res, next) {
       var i;
       for (i = 0; i < agencies.length; i++) {
         if (agencies[i].data.id === req.user.agency) {
-          
+
           data.agency = agencies[i];
           data.userAgency = agencies[i].data;
 
@@ -522,7 +522,7 @@ router.get('/bolo/search/results', function(req, res) {
   });
 });
 
-router.get('/bolo/search', function(req, res) {
+router.get('/bolo/search/:type', function(req, res) {
   var data = {
     'form_errors': req.flash('form-errors')
   };
@@ -533,7 +533,12 @@ router.get('/bolo/search', function(req, res) {
       data.agencies.push(agency.data.name);
     }
 
-    res.render('bolo-search-form', data);
+    if(req.params.type === 'auto')
+        res.render('bolo-search-auto-form', data);
+    else if(req.params.type === 'boat')
+        res.render('bolo-search-boat-form', data);
+    else
+        res.render('bolo-search-form', data);
   });
 });
 
@@ -572,7 +577,7 @@ router.post('/bolo/search', function(req, res, next) {
           query_string += MATCH_EXPR;
           expression = false;
         }
-        query_string += key + ':' + value;
+        query_string += key + ':' + '"' + value + '"';
         expression = true;
       }
 
@@ -596,7 +601,7 @@ router.post('/bolo/search', function(req, res, next) {
             query_string += WILDCARD_EXPR;
             expression = false;
           }
-          query_string += key + ':' + value;
+          query_string += key + ':' + '"' + value + '"';
           expression = true;
         }
 

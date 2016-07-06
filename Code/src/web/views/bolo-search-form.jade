@@ -17,17 +17,23 @@ block content
 
     form#create-bolo-form(action="/bolo/search" enctype="multipart/form-data" method="post")
         input( type="hidden" name="status" value="New" )
+
+        div.text-danger.strong.h4 Search General Bolo
+
         +select_options( "agencyName", "Agency", agencies, true, "" )
         +select_options( "category", "Category", categories, true, "" )
         +input_text( "firstName", "First Name", "", false, "" )
         +input_text( "lastName", "Last Name", "", false,  "" )
-        +input_text( "dob", "Date of Birth (DD/MM/YYYY )", "DD/MM/YYYY", "" )
+        +input_text( "dob", "Date of Birth (MM/DD/YYYY )", "MM/DD/YYYY", "" )
         +input_text( "dlNumber", "Drivers License Number", "", false, "" )
+        +input_text( "address", "Address", "", false, "" )
+        +input_text( "zipCode", "Zip Code", "e.g. 33333", false, "" )
         +select_options( "race", "Race", races, false, "" )
         +select_options( "sex", "Sex", sex, false, "" )
         +input_text( "height", "Height - Feet-Inches (e.g. 05-09)", "e.g. 05-09", false, "" )
-        +input_text( "weight", "Weight - Pounds", "", false, "" )
+        +input_text( "weight", "Weight - Pounds", "e.g. 188", false, "" )
         +select_options( "hairColor", "Hair Color", hair_colors, false, "" )
+
         +input_text( "wildcard", "Wildcard Search", "", false, "" )
         +check_box("matchFields","Match Fields",true)
         .form-group
