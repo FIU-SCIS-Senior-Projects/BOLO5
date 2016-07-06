@@ -42,10 +42,10 @@ UserService.prototype.authenticate = function(username, password) {
     .then(function(user) {
       var authenticated = false;
 
-      //  console.log("the amount of incorrect logins are: "+ user.incorrectLogins)
+
       // if incorrect login attempts is greater than the max allowed lock the account
       if (user.incorrectLogins + 1 >= config.MAX_INCORRECT_LOGINS) {
-        //    console.log("The amount of incorrect logins triggered the if statement");
+
         authenticated = false;
         user.accountStatus = false;
         user.incorrectLogins = 100;
