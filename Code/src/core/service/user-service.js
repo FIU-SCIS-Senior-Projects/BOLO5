@@ -42,6 +42,30 @@ UserService.prototype.authenticate = function(username, password) {
     .then(function(user) {
       var authenticated = false;
 
+      //  console.log("the amount of incorrect logins are: "+ user.incorrectLogins)
+      // if incorrect login attempts is greater than the max allowed lock the account
+      if (user.incorrectLogins + 1 >= config.MAX_INCORRECT_LOGINS) {
+        //    console.log("The amount of incorrect logins triggered the if statement");
+        authenticated = false;
+        user.accountStatus = false;
+        user.incorrectLogins = 100;
+        account.status = user.accountStatus;
+        account.attemptsLeft = 0;
+
+        account.email = user.email;
+        account.agency = user.agency;
+        account.id = user.id;
+        account.username = user.fname + " " + user.lname;
+        account.user = null;
+
+      } else {
+
+        // otherwise maintain account active and calculate logins left
+        account.status = user.accountStatus;
+        account.attemptsLeft = config.MAX_INCORRECT_LOGINS  - (user.incorrectLogins + 1);
+
+      }
+
       // check username and password
       if (user && user.matchesCurrentPassword(password)) {
 
@@ -55,49 +79,24 @@ UserService.prototype.authenticate = function(username, password) {
         user.incorrectLogins += 1;
       }
 
-    //  console.log("the amount of incorrect logins are: "+ user.incorrectLogins)
-      // if incorrect login attempts is greater than the max allowed lock the account
-      if (user.incorrectLogins + 1>= config.MAX_INCORRECT_LOGINS) {
-    //    console.log("The amount of incorrect logins triggered the if statement");
-        authenticated = false;
-        user.accountStatus = false;
-        user.incorrectLogins = config.MAX_INCORRECT_LOGINS;
-        account.status = user.accountStatus;
-        account.attemptsLeft = 0;
 
-        account.email   = user.email;
-        account.agency  = user.agency;
-        account.id      = user.id;
-        account.username    = user.fname + " " + user.lname;
-        account.user = null;
-
-      } else {
-
-        // otherwise maintain account active and calculate logins left
-        account.status = user.accountStatus;
-        account.attemptsLeft = config.MAX_INCORRECT_LOGINS - user.incorrectLogins;
-
-      }
 
       // if loing was successful and account is active reset incorrect login counter
-      if(user.accountStatus && authenticated){
+      if (user.accountStatus && authenticated) {
 
-          user.incorrectLogins = 0;
+        user.incorrectLogins = 0;
+        account.user = user;
+      } else {
+
+        // default returns null as a user if login infor was incorrect
+        account.user = null;
       }
 
       // update the users with # of incorrect logins and account status
       context.userRepository.update(user);
 
-      // if user was authenticated return the user object
-      if (authenticated) {
 
-        account.user = user;
 
-        return account;
-      }
-
-      // default returns null as a user if login infor was incorrect
-      account.user = null;
       return account;
     })
     .catch(function(error) {
