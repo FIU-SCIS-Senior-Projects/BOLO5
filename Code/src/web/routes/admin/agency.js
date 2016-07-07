@@ -53,7 +53,7 @@ function getAgencyAttachments ( fields ) {
         result.push( fileDTO );
         validateWatermark = true;
     }
-  
+
 
     return ( result.length ) ? result : null;
 }

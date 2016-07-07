@@ -49,6 +49,7 @@ function sendBoloNotificationEmail(bolo, template) {
   var data = {};
   var someData = {};
   var sort = 'username';
+  var existWatermark=false;
 
   var doc = new PDFDocument();
 
@@ -60,21 +61,31 @@ function sendBoloNotificationEmail(bolo, template) {
     return agencyService.getAgency(bolo.agency);
   }).then(function(agency) {
     data.agency = agency;
+    console.log(agency);
+    if(agency.attachments['watermark']!=null){
+      existWatermark=true;
+    }
     return agencyService.getAttachment(agency.id, 'logo')
   }).then(function(logo) {
     someData.logo = logo.data;
     return agencyService.getAttachment(data.agency.id, 'shield')
   }).then(function(shield) {
     someData.shield = shield.data;
-    return agencyService.getAttachment(data.agency.id, 'watermark');
+    if(existWatermark)
+      return agencyService.getAttachment(data.agency.id, 'watermark');
+   else
+    return null;
   }).then(function(watermark) {
-    someData.watermark = watermark.data;
+    if(existWatermark)
+      someData.watermark = watermark.data;
     return userService.getByUsername(bolo.authorUName);
   }).then(function(user) {
     data.user = user;
-    doc.image(someData.watermark,0,0,{
-      fit:[800,800]
-    });
+    if(existWatermark){
+      doc.image(someData.watermark,0,0,{
+        fit:[800,800]
+      });
+    }
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });
@@ -772,16 +783,24 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         var doc = new PDFDocument();
         var someData = {};
-
+        var checkWatermark=false;
 
         /** @todo must handle when featured image is empty **/
 
-
-        agencyService.getAttachment(pData[0].agency, 'watermark').then(function(watermarkDTO) {
+        agencyService.hasWatermark(pData[0].agency).then(function(hasWatermark){
+          if(hasWatermark){
+            checkWatermark=true;
+            return   agencyService.getAttachment(pData[0].agency, 'watermark');}
+          else {
+              return null;
+          }
+        }).then(function(watermarkDTO) {
+          if(checkWatermark){
           someData.watermark = watermarkDTO.data;
             doc.image(someData.watermark,0,0,{
               fit:[800,800]
             });
+          }
         return agencyService.getAttachment(pData[0].agency, 'logo')
           }).then(function(logoDTO) {
           someData.logo = logoDTO.data;
@@ -1186,7 +1205,7 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
   var someData = {};
 
   var doc = new PDFDocument();
-
+  var existWatermark=false;
   boloService.getAttachment(req.params.id, 'featured').then(function(attDTO) {
     someData.featured = attDTO.data;
     return boloService.getBolo(req.params.id);
@@ -1195,9 +1214,16 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return agencyService.getAgency(bolo.agency);
   }).then(function(agency) {
     data.agency = agency;
-    return agencyService.getAttachment(agency.id, 'watermark')
+    if(agency.attachments['watermark']!=null){
+      existWatermark=true;
+    }
+    if(existWatermark)
+      return agencyService.getAttachment(agency.id, 'watermark');
+    else
+        return null;
   }).then(function(watermark) {
-    someData.watermark = watermark.data;
+    if(existWatermark)
+      someData.watermark = watermark.data;
     return agencyService.getAttachment(data.agency.id, 'logo')
   }).then(function(logo) {
     someData.logo = logo.data;
@@ -1207,9 +1233,10 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return userService.getByUsername(data.bolo.authorUName);
   }).then(function(user) {
     data.user = user;
+    if(existWatermark){
     doc.image(someData.watermark, 0, 0, {
       fit: [800, 800]
-    });
+    });}
     pdfService.genDetailsPdf(doc, data);
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
