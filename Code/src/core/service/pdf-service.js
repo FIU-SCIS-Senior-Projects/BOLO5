@@ -6,36 +6,31 @@ function PDFService() {
 
 }
 
-PDFService.prototype.genUserGuide = function(doc, data) {
-
+PDFService.prototype.genUserGuide = function(user, doc) {
+    var intro = "   logging in you will be brought to the home page. This is where you will be "
+        + "able to view your BOLOs. Each BOLO has several buttons on it that will be "
+        + "explained later. From the home page, you will see several other links across "
+        + "the top (mobile will be in a dropdown menu accessible from the top right corner) "
+        + "of your screen). These links will also be explained shortly and include a drop "
+        + "down menu to Create BOLO, Archive, Agency Directory, Search, Admin for the "
+        + "Administration and root users, a dropdown for user setting and a dropdown to "
+        + "Filter by Agency";
     // Introduction for tier levels
+    doc.image('../web/public/img/BOLObanner.jpg', 10, 10,{scale: 1.0});
+    doc.fillColor('red');
+    doc.text("UNCLASSIFIED// FOR OFFICIAL LAW ENFORCEMENT USE ONLY", 100, 200,{align: 'center'})
+        .moveDown(.5);
     doc.fillColor('black');
-    doc.font('Times-Roman')
+    doc.font('Times-Roman');
     doc.fontSize(15);
-    doc.text("Introduction").moveDown(0.5);
+    doc.text("Introduction",{align: 'center'}).moveDown(0.5);
     doc.fontSize(12);
-    doc.text("  logging in you will be brought to the home page. This is where you will be",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("able to view your BOLOs. Each BOLO has several buttons on it that will be",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("explained later. From the home page, you will see several other links across",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("the top (mobile will be in a dropdown menu accessible from the top right corner)",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("of your screen). These links will also be explained shortly and include a drop",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("down menu to Create BOLO, Archive, Agency Directory, Search, Admin for the",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("Administration and root users, a dropdown for user setting and a dropdown to",0,410, {align: 'left'})
-    .moveDown(0.25);
-    doc.text("Filter by Agency",0,410, {align: 'left'})
-    .moveDown();
+    doc.text(intro,{align: 'left'}).moveDown(2);
 
-    // need if for root and Admin
-    {
-        // User management
+    // User management
+    if ( user.tier === 4 ){
         doc.fontSize(15);
-        doc.text("User Management").moveDown(0.5);
+        doc.text("User Management").moveDown(0.25);
         doc.fontSize(12);
         doc.text("  1) Click on 'Admin'", {align: 'left'})
         .moveDown(0.25);
@@ -49,11 +44,11 @@ PDFService.prototype.genUserGuide = function(doc, data) {
         .moveDown();
     }
 
-    // need if for root
-    {
-        // agency management
+    // agency management
+    if ( user.tier === 4 || user.tier === 3 ){
+
         doc.fontSize(15);
-        doc.text("Agencgy Management").moveDown(0.5);
+        doc.text("Agencgy Management").moveDown(0.25);
         doc.fontSize(12);
         doc.text("  1) Click on 'Admin'", {align: 'left'})
         .moveDown(0.25);
@@ -70,7 +65,7 @@ PDFService.prototype.genUserGuide = function(doc, data) {
 
         // Data Subscriber
         doc.fontSize(15);
-        doc.text("Agencgy Management").moveDown(0.5);
+        doc.text("Data Subscriber").moveDown(0.25);
         doc.fontSize(12);
         doc.text("  1) Click on 'Admin'", {align: 'left'})
         .moveDown(0.25);
@@ -87,7 +82,7 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Create BOLO
     doc.fontSize(15);
-    doc.text("Agencgy Management").moveDown(0.5);
+    doc.text("Create a BOLO").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  1) Click 'Create BOLO' and select the type of BOLO you would like to create.", {align: 'left'})
     .moveDown(0.25);
@@ -113,7 +108,7 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Edit (link at bottom of BOLO)
     doc.fontSize(15);
-    doc.text("Edit (link at bottom of BOLO)").moveDown(0.5);
+    doc.text("Edit (link at bottom of BOLO)").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  1) Click on 'Edit'", {align: 'left'})
     .moveDown(0.25);
@@ -127,7 +122,7 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Details (link at bottom of BOLO)
     doc.fontSize(15);
-    doc.text("Edit (link at bottom of BOLO)").moveDown(0.5);
+    doc.text("Edit (link at bottom of BOLO)").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  1) Click on 'Details'", {align: 'left'})
     .moveDown(0.25);
@@ -138,10 +133,10 @@ PDFService.prototype.genUserGuide = function(doc, data) {
 
 
     // need if for admin and root
-    {
+    if ( user.tier === 4 ||  user.tier === 3 ){
         // Archive (link at bottom of BOLO)
         doc.fontSize(15);
-        doc.text("Archive (link at bottom of BOLO)").moveDown(0.5);
+        doc.text("Archive (link at bottom of BOLO)").moveDown(0.25);
         doc.fontSize(12);
         doc.text("  1) Click on 'Archive'", {align: 'left'})
         .moveDown(0.25);
@@ -154,16 +149,16 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Archive (link at the top)
     doc.fontSize(15);
-    doc.text("Archive (link at the top)").moveDown(0.5);
+    doc.text("Archive (link at the top)").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  You may view archived BOLOs just in case you are looking for someone who fits the description of another crime.", {align: 'justify'})
     .moveDown(0.25);
 
     // need if for admin and root
-    {
+    if ( user.tier === 4 || user.tier === 3 ){
         // Data Subscriber
         doc.fontSize(15);
-        doc.text("Each BOLO has three options that you may change").moveDown(0.5);
+        doc.text("Each BOLO has three options that you may change").moveDown(0.25);
         doc.fontSize(12);
         doc.text("  1) Status", {align: 'left'})
         .moveDown(0.25);
@@ -177,7 +172,7 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Agency
     doc.fontSize(15);
-    doc.text("Agency").moveDown(0.5);
+    doc.text("Agency").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  1) Click on agency to view a list of partnering agencies.", {align: 'left'})
     .moveDown(0.25);
@@ -187,7 +182,7 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Search
     doc.fontSize(15);
-    doc.text("Search").moveDown(0.5);
+    doc.text("Search").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  1) Select any field(s) you wish to search.", {align: 'left'})
     .moveDown(0.25);
@@ -201,15 +196,14 @@ PDFService.prototype.genUserGuide = function(doc, data) {
     // print for ALL user
     // Filter by Agency
     doc.fontSize(15);
-    doc.text("Search").moveDown(0.5);
+    doc.text("FIlter by Agency").moveDown(0.25);
     doc.fontSize(12);
     doc.text("  1) Click on 'Details'", {align: 'left'})
     .moveDown(0.25);
     doc.text("  2) Review details of a selected BOLO", {align: 'left'})
     .moveDown(0.25);
-    doc.text("  3) 3) Click 'Home' to go back to the BOLOs", {align: 'left'})
+    doc.text("  3) Click 'Home' to go back to the BOLOs", {align: 'left'})
     .moveDown();
-
     return doc;
 }
 
