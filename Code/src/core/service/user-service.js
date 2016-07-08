@@ -48,7 +48,7 @@ UserService.prototype.authenticate = function(username, password) {
 
         authenticated = false;
         user.accountStatus = false;
-        user.incorrectLogins = 100;
+        user.incorrectLogins += 1;
         account.status = user.accountStatus;
         account.attemptsLeft = 0;
 

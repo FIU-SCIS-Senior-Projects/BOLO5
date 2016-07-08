@@ -49,6 +49,7 @@ function sendBoloNotificationEmail(bolo, template) {
   var data = {};
   var someData = {};
   var sort = 'username';
+  var existWatermark=false;
 
   var doc = new PDFDocument();
 
@@ -60,16 +61,31 @@ function sendBoloNotificationEmail(bolo, template) {
     return agencyService.getAgency(bolo.agency);
   }).then(function(agency) {
     data.agency = agency;
+    console.log(agency);
+    if(agency.attachments['watermark']!=null){
+      existWatermark=true;
+    }
     return agencyService.getAttachment(agency.id, 'logo')
   }).then(function(logo) {
     someData.logo = logo.data;
     return agencyService.getAttachment(data.agency.id, 'shield')
   }).then(function(shield) {
     someData.shield = shield.data;
+    if(existWatermark)
+      return agencyService.getAttachment(data.agency.id, 'watermark');
+   else
+    return null;
+  }).then(function(watermark) {
+    if(existWatermark)
+      someData.watermark = watermark.data;
     return userService.getByUsername(bolo.authorUName);
   }).then(function(user) {
     data.user = user;
-    pdfService.genDetailsPdf(doc, data);
+    if(existWatermark){
+      doc.image(someData.watermark,0,0,{
+        fit:[800,800]
+      });
+    }
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });
@@ -79,6 +95,7 @@ function sendBoloNotificationEmail(bolo, template) {
     doc.image(someData.shield, 500, 15, {
       height: 100
     });
+    pdfService.genDetailsPdf(doc, data);
     doc.end();
 
   })
@@ -334,7 +351,7 @@ router.get('/bolo/agency/:id', function(req, res, next) {
       var i;
       for (i = 0; i < agencies.length; i++) {
         if (agencies[i].data.id === req.user.agency) {
-          
+
           data.agency = agencies[i];
           data.userAgency = agencies[i].data;
 
@@ -522,7 +539,7 @@ router.get('/bolo/search/results', function(req, res) {
   });
 });
 
-router.get('/bolo/search', function(req, res) {
+router.get('/bolo/search/:type', function(req, res) {
   var data = {
     'form_errors': req.flash('form-errors')
   };
@@ -533,7 +550,12 @@ router.get('/bolo/search', function(req, res) {
       data.agencies.push(agency.data.name);
     }
 
-    res.render('bolo-search-form', data);
+    if(req.params.type === 'auto')
+        res.render('bolo-search-auto-form', data);
+    else if(req.params.type === 'boat')
+        res.render('bolo-search-boat-form', data);
+    else
+        res.render('bolo-search-form', data);
   });
 });
 
@@ -572,7 +594,7 @@ router.post('/bolo/search', function(req, res, next) {
           query_string += MATCH_EXPR;
           expression = false;
         }
-        query_string += key + ':' + value;
+        query_string += key + ':' + '"' + value + '"';
         expression = true;
       }
 
@@ -596,7 +618,7 @@ router.post('/bolo/search', function(req, res, next) {
             query_string += WILDCARD_EXPR;
             expression = false;
           }
-          query_string += key + ':' + value;
+          query_string += key + ':' + '"' + value + '"';
           expression = true;
         }
 
@@ -766,31 +788,26 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         var doc = new PDFDocument();
         var someData = {};
-        pdfService.genPreviewPDF(doc, pData[0]);
+        var checkWatermark=false;
 
         /** @todo must handle when featured image is empty **/
-        if (pData[0].image === "none") {
-          if (boloDTO.category === "THEFT - AUTO") {
-            doc.image("src/web/public/img/nopicautos.png", 15, 150, {
-              height: 200
-            });
-          } else if (boloDTO.category === "THEFT - BOAT") {
-            doc.image("src/web/public/img/nopicboats.png", 15, 150, {
-              height: 200
-            });
-          } else {
-            doc.image("src/web/public/img/nopic.png", 15, 150, {
-              height: 200
+
+        agencyService.hasWatermark(pData[0].agency).then(function(hasWatermark){
+          if(hasWatermark){
+            checkWatermark=true;
+            return   agencyService.getAttachment(pData[0].agency, 'watermark');}
+          else {
+              return null;
+          }
+        }).then(function(watermarkDTO) {
+          if(checkWatermark){
+          someData.watermark = watermarkDTO.data;
+            doc.image(someData.watermark,0,0,{
+              fit:[800,800]
             });
           }
-        } else {
-          someData.featured = pData[0].image;
-          doc.image(someData.featured, 15, 150, {
-            fit: [260, 200]
-          });
-        }
-
-        agencyService.getAttachment(pData[0].agency, 'logo').then(function(logoDTO) {
+        return agencyService.getAttachment(pData[0].agency, 'logo')
+          }).then(function(logoDTO) {
           someData.logo = logoDTO.data;
           doc.image(someData.logo, 15, 15, {
             height: 100
@@ -801,6 +818,27 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
           doc.image(someData.shield, 500, 15, {
             height: 100
           });
+          pdfService.genPreviewPDF(doc, pData[0]);
+          if (pData[0].image === "none") {
+            if (boloDTO.category === "THEFT - AUTO") {
+              doc.image("src/web/public/img/nopicautos.png", 15, 150, {
+                height: 200
+              });
+            } else if (boloDTO.category === "THEFT - BOAT") {
+              doc.image("src/web/public/img/nopicboats.png", 15, 150, {
+                height: 200
+              });
+            } else {
+              doc.image("src/web/public/img/nopic.png", 15, 150, {
+                height: 200
+              });
+            }
+          } else {
+            someData.featured = pData[0].image;
+            doc.image(someData.featured, 15, 150, {
+              fit: [260, 200]
+            });
+          }
           doc.end();
           res.contentType("application/pdf");
           doc.pipe(res);
@@ -1172,7 +1210,7 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
   var someData = {};
 
   var doc = new PDFDocument();
-
+  var existWatermark=false;
   boloService.getAttachment(req.params.id, 'featured').then(function(attDTO) {
     someData.featured = attDTO.data;
     return boloService.getBolo(req.params.id);
@@ -1181,7 +1219,17 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return agencyService.getAgency(bolo.agency);
   }).then(function(agency) {
     data.agency = agency;
-    return agencyService.getAttachment(agency.id, 'logo')
+    if(agency.attachments['watermark']!=null){
+      existWatermark=true;
+    }
+    if(existWatermark)
+      return agencyService.getAttachment(agency.id, 'watermark');
+    else
+        return null;
+  }).then(function(watermark) {
+    if(existWatermark)
+      someData.watermark = watermark.data;
+    return agencyService.getAttachment(data.agency.id, 'logo')
   }).then(function(logo) {
     someData.logo = logo.data;
     return agencyService.getAttachment(data.agency.id, 'shield')
@@ -1190,8 +1238,11 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return userService.getByUsername(data.bolo.authorUName);
   }).then(function(user) {
     data.user = user;
+    if(existWatermark){
+    doc.image(someData.watermark, 0, 0, {
+      fit: [800, 800]
+    });}
     pdfService.genDetailsPdf(doc, data);
-
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
     });

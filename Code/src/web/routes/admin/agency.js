@@ -4,6 +4,7 @@
 var _                   = require('lodash');
 var multiparty          = require('multiparty');
 var Promise             = require('promise');
+var path = require('path');
 
 var config              = require('../../config');
 var agencyRepository    = new config.AgencyRepository();
@@ -31,6 +32,7 @@ function getAgencyAttachments ( fields ) {
     var fileDTO;
     var validateShield = false;
     var validateLogo = false;
+    var validateWatermark=false;
 
     if ( fields.logo_upload && isImage( fields.logo_upload  ) ) {
         fileDTO = _.assign( {}, fields.logo_upload );
@@ -45,6 +47,13 @@ function getAgencyAttachments ( fields ) {
         result.push( fileDTO );
         validateShield = true;
     }
+    if ( fields.watermark_upload && isImage( fields.watermark_upload ) ) {
+        fileDTO = _.assign( {}, fields.watermark_upload );
+        fileDTO.name = 'watermark';
+        result.push( fileDTO );
+        validateWatermark = true;
+    }
+
 
     return ( result.length ) ? result : null;
 }
