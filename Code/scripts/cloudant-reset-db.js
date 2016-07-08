@@ -30,6 +30,10 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.category) !== 'undefined') {
     index("category", doc.category);
   }
+
+
+
+  //For General Bolo
   if (typeof(doc.firstName) !== 'undefined') {
     index("firstName", doc.firstName);
   }
@@ -41,6 +45,12 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.dlNumber) !== 'undefined') {
     index("dlNumber", doc.dlNumber);
+  }
+  if (typeof(doc.address) !== 'undefined') {
+    index("address", doc.address);
+  }
+  if (typeof(doc.zipCode) !== 'undefined') {
+    index("zipCode", doc.zipCode);
   }
   if (typeof(doc.race) !== 'undefined') {
     index("race", doc.race);
@@ -57,9 +67,92 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.hairColor) !== 'undefined') {
     index("hairColor", doc.hairColor);
   }
-  if (typeof(doc.hairColor) !== 'undefined') {
-    index("hairColor", doc.hairColor);
+
+  //For Theft - Auto
+  if (typeof(doc.vehicleMake) !== 'undefined') {
+    index("vehicleMake", doc.vehicleMake);
   }
+  if (typeof(doc.vehicleModel) !== 'undefined') {
+    index("vehicleModel", doc.vehicleModel);
+  }
+  if (typeof(doc.vehicleColor) !== 'undefined') {
+    index("vehicleColor", doc.vehicleColor);
+  }
+  if (typeof(doc.vehicleYear) !== 'undefined') {
+    index("vehicleYear", doc.vehicleYear);
+  }
+  if (typeof(doc.vehicleTrim) !== 'undefined') {
+    index("vehicleTrim", doc.vehicleTrim);
+  }
+  if (typeof(doc.vehicleLicensePlate) !== 'undefined') {
+    index("vehicleLicensePlate", doc.vehicleLicensePlate);
+  }
+  if (typeof(doc.vehicleIdNumber) !== 'undefined') {
+    index("vehicleIdNumber", doc.vehicleIdNumber);
+  }
+
+  //For Theft - Boat
+  //Vessel
+  if (typeof(doc.boatYear) !== 'undefined') {
+    index("boatYear", doc.boatYear);
+  }
+  if (typeof(doc.boatManufacturer) !== 'undefined') {
+    index("boatManufacturer", doc.boatManufacturer);
+  }
+  if (typeof(doc.boatType) !== 'undefined') {
+    index("boatType", doc.boatType);
+  }
+  if (typeof(doc.boatLength) !== 'undefined') {
+    index("boatLength", doc.boatLength);
+  }
+  if (typeof(doc.boatColor) !== 'undefined') {
+    index("boatColor", doc.boatColor);
+  }
+  if (typeof(doc.boatHullIdNumber) !== 'undefined') {
+    index("boatHullIdNumber", doc.boatHullIdNumber);
+  }
+  if (typeof(doc.boatRegistrationNumberSt) !== 'undefined') {
+    index("boatRegistrationNumberSt", doc.boatRegistrationNumberSt);
+  }
+  if (typeof(doc.boatRegistrationNumberNu) !== 'undefined') {
+    index("boatRegistrationNumberNu", doc.boatRegistrationNumberNu);
+  }
+
+  //Propulsion
+  if (typeof(doc.propulsion) !== 'undefined') {
+    index("propulsion", doc.propulsion);
+  }
+  if (typeof(doc.propulsionType) !== 'undefined') {
+    index("propulsionType", doc.propulsionType);
+  }
+  if (typeof(doc.propulsionMake) !== 'undefined') {
+    index("propulsionMake", doc.propulsionMake);
+  }
+  if (typeof(doc.propulsionModel) !== 'undefined') {
+    index("propulsionModel", doc.propulsionModel);
+  }
+  if (typeof(doc.propulsionSerialNumber) !== 'undefined') {
+    index("propulsionSerialNumber", doc.propulsionSerialNumber);
+  }
+
+  //Trailer
+  if (typeof(doc.trailer) !== 'undefined') {
+    index("trailer", doc.trailer);
+  }
+  if (typeof(doc.trailerManufacturer) !== 'undefined') {
+    index("trailerManufacturer", doc.trailerManufacturer);
+  }
+  if (typeof(doc.trailerVIN) !== 'undefined') {
+    index("trailerVIN", doc.trailerVIN);
+  }
+  if (typeof(doc.trailerTagLicenseState) !== 'undefined') {
+    index("trailerTagLicenseState", doc.trailerTagLicenseState);
+  }
+  if (typeof(doc.trailerTagLicenseNumber) !== 'undefined') {
+    index("trailerTagLicenseNumber", doc.trailerTagLicenseNumber);
+  }
+
+  //Others
   if (typeof(doc.additional) !== 'undefined') {
     index("additional", doc.additional);
   }
@@ -71,6 +164,9 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.record) !== 'undefined') {
     index("record", doc.record);
+  }
+  if (typeof(doc.isActive) !== 'undefined') {
+    index("isActive", doc.isActive);
   }
 };
 

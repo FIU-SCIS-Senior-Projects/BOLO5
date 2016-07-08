@@ -1,22 +1,28 @@
+
 include ./includes/mixins.jade
-include ../routes/bolos.js
 extends ./layout.jade
+
 
 block jumbo
     .jumbotron
         .container
-            p Create a BOLO
+            p Search BOLOs
 
 block content
     include ./partials/global-alerts.jade
+
     include ./partials/bolo-options.jade
 
-    form#create-bolo-form(action= "/bolo/create" enctype="multipart/form-data" method="post")
-        input( type = "hidden" name="status" value="new")
+    form#create-bolo-form(action="/bolo/search" enctype="multipart/form-data" method="post")
+        input( type="hidden" name="status" value="New" )
 
-        +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
+        div.text-danger.strong.h4 Search Theft - Boat
 
-        div.h4 VESSEL
+        +select_options( "agencyName", "Agency", agencies, true, "" )
+        +select_options( "category", "Category", categoriesBoat, true, "" )
+        //+input_text_static( "category", "Category", "", false, "THEFT - BOAT")
+
+        div.text-danger.strong.h4 Vessel
 
         +input_text( "boatYear", "Year", "e.g. 2016", false, "" )
         +input_text( "boatManufacturer", "Manufacturer", "", false, "" )
@@ -30,7 +36,7 @@ block content
             .col-md-8
                 +input_text( "boatRegistrationNumberNu", "", "e.g. 1234AB", false, "" )
 
-        div.h4 PROPULSION
+        div.text-danger.strong.h4 Propulsion
 
         +select_options( "propulsion", "Propulsion", v_propulsion, false, "" )
         +select_options( "propulsionType", "Type", v_propulsion_type, false, "" )
@@ -38,7 +44,7 @@ block content
         +input_text( "propulsionModel", "Model", "", false, "" )
         +input_text( "propulsionSerialNumber", "Serial Number", "", false, "" )
 
-        div.h4 TRAILER
+        div.text-danger.strong.h4 Trailer
 
         +select_options( "trailer", "Trailer", v_trailer, false, "" )
         +select_options( "trailerManufacturer", "Manufacturer", v_trailer_manufacturer, false, "" )
@@ -49,23 +55,7 @@ block content
             .col-md-8
                 +input_text( "trailerTagLicenseNumber", "", "Only Numbers", false, "" )
 
-        .form-group.row
-            .col-md-4
-                label.control-label( for="featured_image" ) Featured Image
-                input( name="featured_image" type="file" accept="image/*" )
-
-            .col-md-4
-                label.control-label( for="featured_image" ) Image Upload
-                input( name="image_upload[]" type="file" accept="image/*" )
-
-            .col-md-4
-                label.control-label( for="featured_image" ) Image Upload
-                input( name="image_upload[]" type="file" accept="image/*" )
-
-        +input_text( "video_url", "Video Link", "", false, "", "url" )
-        +input_textarea( "additional", "Additional Info", "", false, "" )
-        +input_textarea( "summary", "Summary", "", false, "" )
-
+        +input_text( "wildcard", "Wildcard Search", "", false, "" )
+        +check_box("matchFields","Match Fields",true)
         .form-group
-            button.btn.btn-default( name = "option" type = "submit" value = "submit") SUBMIT
-            button.btn.btn-default( name = "option" type = "submit" value = "preview" ) PREVIEW
+            button.btn.btn-primary( type="submit" value="save") Search

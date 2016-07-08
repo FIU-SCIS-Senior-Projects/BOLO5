@@ -21,10 +21,14 @@ block admin-content
                 label.control-label(for="role") Role
                 select.form-control(name="role")
                     each role in roles
+                      if ( (tier === 'ROOT' )&&(  /root/i.test(role) ))
                         - var formattedRole = _.startCase( role.toLowerCase() );
                         - var sel = ( role === user.roleName() );
                         option(value=role, selected=sel) #{formattedRole}
-
+                      else if ((  ! /root/i.test(role) ))
+                       - var formattedRole = _.startCase( role.toLowerCase() );
+                       - var sel = ( role === user.roleName() );
+                       option(value=role, selected=sel) #{formattedRole}
         if ( agencies )
             .form-group
                 label.control-label( for="agency" ) Agency

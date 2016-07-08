@@ -24,7 +24,10 @@ mixin dropdown_menu ( label )
                     li: a( href="/bolo/create/generalbolo" ) General
             li: a( href="/bolo/archive" ) Archive
             li: a( href="/agency" ) Agency Directory
-            li: a( href="/bolo/search" ) Search
+            +dropdown_menu( 'SEARCH BOLO' )
+                li: a( href="/bolo/search/generalbolo" ) GENERAL BOLO
+                li: a( href="/bolo/search/auto" ) THEFT - AUTO
+                li: a( href="/bolo/search/boat" ) THEFT - BOAT
             if (tier === 'ROOT' || tier === 'ADMINISTRATOR')
                 li: a( href="/admin" ) Admin
         ul.nav.navbar-nav.navbar-right
