@@ -33,13 +33,13 @@ block content
 
         +input_text_static( "category", "Category", "", false, "THEFT - AUTO")
 
-        +input_text( "vehicleYear", "Year", "e.g. 2016", false,  bolo.vehicleYear )
+        +input_text( "vehicleYear", "Year", "", false,  bolo.vehicleYear )
         +select_options( "vehicleMake", "Make", vehicles_makes, false, bolo.vehicleMake  )
         +input_text( "vehicleModel", "Model", "", false,  bolo.vehicleModel )
-        +input_text( "vehicleTrim", "Trim", "", false,  bolo.vehicleTrim )
+        +select_options( "vehicleStyle", "Style", v_style, false, bolo.vehicleStyle )
         +input_text( "vehicleColor", "Color", "", false, bolo.vehicleColor )
+        +input_text( "vehicleIdNumber", "Vehicle Identification Number", "", false,  bolo.vehicleIdNumber )
         +input_text( "vehicleLicensePlate", "License Plate", "", false, bolo.vehicleLicensePlate )
-        +input_text( "vehicleIdNumber", "Vehicle Identification Number (VIN)", "", false,  bolo.vehicleIdNumber )
 
 
         .form-group.row

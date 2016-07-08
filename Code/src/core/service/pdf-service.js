@@ -271,10 +271,10 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                     .moveDown();
         }
 
-        // Display trim only if there is a value in it
-        if(data.bolo['vehicleTrim'] !== ""){
+        // Display Style only if there is a value in it
+        if(data.bolo['vehicleStyle'] !== ""){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['vehicleTrim'], 300)
+                .text("Type: " + data.bolo['vehicleStyle'], 300)
                 .moveDown();
         }
 
@@ -285,17 +285,17 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
+        // Display VIN only if there is a value in it
+        if(data.bolo['vehicleIdNumber'] !== ""){
+            doc.font('Times-Roman')
+                .text("Identification Number: " + data.bolo['vehicleIdNumber'], 300)
+                .moveDown();
+        }
+
         // Display License Plate only if there is a value in it
         if(data.bolo['vehicleLicensePlate'] !== "" ){
             doc.font('Times-Roman')
                 .text("License Plate: " + data.bolo['vehicleLicensePlate'], 300)
-                .moveDown();
-        }
-
-        // Display VIN only if there is a value in it
-        if(data.bolo['vehicleIdNumber'] !== ""){
-            doc.font('Times-Roman')
-                .text("Identification Number (VIN): " + data.bolo['vehicleIdNumber'], 300)
                 .moveDown();
         }
     }
@@ -321,6 +321,13 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
         if(data.bolo.boatManufacturer !== ""){
             doc.font('Times-Roman')
                 .text("Manufacturer: " + data.bolo.boatManufacturer, 300)
+                .moveDown();
+        }
+
+        // Display Model only if there is a value in it
+        if(data.bolo['boatModel'] !== ""){
+            doc.font('Times-Roman')
+                .text("Model: " + data.bolo['boatModel'], 300)
                 .moveDown();
         }
 
@@ -377,7 +384,7 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
         // Display Type only if there is a value in it
         if(data.bolo['propulsionType'] !== ""){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['propulsionType'], 300)
+                .text("Motor Type: " + data.bolo['propulsionType'], 300)
                 .moveDown();
         }
 
@@ -388,20 +395,6 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
-        // Display Model only if there is a value in it
-        if(data.bolo['propulsionModel'] !== ""){
-            doc.font('Times-Roman')
-                .text("Model: " + data.bolo['propulsionModel'], 300)
-                .moveDown();
-        }
-
-        // Display Serial Number only if there is a value in it
-        if(data.bolo['propulsionSerialNumber'] !== ""){
-            doc.font('Times-Roman')
-                .text("Serial Number: " + data.bolo['propulsionSerialNumber'], 300)
-                .moveDown();
-        }
-        
             //Display tittle TRAILER
             doc.fillColor('red');
             doc.fontSize(11);
@@ -427,7 +420,7 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
             // Display Vehicle ID Number only if there is a value in it
             if(data.bolo['trailerVIN'] !== ""){
                 doc.font('Times-Roman')
-                    .text("Vehicle ID Number: " + data.bolo['trailerVIN'], 300)
+                    .text("Vehicle Identification Number: " + data.bolo['trailerVIN'], 300)
                     .moveDown();
             }
 
@@ -614,10 +607,10 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         }
 
 
-        // Display Trim only if there is a value in it
-        if(data.bolo['vehicleTrim'] !== ""){
+        // Display Style only if there is a value in it
+        if(data.bolo['vehicleStyle'] !== ""){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['vehicleTrim'], 300)
+                .text("Type: " + data.bolo['vehicleStyle'], 300)
                 .moveDown();
         }
 
@@ -628,6 +621,13 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
+        // Display VIN only if there is a value in it
+        if(data.bolo['vehicleIdNumber'] !== ""){
+            doc.font('Times-Roman')
+                .text("Identification Number: " + data.bolo['vehicleIdNumber'], 300)
+                .moveDown();
+        }
+
         // Display License Plate only if there is a value in it
         if(data.bolo['vehicleLicensePlate'] !== ""){
             doc.font('Times-Roman')
@@ -635,12 +635,6 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
                 .moveDown();
         }
 
-        // Display VIN only if there is a value in it
-        if(data.bolo['vehicleIdNumber'] !== ""){
-            doc.font('Times-Roman')
-                .text("Identification Number (VIN): " + data.bolo['vehicleIdNumber'], 300)
-                .moveDown();
-        }
     }
     else if(data.bolo.category === "THEFT - BOAT"){  //PDF for theft - boat
 
@@ -664,6 +658,13 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         if(data.bolo.boatManufacturer !== ""){
             doc.font('Times-Roman')
                 .text("Manufacturer: " + data.bolo.boatManufacturer, 300)
+                .moveDown();
+        }
+
+        // Display Model only if there is a value in it
+        if(data.bolo['boatModel'] !== ""){
+            doc.font('Times-Roman')
+                .text("Model: " + data.bolo['boatModel'], 300)
                 .moveDown();
         }
 
@@ -720,7 +721,7 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         // Display Type only if there is a value in it
         if(data.bolo['propulsionType'] !== ""){
             doc.font('Times-Roman')
-                .text("Type: " + data.bolo['propulsionType'], 300)
+                .text("Motor Type: " + data.bolo['propulsionType'], 300)
                 .moveDown();
         }
 
@@ -728,20 +729,6 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         if(data.bolo['propulsionMake'] !== ""){
             doc.font('Times-Roman')
                 .text("Make: " + data.bolo['propulsionMake'], 300)
-                .moveDown();
-        }
-
-        // Display Propulsion Model only if there is a value in it
-        if(data.bolo['propulsionModel'] !== ""){
-            doc.font('Times-Roman')
-                .text("Model: " + data.bolo['propulsionModel'], 300)
-                .moveDown();
-        }
-
-        // Display Propulsion Serial Number only if there is a value in it
-        if(data.bolo['propulsionSerialNumber'] !== ""){
-            doc.font('Times-Roman')
-                .text("Serial Number: " + data.bolo['propulsionSerialNumber'], 300)
                 .moveDown();
         }
 
@@ -770,7 +757,7 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         // Display Vehicle ID Number only if there is a value in it
         if(data.bolo['trailerVIN'] !== ""){
             doc.font('Times-Roman')
-                .text("Vehicle ID Number: " + data.bolo['trailerVIN'], 300)
+                .text("Vehicle Identification Number: " + data.bolo['trailerVIN'], 300)
                 .moveDown();
         }
 

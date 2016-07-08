@@ -20,14 +20,13 @@ block content
 
         +select_options( "agencyName", "Agency", agencies, true, "" )
         +select_options( "category", "Category", categoriesAuto, true, "" )
-        //+input_text_static( "category", "Category", "", false, "THEFT - AUTO")
-        +input_text( "vehicleYear", "Year", "e.g. 2016", false,  "" )
+        +input_text( "vehicleYear", "Year", "", false,  "" )
         +select_options( "vehicleMake", "Make", vehicles_makes, false, "" )
         +input_text( "vehicleModel", "Model", "", false,  "" )
-        +input_text( "vehicleTrim", "Trim", "", false,  "" )
+        +select_options( "vehicleStyle", "Style", v_style, false, "" )
         +input_text( "vehicleColor", "Color", "", false, "" )
+        +input_text( "vehicleIdNumber", "Vehicle Identification Number", "", false,  "" )
         +input_text( "vehicleLicensePlate", "License Plate", "", false, "" )
-        +input_text( "vehicleIdNumber", "Vehicle Identification Number (VIN)", "", false,  "" )
 
         +input_text( "wildcard", "Wildcard Search", "", false, "" )
         +check_box("matchFields","Match Fields",true)
