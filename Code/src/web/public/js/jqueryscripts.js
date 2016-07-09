@@ -89,8 +89,8 @@ jQuery(function(){
     }).mask("9999aa",{placeholder:""});
 
 //Validations for Theft-Boat PROPULSION
-    // Uppercase first letter each word Propulsion Model
-    $("#propulsionModel[type='text']").keyup(function(evt){
+    // Uppercase first letter each word Boat Model
+    $("#boatModel[type='text']").keyup(function(evt){
         var txt = $(this).val();
         $(this).val(txt.replace(/^(.)|\s(.)/g, function($1){ return $1.toUpperCase();}));
     });
@@ -106,9 +106,9 @@ jQuery(function(){
         $(this).val( $(this).val().toUpperCase());
     });
 
-    //Validate only numbers Traile Tag License Number
-    $("#trailerTagLicenseNumber").keypress(function (e) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) return false;
-   });
+    //Transform characters to uppercase Trailer Tag License Number
+    $("#trailerTagLicenseNumber[type=text]").keyup(function(){
+        $(this).val( $(this).val().toUpperCase());
+    });
 
 });
