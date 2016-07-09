@@ -1,0 +1,26 @@
+extends ./layout.jade
+include ./includes/mixins.jade
+
+block jumbo
+    .jumbotron
+        .container
+            h3 IBM's contribution
+
+block content
+    table
+        tr
+            h1 This page is under construction
+        tr
+            p &nbsp;&nbsp;&nbsp;&nbsp; IBM played a major role in bringing BOLO
+                | to life with Bluemix platform.
+        tr
+            td.col-md-4
+                img#featured.img-fluid( src="/img/caraballo.jpg" alt="", width=200 )
+                h4 Software Engineer
+                P
+
+            td
+                img#featured.img-fluid( src="/img/robert_loredo.png" alt="", width=200 )
+                h4 Software Engineer
+                h4 IBM Support
+                p

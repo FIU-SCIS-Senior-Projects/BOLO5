@@ -31,6 +31,13 @@ function getUserGuide(req, res){
     res.render('user-guide');
 }
 
+
+/**
+ *This function is used to down load the user's guide as a PDF
+ *
+ * @params req
+ * @params res
+ */
 function downloadUserGuide(req, res) {
 
     console.log('In the downloadUserGuide');

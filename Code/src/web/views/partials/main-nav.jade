@@ -1,20 +1,5 @@
 include ../includes/mixins.jade
 
-mixin dropdown_menu ( label )
-    -
-        var atts = {
-            'href'          : '#',
-            'data-toggle'   : 'dropdown',
-            'role'          : 'button',
-            'aria-haspopup' : 'true',
-            'aria-expanded' : 'false',
-        };
-    li.dropdown
-        a( class="dropdown_toggle" )&attributes( atts ) #{label}
-            span.caret
-        ul.dropdown-menu
-            block
-
 +nav( "BOLO", "bolo-nav" )
     if userLoggedIn
         ul.nav.navbar-nav
@@ -24,15 +9,21 @@ mixin dropdown_menu ( label )
                     li: a( href="/bolo/create/generalbolo" ) General
             li: a( href="/bolo/archive" ) Archive
             li: a( href="/agency" ) Agency Directory
-            +dropdown_menu( 'SEARCH BOLO' )
-                li: a( href="/bolo/search/generalbolo" ) GENERAL BOLO
-                li: a( href="/bolo/search/auto" ) THEFT - AUTO
-                li: a( href="/bolo/search/boat" ) THEFT - BOAT
+            +dropdown_menu( 'Search' )
+                li: a( href="/bolo/search/auto" ) Auto Theft
+                li: a( href="/bolo/search/boat" ) Boat Theft
+                    li: a( href="/bolo/search/generalbolo" ) General
             if (tier === 'ROOT' || tier === 'ADMINISTRATOR')
                 li: a( href="/admin" ) Admin
         ul.nav.navbar-nav.navbar-right
             +dropdown_menu(username)
                 li: a( href="/account" ) Setting
                 li: a( href="/userGuide" ) User Guide
-                li: a( href="/aboutUs" ) About Us
                 li: a( href="/logout" ) Logout
+    else
+        ul.nav.navbar-nav.navbar-right
+            +dropdown_menu( 'About Us')
+                li: a( href="/aboutUs/BOLO" ) BOLO
+                li: a( href="/aboutUs/FIU" ) FIU
+                li: a( href="/aboutUs/IBM" ) IBM
+                li: a( href="/login" ) Login

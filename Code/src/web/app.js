@@ -130,13 +130,13 @@ app.get( '/', isAuthenticated, function ( req, res, next ) {
 });
 
 app.use( auth.router );
+app.use( routes.aboutUs);
 app.get( '/bolo/asset/:boloid/:attname', routes.bolos.getAttachment );
 app.use( isAuthenticated, routes.bolos );
 app.use( isAuthenticated, routes.account );
 app.use( isAuthenticated, routes.agency );
 app.use( isAuthenticated, routes.admin );
 app.use( isAuthenticated, routes.userGuide);
-app.use( isAuthenticated, routes.aboutUs);
 app.use( function( req, res, next ) {
     console.error(
         '404 encountered at %s, request ip = %s', req.originalUrl, req.ip
