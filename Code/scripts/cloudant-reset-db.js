@@ -81,8 +81,8 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.vehicleYear) !== 'undefined') {
     index("vehicleYear", doc.vehicleYear);
   }
-  if (typeof(doc.vehicleTrim) !== 'undefined') {
-    index("vehicleTrim", doc.vehicleTrim);
+  if (typeof(doc.vehicleStyle) !== 'undefined') {
+    index("vehicleStyle", doc.vehicleStyle);
   }
   if (typeof(doc.vehicleLicensePlate) !== 'undefined') {
     index("vehicleLicensePlate", doc.vehicleLicensePlate);
@@ -98,6 +98,9 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.boatManufacturer) !== 'undefined') {
     index("boatManufacturer", doc.boatManufacturer);
+  }
+  if (typeof(doc.boatModel) !== 'undefined') {
+    index("boatModel", doc.boatModel);
   }
   if (typeof(doc.boatType) !== 'undefined') {
     index("boatType", doc.boatType);
@@ -127,12 +130,6 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.propulsionMake) !== 'undefined') {
     index("propulsionMake", doc.propulsionMake);
-  }
-  if (typeof(doc.propulsionModel) !== 'undefined') {
-    index("propulsionModel", doc.propulsionModel);
-  }
-  if (typeof(doc.propulsionSerialNumber) !== 'undefined') {
-    index("propulsionSerialNumber", doc.propulsionSerialNumber);
   }
 
   //Trailer

@@ -61,22 +61,22 @@ block content
                   +form_labels_row("Model", bolo.data.vehicleModel, bolo.data.vehicleModel?"":"hidden")
                 else
                   +form_labels_row("Model", "N/A" )
-                if bolo.data.vehicleTrim.length
-                  +form_labels_row("Trim", bolo.data.vehicleTrim, bolo.data.vehicleTrim?"":"hidden")
+                if bolo.data.vehicleStyle.length
+                  +form_labels_row("Style", bolo.data.vehicleStyle, bolo.data.vehicleStyle?"":"hidden")
                 else
-                  +form_labels_row("Trim", "N/A" )
+                  +form_labels_row("Style", "N/A" )
                 if bolo.data.vehicleColor.length
                    +form_labels_row("Color", bolo.data.vehicleColor, bolo.data.vehicleColor?"":"hidden")
                 else
                    +form_labels_row("Color", "N/A" )
+                if bolo.data.vehicleIdNumber.length
+                   +form_labels_row("Vehicle Identification Number", bolo.data.vehicleIdNumber, bolo.data.vehicleIdNumber?"":"hidden")
+                else
+                   +form_labels_row("Vehicle Identification Number", "N/A" )
                 if bolo.data.vehicleLicensePlate.length
                   +form_labels_row("License Plate", bolo.data.vehicleLicensePlate, bolo.data.vehicleLicensePlate?"":"hidden")
                 else
                   +form_labels_row("License Plate", "N/A" )
-                if bolo.data.vehicleIdNumber.length
-                  +form_labels_row("Vehicle Identification Number (VIN)", bolo.data.vehicleIdNumber, bolo.data.vehicleIdNumber?"":"hidden")
-                else
-                  +form_labels_row("Vehicle Identification Number (VIN)", "N/A" )
 
 
             div.row
