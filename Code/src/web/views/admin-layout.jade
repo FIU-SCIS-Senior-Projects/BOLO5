@@ -14,7 +14,7 @@ block jumbo
                 li(class=( admin_nav === 'admin-users' ? 'active' : '' ))
                     a(href="/admin/users") User Management
                 li(class=( admin_nav === 'admin-agency' ? 'active' : '' ))
-                  if(tier === 'ROOT')
+                  if(tier === 'ROOT' ||tier === 'ADMINISTRATOR')
                     a(href="/admin/agency") Agency Management
                 li(class=( admin_nav === 'admin-dataSubscriber' ? 'active' : '' ))
                   if(tier === 'ROOT')

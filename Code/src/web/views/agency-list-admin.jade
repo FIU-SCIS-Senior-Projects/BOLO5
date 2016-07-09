@@ -22,6 +22,7 @@ block admin-content
                 th
         tbody
             for agency in agencies
+              if(tier==='ROOT'||(tier==='ADMINISTRATOR'&& agency.id === userAgency))
                 tr
                     td  #{agency.agency_id}
                     td  #{agency.name}

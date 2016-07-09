@@ -99,7 +99,8 @@ module.exports.getList = function ( req, res ) {
     agencyService.getAgencies()
     .then(function (agencies) {
         res.render('agency-list-admin', {
-            agencies: agencies
+            agencies: agencies,
+            userAgency:req.user.agency
         });
     });
 };

@@ -18,7 +18,7 @@ module.exports = router;
 
 
 router.use( '/admin/agency', function ( req, res, next ) {
-    if ( req.user.tier === User.ROOT ) {
+  if ( req.user.tier === User.ROOT || req.user.tier === User.ADMINISTRATOR) {
         next();
     } else {
         res.render( 'unauthorized' );
