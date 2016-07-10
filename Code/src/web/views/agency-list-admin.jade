@@ -34,5 +34,5 @@ block admin-content
                         td.text-warning disabled
                     td: a( href=route + "/edit/" + agency.id role="button" )
                         span.glyphicon.glyphicon-cog( aria-hidden="true" )
-
-    a.btn.btn-default( href=route + "/create") Add New Agency
+      if(tier==='ROOT')
+        a.btn.btn-default( href=route + "/create") Add New Agency
