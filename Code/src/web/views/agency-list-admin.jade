@@ -8,7 +8,10 @@ block jumbo-desc
 block admin-content
     - var route = '/admin/agency'
 
-    p.lead Total Agencies: #{agencies.length}
+    if(tier==='ROOT')
+      p.lead Total Agencies: #{agencies.length}
+    if(tier==='ADMINISTRATOR')
+      p.lead Agency Management
 
     table.table.table-striped
         thead
