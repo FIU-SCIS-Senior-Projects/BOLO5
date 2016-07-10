@@ -29,7 +29,11 @@ var schema = {
     'agency_id':{
         'required'  : true,
         'type'      : 'string'
-    }
+    },
+    'preventUnsubscription': {
+        'required'  : true,
+        'type'      : 'boolean'
+    },
 
 };
 
@@ -57,7 +61,8 @@ function Agency(data) {
         'agency_id'     : '',
         'isActive'      : true,
         'attachments'   : {},
-        'domain'        : ''
+        'domain'        : '',
+        'preventUnsubscription':false
     };
 
     this.data = _.extend({}, agencyTemplate, data);

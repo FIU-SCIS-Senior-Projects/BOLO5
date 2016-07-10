@@ -159,14 +159,22 @@ function getAvailableAgencyNotifications ( req, res ) {
  * notifications.
  */
 function postUnsubscribeNotifications ( req, res ) {
+    var selected=[];
     parseFormData( req ).then( function ( formDTO ) {
-        var selected = formDTO.fields['agencies[]'] || [];
+        selected = formDTO.fields['agencies[]'] || [];
 
         if ( ! selected.length ) {
             return null;
         }
         console.log(req.user.id);
-        return userService.removeNotifications( req.user.id, selected );
+        return agencyService.getAgency(req.user.agency)
+    }).then(function(agency){
+      if(selected.indexOf(agency.name)>-1 && agency.preventUnsubscription===true){
+          req.flash( GFERR, 'You cannot unsubscribe from your own agency' );
+          selected=[];
+          res.redirect( 'back' );
+      }
+      return userService.removeNotifications( req.user.id, selected );
     })
     .then( function ( user ) {
         if ( ! user ) {
@@ -186,8 +194,15 @@ function postUnsubscribeNotifications ( req, res ) {
 function getUnsubscribeNotificationsFromEmail ( req, res ) {
 
         var selected = [req.params.agencyId];
-
-       userService.removeNotifications( req.user.id, selected ).then( function ( user ) {
+        return agencyService.getAgency(req.user.agency).then(function(agency){
+          if(selected.indexOf(agency.name)>-1 && agency.preventUnsubscription===true){
+              req.flash( GFERR, 'You cannot unsubscribe from your own agency' );
+              selected=[];
+              res.redirect('/account/notifications');
+          }
+          return  userService.removeNotifications( req.user.id, selected )
+        })
+      .then( function ( user ) {
         if ( ! user ) {
             req.flash( GFERR, 'Subscriptions update error occured.' );
         } else {
