@@ -378,7 +378,7 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
         // Display Type only if there is a value in it
         if(data.bolo['propulsionType'] !== ""){
             doc.font('Times-Roman')
-                .text("Motor Type: " + data.bolo['propulsionType'], 300)
+                .text("Type: " + data.bolo['propulsionType'], 300)
                 .moveDown();
         }
 
@@ -502,9 +502,49 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
         }
     }//end of specific data
 
+    // Created
     doc.font('Times-Bold')
         .text("Created: " + data.bolo.createdOn, 15, 360)
-        .moveDown(4.15);
+        .moveDown();
+
+        //For Data Analysis Reported
+        if(data.bolo['dateReported'] !== ""){
+            doc.font('Times-Roman')
+                .text("Date Reported: " + data.bolo['dateReported'], 15)
+                .moveDown(0.25);
+        }
+        if(data.bolo['timeReported'] !== ""){
+            doc.font('Times-Roman')
+                .text("Time Reported: " + data.bolo['timeReported'], 15)
+                .moveDown();
+        }
+
+        //For Data Analysis Recovered
+        if(data.bolo['dateRecovered'] !== ""){
+            doc.font('Times-Roman')
+                .text("Date Recovered: " + data.bolo['dateRecovered'], 15)
+                .moveDown(0.25);
+        }
+        if(data.bolo['timeRecovered'] !== ""){
+            doc.font('Times-Roman')
+                .text("Time Recovered: " + data.bolo['timeRecovered'], 15)
+                .moveDown(0.25);
+        }
+        if(data.bolo['addressRecovered'] !== ""){
+            doc.font('Times-Roman')
+                .text("Address Recovered: " + data.bolo['addressRecovered'], 15)
+                .moveDown(0.25);
+        }
+        if(data.bolo['zipCodeRecovered'] !== ""){
+            doc.font('Times-Roman')
+                .text("Zip Code Recovered: " + data.bolo['zipCodeRecovered'], 15)
+                .moveDown(0.25);
+        }
+        if(data.bolo['agencyRecovered'] !== ""){
+            doc.font('Times-Roman')
+                .text("Agency Recovered: " + data.bolo['agencyRecovered'], 15)
+                .moveDown();
+        }
 
     // Display Additional Informatin only if there is a value in it
     if(data.bolo['additional'] !== ""){
@@ -512,7 +552,7 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
             .text("Additional: ", 15)
             .moveDown(0.25);
         doc.font('Times-Roman')
-            .text(data.bolo['additional'], {width: 300})
+            .text(data.bolo['additional'], {width: 281})
             .moveDown();
     }
 
@@ -522,11 +562,14 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
             .text("Summary: ", 15)
             .moveDown(0.25);
         doc.font('Times-Roman')
-            .text(data.bolo['summary'], {width: 300})
-            .moveDown(4);
+            .text(data.bolo['summary'], {width: 281})
+            .moveDown();
     }
     doc.font('Times-Bold')
-        .text("This BOLO was created by: " + data.user.sectunit + " " + data.user.ranktitle + " " + data.bolo.authorFName + " " + data.bolo.authorLName, 15)
+        .text("This BOLO was created by: ", 15)
+        .moveDown(0.25);
+    doc.font('Times-Bold')
+        .text(data.user.sectunit + " " + data.user.ranktitle + " " + data.bolo.authorFName + " " + data.bolo.authorLName, 15)
         .moveDown(0.25);
     doc.font('Times-Bold')
         .text("Please contact the agency should clarification be required.");
@@ -715,7 +758,7 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
         // Display Type only if there is a value in it
         if(data.bolo['propulsionType'] !== ""){
             doc.font('Times-Roman')
-                .text("Motor Type: " + data.bolo['propulsionType'], 300)
+                .text("Type: " + data.bolo['propulsionType'], 300)
                 .moveDown();
         }
 

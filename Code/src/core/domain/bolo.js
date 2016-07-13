@@ -101,6 +101,14 @@ function Bolo( data ) {
         trailerVIN              : '',
         trailerTagLicenseState  : '',
         trailerTagLicenseNumber  : '',
+        // For Data Analysis
+        timeReported            : '',
+        dateReported            : '',
+        timeRecovered           : '',
+        dateRecovered           : '',
+        addressRecovered        : '',
+        zipCodeRecovered        : '',
+        agencyRecovered         : '',
         //others
         boloToken       : null,
         confirmed       : false

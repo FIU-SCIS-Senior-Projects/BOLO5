@@ -16,7 +16,7 @@ mixin check_box(name,label,required)
 mixin input_text( name, label, placeholder, required, value, type )
     .form-group
         label.control-label( for=name ) #{label}
-        input.form-control( name=name type=type?type:'text' placeholder=placeholder value=value id=name)
+        input.form-control( name=name type=type?type:'text' placeholder=placeholder value=value id=name )
 
 mixin input_text_static( name, label, placeholder, required, value, type )
     .form-group

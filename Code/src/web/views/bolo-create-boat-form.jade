@@ -14,6 +14,12 @@ block content
     form#create-bolo-form(action= "/bolo/create" enctype="multipart/form-data" method="post")
         input( type = "hidden" name="status" value="new")
 
+        .row
+            .col-md-6
+                +input_text( "dateReported", "Date Reported (DD/MM/YYYY)", "", false, "" )
+            .col-md-6
+                +input_text( "timeReported", "Time Reported (HH:MM)", "", false, "" )
+
         +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
 
         div.text-danger.strong.h4 Vessel
@@ -21,7 +27,7 @@ block content
         +input_text( "boatYear", "Year", "", false, "" )
         +input_text( "boatManufacturer", "Manufacturer", "", false, "" )
         +input_text( "boatModel", "Model", "", false, "" )
-        +input_text( "boatType", "Motor Type", "", false, "" )
+        +input_text( "boatType", "Type", "", false, "" )
         +select_options( "boatLength", "Length - Feet", boatFeet, false, "" )
         +input_text( "boatColor", "Color", "", false, "" )
         +input_text( "boatHullIdNumber", "Hull Identification Number", "", false, "" )
@@ -66,5 +72,5 @@ block content
         +input_textarea( "summary", "Summary", "", false, "" )
 
         .form-group
-            button.btn.btn-default( name = "option" type = "submit" value = "submit") SUBMIT
+            button.btn.btn-default( name = "option" type = "submit" value = "submit" id= "buttonClickCreate" disabled = false) SUBMIT
             button.btn.btn-default( name = "option" type = "submit" value = "preview" ) PREVIEW
