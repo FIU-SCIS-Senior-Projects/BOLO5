@@ -149,6 +149,29 @@ var bolo_indexer = function(doc) {
     index("trailerTagLicenseNumber", doc.trailerTagLicenseNumber);
   }
 
+  //For Data Analysis
+  if (typeof(doc.timeReported) !== 'undefined') {
+    index("timeReported", doc.timeReported);
+  }
+  if (typeof(doc.dateReported) !== 'undefined') {
+    index("dateReported", doc.dateReported);
+  }
+  if (typeof(doc.timeRecovered) !== 'undefined') {
+    index("timeRecovered", doc.timeRecovered);
+  }
+  if (typeof(doc.dateRecovered) !== 'undefined') {
+    index("dateRecovered", doc.dateRecovered);
+  }
+  if (typeof(doc.addressRecovered) !== 'undefined') {
+    index("addressRecovered", doc.addressRecovered);
+  }
+  if (typeof(doc.zipCodeRecovered) !== 'undefined') {
+    index("zipCodeRecovered", doc.zipCodeRecovered);
+  }
+  if (typeof(doc.agencyRecovered) !== 'undefined') {
+    index("agencyRecovered", doc.agencyRecovered);
+  }
+
   //Others
   if (typeof(doc.additional) !== 'undefined') {
     index("additional", doc.additional);
