@@ -33,7 +33,7 @@ block content
             .col-md-4
                 +select_options( "boatRegistrationNumberSt", "Registration Number", states, false, "" )
             .col-md-8
-                +input_text( "boatRegistrationNumberNu", "", "e.g. 1234AB", false, "" )
+                +input_text( "boatRegistrationNumberNu", "", "", false, "" )
 
         div.text-danger.strong.h4 Propulsion
 
@@ -50,7 +50,7 @@ block content
             .col-md-4
                 +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, "" )
             .col-md-8
-                +input_text( "trailerTagLicenseNumber", "", "Only Numbers", false, "" )
+                +input_text( "trailerTagLicenseNumber", "", "", false, "" )
 
         +input_text( "wildcard", "Wildcard Search", "", false, "" )
         +check_box("matchFields","Match Fields",true)
