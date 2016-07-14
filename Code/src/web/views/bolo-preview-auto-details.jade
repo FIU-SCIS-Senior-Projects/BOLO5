@@ -84,11 +84,12 @@ block content
                 else
                    +form_labels_row("Vehicle Identification Number", "N/A" )
                 | &nbsp;
-                if bolo.data.vehicleLicensePlate.length
-                  +form_labels_row("License Plate", bolo.data.vehicleLicensePlate, bolo.data.vehicleLicensePlate?"":"hidden")
-                else
-                  +form_labels_row("License Plate", "N/A" )
-
+                div.row
+                   div.col-xs-12
+                      if bolo.data.vehicleLicenseState != 'null' || bolo.data.vehicleLicensePlate != null
+                         +form_labels_row("Tag License Plate", bolo.data.vehicleLicenseState + " " +  bolo.data.vehicleLicensePlate )
+                      else
+                         +form_labels_row("Tag License Plate", "N/A")
 
             div.row
               div.col-xs-8

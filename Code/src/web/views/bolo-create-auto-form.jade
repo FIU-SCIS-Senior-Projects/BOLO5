@@ -29,7 +29,11 @@ block content
         +select_options( "vehicleStyle", "Style", v_style, false, "" )
         +input_text( "vehicleColor", "Color", "", false, "" )
         +input_text( "vehicleIdNumber", "Vehicle Identification Number", "", false,  "" )
-        +input_text( "vehicleLicensePlate", "License Plate", "", false, "" )
+        .row
+            .col-md-4
+                +select_options( "vehicleLicenseState", "Tag License Plate", states, false, "" )
+            .col-md-8
+                +input_text( "vehicleLicensePlate", "", "", false, "" )
 
         .form-group.row
             .col-md-4

@@ -84,6 +84,9 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.vehicleStyle) !== 'undefined') {
     index("vehicleStyle", doc.vehicleStyle);
   }
+  if (typeof(doc.vehicleLicenseState) !== 'undefined') {
+    index("vehicleLicensePlate", doc.vehicleLicenseState);
+  }
   if (typeof(doc.vehicleLicensePlate) !== 'undefined') {
     index("vehicleLicensePlate", doc.vehicleLicensePlate);
   }

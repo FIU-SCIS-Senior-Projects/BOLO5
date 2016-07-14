@@ -35,18 +35,18 @@ block content
 
         .row
             .col-md-6
-                +input_text( "dateRecovered", "Date Recovered (DD/MM/YYYY)", "", false, "" )
+                +input_text( "dateRecovered", "Date Recovered (DD/MM/YYYY)", "", false, bolo.dateRecovered )
             .col-md-6
-                +input_text( "timeRecovered", "Time Recovered (HH:MM)", "", false, "" )
+                +input_text( "timeRecovered", "Time Recovered (HH:MM)", "", false, bolo.timeRecovered )
 
 
-        +input_text( "addressRecovered", "Address Recovered", "", false, "" )
+        +input_text( "addressRecovered", "Address Recovered", "", false, bolo.addressRecovered )
 
         .row
             .col-md-6
-                +input_text( "zipCodeRecovered", "Zip Code", "", false, "" )
+                +input_text( "zipCodeRecovered", "Zip Code", "", false, bolo.zipCodeRecovered )
             .col-md-6
-                +input_text( "agencyRecovered", "Agency", "", false, "" )
+                +input_text( "agencyRecovered", "Agency", "", false, bolo.agencyRecovered )
 
         +input_text_static( "category", "Category", "", false, "THEFT - AUTO")
 
@@ -56,8 +56,11 @@ block content
         +select_options( "vehicleStyle", "Style", v_style, false, bolo.vehicleStyle )
         +input_text( "vehicleColor", "Color", "", false, bolo.vehicleColor )
         +input_text( "vehicleIdNumber", "Vehicle Identification Number", "", false,  bolo.vehicleIdNumber )
-        +input_text( "vehicleLicensePlate", "License Plate", "", false, bolo.vehicleLicensePlate )
-
+        .row
+            .col-md-4
+                +select_options( "vehicleLicenseState", "Tag License Plate", states, false, bolo.vehicleLicenseState )
+            .col-md-8
+                +input_text( "vehicleLicensePlate", "", "", false, bolo.vehicleLicensePlate )
 
         .form-group.row
             .col-md-4
