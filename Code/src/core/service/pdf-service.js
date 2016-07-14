@@ -286,12 +286,14 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
                 .moveDown();
         }
 
-        // Display License Plate only if there is a value in it
-        if(data.bolo['vehicleLicensePlate'] !== "" ){
+        // Display Tag License Plate only if there is a value in it
+        if(data.bolo['vehicleLicenseState'] !== "" || data.bolo['vehicleLicensePlate'] !== ""){
             doc.font('Times-Roman')
-                .text("License Plate: " + data.bolo['vehicleLicensePlate'], 300)
+                .text("Tag License Plate: " + data.bolo['vehicleLicenseState'] + data.bolo['vehicleLicensePlate'], 300)
                 .moveDown();
         }
+
+
     }
     else if(data.bolo.category === "THEFT - BOAT"){  //PDF for theft - boatMake
 

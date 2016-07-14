@@ -35,18 +35,18 @@ block content
 
         .row
             .col-md-6
-                +input_text( "dateRecovered", "Date Recovered (DD/MM/YYYY)", "", false, "" )
+                +input_text( "dateRecovered", "Date Recovered (DD/MM/YYYY)", "", false, bolo.dateRecovered )
             .col-md-6
-                +input_text( "timeRecovered", "Time Recovered (HH:MM)", "", false, "" )
+                +input_text( "timeRecovered", "Time Recovered (HH:MM)", "", false, bolo.timeRecovered )
 
 
-        +input_text( "addressRecovered", "Address Recovered", "", false, "" )
+        +input_text( "addressRecovered", "Address Recovered", "", false, bolo.addressRecovered )
 
         .row
             .col-md-6
-                +input_text( "zipCodeRecovered", "Zip Code", "", false, "" )
+                +input_text( "zipCodeRecovered", "Zip Code", "", false, bolo.zipCodeRecovered )
             .col-md-6
-                +input_text( "agencyRecovered", "Agency", "", false, "" )
+                +input_text( "agencyRecovered", "Agency", "", false, bolo.agencyRecovered )
 
         +select_options( "category", "Category", categories, true, bolo.category )
         +input_text( "firstName", "First Name", "", false, bolo.firstName )

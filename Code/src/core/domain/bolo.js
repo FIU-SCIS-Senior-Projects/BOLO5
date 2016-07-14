@@ -77,7 +77,8 @@ function Bolo( data ) {
         vehicleModel        : '',
         vehicleColor        : '',
         vehicleYear         : '',
-        vehicleStyle         : '',
+        vehicleStyle        : '',
+        vehicleLicenseState : '',
         vehicleLicensePlate : '',
         vehicleIdNumber     : '',
         //For theft-boat
