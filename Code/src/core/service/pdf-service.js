@@ -565,14 +565,12 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
             .text(data.bolo['summary'], {width: 281})
             .moveDown();
     }
+
     doc.font('Times-Bold')
-        .text("This BOLO was created by: ", 15)
+        .text("This BOLO was created by: " + data.user.sectunit + " " + data.user.ranktitle + " " + data.bolo.authorFName + " " + data.bolo.authorLName, {width: 281})
         .moveDown(0.25);
     doc.font('Times-Bold')
-        .text(data.user.sectunit + " " + data.user.ranktitle + " " + data.bolo.authorFName + " " + data.bolo.authorLName, 15)
-        .moveDown(0.25);
-    doc.font('Times-Bold')
-        .text("Please contact the agency should clarification be required.");
+        .text("Please contact the agency should clarification be required.", {width: 281});
 
     return doc;
 }
