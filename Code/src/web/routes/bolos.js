@@ -303,7 +303,7 @@ router.get('/bolo', function(req, res, next) {
     }
     data.paging.last = Math.ceil(results.total / limit);
 
-    console.log(req.user)
+
     agencyService.getAgencies().then(function(agencies) {
       // bind agencies to front end
       data.agencies = agencies;
@@ -407,6 +407,42 @@ router.get('/bolo/mybolos/', function(req, res, next) {
   });
 });
 
+router.get('/bolo/agencies/', function(req, res, next) {
+  console.log(req.query);
+
+  var page = parseInt(req.query.page) || 1;
+  console.log('page: ' + page);
+  var limit = config.const.BOLOS_PER_PAGE;
+  console.log('limit: ' + limit);
+  var skip = (1 <= page) ? (page - 1) * limit : 0;
+  var data = {
+    'paging': {
+      'first': 1,
+      'current': page
+    }
+  };
+  data.filter = "Agencies";
+
+  boloService.getBolosByAuthor(author).then(function(results) {
+    data.bolos = results;
+
+    console.log('total: ' + results.total);
+    data.paging.last = Math.ceil(results.total / limit);
+    console.log('paging: ' + data.paging.last);
+    agencyService.getAgencies().then(function(agencies) {
+      data.agencies = agencies;
+      var i;
+      for (i = 0; i < agencies.length; i++) {
+        if (req.user.agency === agencies[i].data.id) {
+          data.userAgency = agencies[i].data;
+        }
+      }
+      res.render('bolo-list', data);
+    });
+  }).catch(function(error) {
+    next(error);
+  });
+});
 
 // list archived bolos
 router.get('/bolo/archive', function(req, res, next) {

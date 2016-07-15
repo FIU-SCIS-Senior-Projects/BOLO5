@@ -8,24 +8,50 @@ block jumbo
                 div.col-xs-1.col-md-10
                     p Active BOLOs
                 div.col-xs-1.dropdown
-                    button.dropbtn.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown") Filter By:
+                    button.btn.btn-default(type="button" data-toggle="dropdown") Filter By
                         span.caret
-                    ul.dropdown-menu.multi-level(role="menu" aria-labelledby="dropdownMenu")
+                    ul.dropdown-menu(role="menu" id="parent-menu" aria-labelledby="dropdownMenu")
                         -var dimensions = "width: 210px; margin: 0 auto;"
                         a.btn.btn-default(href="/bolo/mybolos" style=dimensions) My Bolos
-                        a.btn.btn-default(href="/bolo/" style=dimensions) View all
-                        a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) #{userAgency.name}
-                        li.dropdown-submenu
-                            a.btn.btn-default(tabindex="-1" style = dimensions) Agencies
-                            ul.dropdown-menu
-                              li
-                                  for agency in agencies
-                                      if(agency.id !== userAgency.id)
-                                          a.btn.btn-default(href="/bolo/agency/" + agency.id style = dimensions value = agency.name ) #{agency.name}
-                                      
-                                
+                        a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) My Agency
+                        a.btn.btn-default(href="/bolo/" style=dimensions) All Bolos     
+                div.pull-right     
+                    form-inline(role="form" action="/admin/users/create" enctype="multipart/form-data" method="post" )
+                        div.input-group
+                            span.input-group-btn
+                                select.selectpicker(multiple title="Select Agencies" data-width="160px")
+                                    for agency in agencies
+                                        //if(agency.id !== userAgency.id)
+                                        option(value=agency.name ) #{agency.name}
+                            button.btn.btn-default(type = "submit" value = "send" id="submit-select") Submit
+                                        script.
+                                              var agencies = [];
+                                              $('.selectpicker').change(function(){
+                                                  agencies = $('.selectpicker').val();
+                                                  console.log(agencies);
+                                                })
+                                              $('#submit-select').click(function(e){
+                                                  console.log(agencies);
+                                                  console.log("CLICKED")
+                                                  
+                                                  if(agencies.length > 0){
+                                                      $.ajax({
+                                                        url: '/bolo/agencies',
+                                                        type: 'GET',
+                                                        data: {agencies},
+                                                        success: function(response){
+                                                          console.log("Redirecting")
+                                                          console.log()
+                                                          window.location.href = '/bolo/agencies';
+                                                        }
+                                                      })
+                                                    }
+                                                  })
+                                          
+                                            
+                      
                             
-
+                                                
 block content
     include ./partials/global-alerts.jade
         h2 #{filter}
