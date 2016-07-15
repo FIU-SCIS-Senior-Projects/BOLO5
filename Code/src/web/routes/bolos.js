@@ -409,7 +409,7 @@ router.get('/bolo/mybolos/', function(req, res, next) {
 
 router.get('/bolo/agencies/', function(req, res, next) {
   console.log(req.query);
-
+  var author = req.user.username;
   var page = parseInt(req.query.page) || 1;
   console.log('page: ' + page);
   var limit = config.const.BOLOS_PER_PAGE;
