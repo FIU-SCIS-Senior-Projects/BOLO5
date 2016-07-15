@@ -99,7 +99,8 @@ module.exports.getList = function ( req, res ) {
     agencyService.getAgencies()
     .then(function (agencies) {
         res.render('agency-list-admin', {
-            agencies: agencies
+            agencies: agencies,
+            userAgency:req.user.agency
         });
     });
 };
@@ -206,7 +207,13 @@ module.exports.getEditForm = function ( req, res, next ) {
  */
 module.exports.postEditForm = function ( req, res, next ) {
     parseFormData( req ).then( function ( formDTO ) {
+        if(formDTO.fields['preventUnsubscription']==="on"){
+          formDTO.fields['preventUnsubscription']=true;
+        }
         var agencyDTO = agencyService.formatDTO( formDTO.fields );
+        console.log(formDTO.fields);
+        console.log('------------');
+        console.log(agencyDTO);
         var atts = getAgencyAttachments( formDTO.fields );
         var formFields = validateFields(formDTO.fields);
 

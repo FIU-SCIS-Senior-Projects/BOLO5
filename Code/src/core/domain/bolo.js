@@ -77,13 +77,15 @@ function Bolo( data ) {
         vehicleModel        : '',
         vehicleColor        : '',
         vehicleYear         : '',
-        vehicleTrim         : '',
+        vehicleStyle        : '',
+        vehicleLicenseState : '',
         vehicleLicensePlate : '',
         vehicleIdNumber     : '',
         //For theft-boat
          //Vessel
         boatYear                : '',
         boatManufacturer        : '',
+        boatModel               : '',
         boatType                : '',
         boatLength              : '',
         boatColor               : '',
@@ -94,14 +96,20 @@ function Bolo( data ) {
         propulsion              : '',
         propulsionType          : '',
         propulsionMake          : '',
-        propulsionModel         : '',
-        propulsionSerialNumber  : '',
           //Trailer
         trailer                 : '',
         trailerManufacturer     : '',
         trailerVIN              : '',
         trailerTagLicenseState  : '',
         trailerTagLicenseNumber  : '',
+        // For Data Analysis
+        timeReported            : '',
+        dateReported            : '',
+        timeRecovered           : '',
+        dateRecovered           : '',
+        addressRecovered        : '',
+        zipCodeRecovered        : '',
+        agencyRecovered         : '',
         //others
         boloToken       : null,
         confirmed       : false

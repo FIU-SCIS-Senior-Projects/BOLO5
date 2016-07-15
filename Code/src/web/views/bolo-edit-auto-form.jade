@@ -28,19 +28,39 @@ block content
         input( type="hidden" name="id" value=bolo.id )
         input( type="hidden" name="record" value=bolo.record)
         input( type="hidden" name="agencyName" value=bolo.agencyName)
+        input( type="hidden" name="dateReported" value=bolo.data.dateReported )
+        input( type="hidden" name="timeReported" value=bolo.data.timeReported )
 
-        +select_options( "status", "Status", bolo_status, false, bolo.status )
+        +select_options( "status", "Status", bolo_status_theft, false, bolo.status )
+
+        .row
+            .col-md-6
+                +input_text( "dateRecovered", "Date Recovered (DD/MM/YYYY)", "", false, bolo.dateRecovered )
+            .col-md-6
+                +input_text( "timeRecovered", "Time Recovered (HH:MM)", "", false, bolo.timeRecovered )
+
+
+        +input_text( "addressRecovered", "Address Recovered", "", false, bolo.addressRecovered )
+
+        .row
+            .col-md-6
+                +input_text( "zipCodeRecovered", "Zip Code", "", false, bolo.zipCodeRecovered )
+            .col-md-6
+                +input_text( "agencyRecovered", "Agency", "", false, bolo.agencyRecovered )
 
         +input_text_static( "category", "Category", "", false, "THEFT - AUTO")
 
-        +input_text( "vehicleYear", "Year", "e.g. 2016", false,  bolo.vehicleYear )
+        +input_text( "vehicleYear", "Year", "", false,  bolo.vehicleYear )
         +select_options( "vehicleMake", "Make", vehicles_makes, false, bolo.vehicleMake  )
         +input_text( "vehicleModel", "Model", "", false,  bolo.vehicleModel )
-        +input_text( "vehicleTrim", "Trim", "", false,  bolo.vehicleTrim )
+        +select_options( "vehicleStyle", "Style", v_style, false, bolo.vehicleStyle )
         +input_text( "vehicleColor", "Color", "", false, bolo.vehicleColor )
-        +input_text( "vehicleLicensePlate", "License Plate", "", false, bolo.vehicleLicensePlate )
-        +input_text( "vehicleIdNumber", "Vehicle Identification Number (VIN)", "", false,  bolo.vehicleIdNumber )
-
+        +input_text( "vehicleIdNumber", "Vehicle Identification Number", "", false,  bolo.vehicleIdNumber )
+        .row
+            .col-md-4
+                +select_options( "vehicleLicenseState", "Tag License Plate", states, false, bolo.vehicleLicenseState )
+            .col-md-8
+                +input_text( "vehicleLicensePlate", "", "", false, bolo.vehicleLicensePlate )
 
         .form-group.row
             .col-md-4
@@ -72,6 +92,6 @@ block content
         +input_textarea( "summary", "Summary", "", false, bolo.summary )
 
         .form-group
-            button.btn.btn-primary( type="submit" value="save" ) Publish
+            button.btn.btn-primary( type="submit" value="save" id= "buttonClickEdit" disabled = false ) Publish
             button.btn.btn-default( type="submit" disabled=true value="preview" ) Preview
             button.btn.btn-default( type="submit" disabled=true value="pdf" ) PDF

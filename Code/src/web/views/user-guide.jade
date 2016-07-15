@@ -4,7 +4,15 @@ include ./includes/mixins.jade
 block jumbo
     .jumbotron
         .container
-            h3 Hello #{username}
+            .row
+              div.col-xs-12
+                 p User's Guide
+            .row
+              .col-xs-12.col-md-6
+                .pull-left
+                    a.btn.btn-default(href= '/userGuide/pdf' target="_blank") Generate PDF
+                    |&nbsp;
+            br
 
 block content
     if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')

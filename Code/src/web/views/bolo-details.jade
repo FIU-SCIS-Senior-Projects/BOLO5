@@ -55,6 +55,18 @@ block content
             div.col-xs-8#boloDetails
                 form.form-horizontal
                 +form_labels_row("Bolo ID", bolo.data.id )
+
+
+                if bolo.data.dateReported.length
+                  +form_labels_row("Date Reported", bolo.data.dateReported, bolo.data.dateReported?"":"hidden")
+                else
+                  +form_labels_row("Date Reported", "N/A" )
+                if bolo.data.timeReported.length
+                  +form_labels_row("Time Reported", bolo.data.timeReported, bolo.data.timeReported?"":"hidden")
+                else
+                  +form_labels_row("Time Reported", "N/A" )
+
+
                 if bolo.data.firstName.length || bolo.data.lastName.length
                   +form_labels_row("Name", bolo.data.firstName + " " +  bolo.data.lastName)
                 else
@@ -99,6 +111,30 @@ block content
                   +form_labels_row("Tattoos/Scars", bolo.data.tattoos,bolo.data.tattoos?"":"hidden")
                 else
                   +form_labels_row("Tattoos/Scars", "N/A" )
+
+
+                if bolo.data.dateRecovered.length
+                  +form_labels_row("Date Recovered", bolo.data.dateRecovered, bolo.data.dateRecovered?"":"hidden")
+                else
+                  +form_labels_row("Date Recovered", "N/A" )
+                if bolo.data.timeRecovered.length
+                  +form_labels_row("Time Recovered", bolo.data.timeRecovered, bolo.data.timeRecovered?"":"hidden")
+                else
+                  +form_labels_row("Time Recovered", "N/A" )
+                if bolo.data.addressRecovered.length
+                  +form_labels_row("Address Recovered", bolo.data.addressRecovered, bolo.data.addressRecovered?"":"hidden")
+                else
+                  +form_labels_row("Address Recovered", "N/A" )
+                if bolo.data.zipCodeRecovered.length
+                  +form_labels_row("Zip Code Recovered", bolo.data.zipCodeRecovered, bolo.data.zipCodeRecovered?"":"hidden")
+                else
+                  +form_labels_row("Zip Code Recovered", "N/A" )
+                if bolo.data.agencyRecovered.length
+                  +form_labels_row("Agency Recovered", bolo.data.agencyRecovered, bolo.data.agencyRecovered?"":"hidden")
+                else
+                  +form_labels_row("Agency Recovered", "N/A" )
+
+
         div.row
             div.col-xs-8
         div.row

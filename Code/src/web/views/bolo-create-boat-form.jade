@@ -14,12 +14,19 @@ block content
     form#create-bolo-form(action= "/bolo/create" enctype="multipart/form-data" method="post")
         input( type = "hidden" name="status" value="new")
 
+        .row
+            .col-md-6
+                +input_text( "dateReported", "Date Reported (DD/MM/YYYY)", "", false, "" )
+            .col-md-6
+                +input_text( "timeReported", "Time Reported (HH:MM)", "", false, "" )
+
         +input_text_static( "category", "Category", "", false, "THEFT - BOAT")
 
-        div.h4 VESSEL
+        div.text-danger.strong.h4 Vessel
 
-        +input_text( "boatYear", "Year", "e.g. 2016", false, "" )
+        +input_text( "boatYear", "Year", "", false, "" )
         +input_text( "boatManufacturer", "Manufacturer", "", false, "" )
+        +input_text( "boatModel", "Model", "", false, "" )
         +input_text( "boatType", "Type", "", false, "" )
         +select_options( "boatLength", "Length - Feet", boatFeet, false, "" )
         +input_text( "boatColor", "Color", "", false, "" )
@@ -28,26 +35,24 @@ block content
             .col-md-4
                 +select_options( "boatRegistrationNumberSt", "Registration Number", states, false, "" )
             .col-md-8
-                +input_text( "boatRegistrationNumberNu", "", "e.g. 1234AB", false, "" )
+                +input_text( "boatRegistrationNumberNu", "", "", false, "" )
 
-        div.h4 PROPULSION
+        div.text-danger.strong.h4 Propulsion
 
         +select_options( "propulsion", "Propulsion", v_propulsion, false, "" )
         +select_options( "propulsionType", "Type", v_propulsion_type, false, "" )
         +select_options( "propulsionMake", "Make", v_propulsion_make, false, "" )
-        +input_text( "propulsionModel", "Model", "", false, "" )
-        +input_text( "propulsionSerialNumber", "Serial Number", "", false, "" )
 
-        div.h4 TRAILER
+        div.text-danger.strong.h4 Trailer
 
         +select_options( "trailer", "Trailer", v_trailer, false, "" )
-        +select_options( "trailerManufacturer", "Manufacturer", v_trailer_manufacturer, false, "" )
-        +input_text( "trailerVIN", "Vehicle ID Number", "", false, "" )
+        +input_text( "trailerManufacturer", "Manufacturer", "", false, "" )
+        +input_text( "trailerVIN", "Vehicle Identification Number", "", false, "" )
         .row
             .col-md-4
                 +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, "" )
             .col-md-8
-                +input_text( "trailerTagLicenseNumber", "", "Only Numbers", false, "" )
+                +input_text( "trailerTagLicenseNumber", "", "", false, "" )
 
         .form-group.row
             .col-md-4
@@ -67,6 +72,5 @@ block content
         +input_textarea( "summary", "Summary", "", false, "" )
 
         .form-group
-            button.btn.btn-default( name = "option" type = "submit" value = "submit") SUBMIT
+            button.btn.btn-default( name = "option" type = "submit" value = "submit" id= "buttonClickCreate" disabled = false) SUBMIT
             button.btn.btn-default( name = "option" type = "submit" value = "preview" ) PREVIEW
-            button.btn.btn-default( name = "option" type="submit" value="pdf" ) PDF

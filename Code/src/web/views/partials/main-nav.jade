@@ -18,11 +18,10 @@ mixin dropdown_menu ( label )
 +nav( "BOLO", "bolo-nav" )
     if userLoggedIn
         ul.nav.navbar-nav
-            li: a( href="/bolo" ) Home
-            +dropdown_menu( 'CREATE BOLO' )
-                li: a( href="/bolo/create/generalbolo" ) GENERAL BOLO
-                li: a( href="/bolo/create/auto" ) THEFT - AUTO
-                li: a( href="/bolo/create/boat" ) THEFT - BOAT
+            +dropdown_menu( 'Create' )
+                li: a( href="/bolo/create/auto" ) Auto Theft
+                li: a( href="/bolo/create/boat" ) Boat Theft
+                    li: a( href="/bolo/create/generalbolo" ) General
             li: a( href="/bolo/archive" ) Archive
             li: a( href="/agency" ) Agency Directory
             +dropdown_menu( 'SEARCH BOLO' )

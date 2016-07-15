@@ -81,8 +81,11 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.vehicleYear) !== 'undefined') {
     index("vehicleYear", doc.vehicleYear);
   }
-  if (typeof(doc.vehicleTrim) !== 'undefined') {
-    index("vehicleTrim", doc.vehicleTrim);
+  if (typeof(doc.vehicleStyle) !== 'undefined') {
+    index("vehicleStyle", doc.vehicleStyle);
+  }
+  if (typeof(doc.vehicleLicenseState) !== 'undefined') {
+    index("vehicleLicensePlate", doc.vehicleLicenseState);
   }
   if (typeof(doc.vehicleLicensePlate) !== 'undefined') {
     index("vehicleLicensePlate", doc.vehicleLicensePlate);
@@ -98,6 +101,9 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.boatManufacturer) !== 'undefined') {
     index("boatManufacturer", doc.boatManufacturer);
+  }
+  if (typeof(doc.boatModel) !== 'undefined') {
+    index("boatModel", doc.boatModel);
   }
   if (typeof(doc.boatType) !== 'undefined') {
     index("boatType", doc.boatType);
@@ -128,12 +134,6 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.propulsionMake) !== 'undefined') {
     index("propulsionMake", doc.propulsionMake);
   }
-  if (typeof(doc.propulsionModel) !== 'undefined') {
-    index("propulsionModel", doc.propulsionModel);
-  }
-  if (typeof(doc.propulsionSerialNumber) !== 'undefined') {
-    index("propulsionSerialNumber", doc.propulsionSerialNumber);
-  }
 
   //Trailer
   if (typeof(doc.trailer) !== 'undefined') {
@@ -150,6 +150,29 @@ var bolo_indexer = function(doc) {
   }
   if (typeof(doc.trailerTagLicenseNumber) !== 'undefined') {
     index("trailerTagLicenseNumber", doc.trailerTagLicenseNumber);
+  }
+
+  //For Data Analysis
+  if (typeof(doc.timeReported) !== 'undefined') {
+    index("timeReported", doc.timeReported);
+  }
+  if (typeof(doc.dateReported) !== 'undefined') {
+    index("dateReported", doc.dateReported);
+  }
+  if (typeof(doc.timeRecovered) !== 'undefined') {
+    index("timeRecovered", doc.timeRecovered);
+  }
+  if (typeof(doc.dateRecovered) !== 'undefined') {
+    index("dateRecovered", doc.dateRecovered);
+  }
+  if (typeof(doc.addressRecovered) !== 'undefined') {
+    index("addressRecovered", doc.addressRecovered);
+  }
+  if (typeof(doc.zipCodeRecovered) !== 'undefined') {
+    index("zipCodeRecovered", doc.zipCodeRecovered);
+  }
+  if (typeof(doc.agencyRecovered) !== 'undefined') {
+    index("agencyRecovered", doc.agencyRecovered);
   }
 
   //Others
