@@ -35,14 +35,14 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     userService.authenticate(username, password)
       .then(function(account) {
-
+  console.log(account)
 
         // check the status of the account
         if (account.status) {
 
 
           // if account returned is not empty
-          if (account.user) {
+          if (account.user && account.found) {
 
             /*If user password is expired, deny login, send password reset email*/
             if (account.user.passwordLifetime <= Date.now()) {
@@ -82,6 +82,12 @@ passport.use(new LocalStrategy(
 
 
 
+          } else if (account.found === false) {
+
+              return done(null, false, {
+
+                'message': 'Unknown username'
+              })
           } else {
             return done(null, false, {
               'message': 'Invalid login credentials. You have ' + account.attemptsLeft + ' attempts left before your account is locked'

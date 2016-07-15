@@ -40,8 +40,16 @@ UserService.prototype.authenticate = function(username, password) {
   var account = {};
   return this.userRepository.getByUsername(username)
     .then(function(user) {
+      console.log(user);
       var authenticated = false;
 
+      if (user === null) {
+        account.found = false;
+        account.status = true;
+        return account;
+      } else {
+        account.found = true;
+      }
 
       // if incorrect login attempts is greater than the max allowed lock the account
       if (user.incorrectLogins + 1 >= config.MAX_INCORRECT_LOGINS) {
@@ -62,7 +70,7 @@ UserService.prototype.authenticate = function(username, password) {
 
         // otherwise maintain account active and calculate logins left
         account.status = user.accountStatus;
-        account.attemptsLeft = config.MAX_INCORRECT_LOGINS  - (user.incorrectLogins + 1);
+        account.attemptsLeft = config.MAX_INCORRECT_LOGINS - (user.incorrectLogins + 1);
 
       }
 
@@ -81,7 +89,7 @@ UserService.prototype.authenticate = function(username, password) {
 
 
 
-      // if loing was successful and account is active reset incorrect login counter
+      // if login was successful and account is active reset incorrect login counter
       if (user.accountStatus && authenticated) {
 
         user.incorrectLogins = 0;
@@ -100,6 +108,7 @@ UserService.prototype.authenticate = function(username, password) {
       return account;
     })
     .catch(function(error) {
+
       throw new Error('Unable to retrieve user data.');
     });
 };
