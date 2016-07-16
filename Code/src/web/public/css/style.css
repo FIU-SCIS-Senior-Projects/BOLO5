@@ -369,3 +369,11 @@ a.thumbnail.active {
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
 }
+
+.ui-datepicker {
+    background: lightgrey;
+    border: 1px solid #555;
+    color: black;
+    padding: 25px;
+    margin:25px
+}

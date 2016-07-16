@@ -1,0 +1,59 @@
+extends ./layout.jade
+include ./includes/mixins.jade
+// $( document ).ready( function() {
+    // Don't forget to wrap all you jQuery code inside the ready function.
+    //$( 'input#datepicker' ).datepicker();
+//} );
+block jumbo
+    .jumbotron
+        .container
+            h3 Down Load data for Analysis
+
+block content
+    script.
+        $(document).ready(function() {
+          // Default Icon Trigger
+          $('.datepicker').datepicker({
+             showOn: "button",
+             buttonImage: "http://jqueryui.com/resources/demos/images/calendar.gif",
+             buttonText: "Select date",
+             changeMonth: true,
+             changeYear: true,
+             minDate: new Date(2016, 7-1, 15),
+             maxDate: 0
+         });
+        });
+    if (tier === 'ROOT')
+        div.container
+            div.col-md-3
+                h3 Analysis Parameters:
+                    .form-group
+                    select#anim
+                        option(value='') Agency
+                        option(value='#') Auto Theft
+                        option(value='#') Boat Theft
+                        option(value='#') All
+                        <br>
+        div.container
+            div.row
+                div.col-md-4.col-sm-6
+                    h3 From Date:
+                    form
+                        .form-group
+                            input.datepicker.form-control
+
+        div.container
+            div.row
+                div.col-md-4.col-sm-6
+                    h3 To Date:
+                    form
+                        .form-group
+                            input.datepicker.form-control
+        <br>
+        <br>
+        div
+            .col-med-6
+                .form-group
+                    button.btn.btn-default( name = "option" type = "submit" value = "submit") SUBMIT
+    else
+        h1 Well this is embarrassing! Who are you?
