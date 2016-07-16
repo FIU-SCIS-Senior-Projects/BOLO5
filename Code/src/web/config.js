@@ -68,7 +68,10 @@ config.const = config.constants = {
 // # of days a bolo can remain unconfirmed before expiring
 config.days = 30;
 
-config.unconfirmedBoloLifetime =  config.days * 24 * 60 * 60 * 1000;
+config.unconfirmedBoloLifetime = config.days * 24 * 60 * 60 * 1000;
+
+//
+config.max_age = 10 * 10 * 6000;
 
 // # of tries a user can attempt a login without being locked out of the system.
 config.MAX_INCORRECT_LOGINS = 10;

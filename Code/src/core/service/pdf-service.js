@@ -6,8 +6,19 @@ function PDFService() {
 
 }
 
+
+/**
+ * This function builds the user guide according to the user's tier.
+ * tier 4 === ROOT
+ * tier 3 === ADMINSTRATION
+ * tier 2 === SUPERVISOR
+ * tier 1 === OFFICER
+ *
+ *@params user
+ *@params doc
+ */
 PDFService.prototype.genUserGuide = function(user, doc) {
-    var intro = "   logging in you will be brought to the home page. This is where you will be "
+    var INTRO = "   logging in you will be brought to the home page. This is where you will be "
         + "able to view your BOLOs. Each BOLO has several buttons on it that will be "
         + "explained later. From the home page, you will see several other links across "
         + "the top (mobile will be in a dropdown menu accessible from the top right corner) "
@@ -15,6 +26,76 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "down menu to Create BOLO, Archive, Agency Directory, Search, Admin for the "
         + "Administration and root users, a dropdown for user setting and a dropdown to "
         + "Filter by Agency";
+
+    var USER_MANAGENT = "  1) Click on 'Admin'\n"
+        + "  2) Click on 'User Management'\n"
+        + "  3) Click on 'Add New User'\n"
+        + "  4) Fill in the empty fields\n"
+        + "  5) Click 'Submit'\n";
+
+    var AGENCY_MANAGMENT = "  1) Click on 'Admin'\n"
+        + "  2) Click on 'Agency Management'\n"
+        + "  3) Click on 'Add new agency'\n"
+        + "  4) Fill in empty fields\n"
+        + "  5) Select new agency logo and shield images\n"
+        + "  6) Click 'Submit'\n";
+
+    var DATA_SUBSCRIBER = "  1) Click on 'Admin'\n"
+        + "  2) Click on 'Data Subscriber'\n"
+        + "  3) Click on 'Add New Data Subscriber'\n"
+        + "  4) Fill in data subscriber's ID, Name and email\n"
+        + "  5) Click 'Submit'\n";
+
+    // system settings here
+    // var SYSTEM_SETTING = "";
+
+    var CREATE_BOLO = "  1) Click 'Create BOLO' and select the type of BOLO you would like to create.\n"
+        + "  2) Fill in required fields.\n"
+        + "  3) Select available images.\n"
+        + "  4) Add a video link (if available)\n"
+        + "  5) Add a summery.\n"
+        + "  6) Click the 'Preview' Button to make sure you have added everything.\n"
+        + "  7) Click 'Back to Create BOLO' to go back to the BOLO.\n"
+        + "  8) Repeat Steps 2 - 7 until all information is complete.\n"
+        + "  9) Click 'Submit' to submit your BOLO.\n"
+        + "  10) Goto to your registered email and click on the confirmation link.\n";
+
+    var EDIT = "  1) Click on 'Edit'\n"
+        + "  2) Select any field you want to edit\n"
+        + "  3) Enter any information required\n"
+        + "  4) Click 'Submit'\n";
+
+    var DETAILS = "  1) Click on 'Details'\n"
+        + "  2) Review details of a selected BOLO\n"
+        + "  3) Click 'Back' to go back to the BOLOs\n"
+
+    var ARCHIVE_ALL = "  You may view archived BOLOs just in case "
+        + "you are looking for someone who fits the description of "
+        + "another crime.\n";
+
+    var ARCHIVE_ADMIN = "  1) Click on 'Archive'\n"
+        + "  2) The Bolo will be moved into the archived BOLOs\n"
+        + "  3) At this point you may 'Restore', 'Delete' or 'Purge' the BOLO\n";
+
+    var DATA_SUBSCRIBER = "Each BOLO has three options that you may change'\n"
+        + "  1) Status'\n"
+        + "  2) Restore'\n"
+        + "  3) Delete'\n";
+
+    var AGENCY_VIEW = "  1) Click on agency to view a list of partnering agencies.\n"
+        + "  2) Select an agency and view contact information or verify the "
+        + "agency's 'Logo' and 'Shield.'\n";
+
+     var SEARCH = "  1) Select any field(s) you wish to search.\n"
+        + "  2) Enter information value of field(s).\n"
+        + "  3) Wild card search is for something you can not search with an "
+        + "optional search.\n"
+        + "  4) Click 'Search'\n";
+
+    var FILTER = "  1) Click on 'Details'\n"
+    + "  2) Review details of a selected BOLO\n"
+    + "  3) Click 'Home' to go back to the BOLOs\n";
+
     // Introduction for tier levels
     doc.image('../web/public/img/BOLObanner.jpg', 10, 10,{scale: 1.0});
     doc.fillColor('red');
@@ -25,58 +106,39 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     doc.fontSize(15);
     doc.text("Introduction",{align: 'center'}).moveDown(0.5);
     doc.fontSize(12);
-    doc.text(intro,{align: 'left'}).moveDown(2);
+    doc.text(INTRO,{align: 'left'}).moveDown(2);
 
-    // User management
-    if ( user.tier === 4 ){
+    // print for root and admin
+    if ( user.tier === 4  || user.tier === 3 ){
+
+        // User management
         doc.fontSize(15);
         doc.text("User Management").moveDown(0.25);
         doc.fontSize(12);
-        doc.text("  1) Click on 'Admin'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  2) Click on 'User Management'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  3) Click on 'Add New User'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  4) Fill in empty fields", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  5) Click 'Submit'", {align: 'left'})
-        .moveDown();
+        doc.text(USER_MANAGENT, {align: 'left'}).moveDown();
     }
 
-    // agency management
-    if ( user.tier === 4 || user.tier === 3 ){
 
+    // print for root
+    if ( user.tier === 4){
+
+        // agency management
         doc.fontSize(15);
         doc.text("Agencgy Management").moveDown(0.25);
         doc.fontSize(12);
-        doc.text("  1) Click on 'Admin'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  2) Click on 'Agency Management'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  3) Click on 'Add new agency'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  4) Fill in empty fields", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  5) Select new agency logo and shield images", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  6) Click 'Submit'", {align: 'left'})
-        .moveDown();
+        doc.text(AGENCY_MANAGMENT, {align: 'left'}).moveDown();
 
         // Data Subscriber
         doc.fontSize(15);
         doc.text("Data Subscriber").moveDown(0.25);
         doc.fontSize(12);
-        doc.text("  1) Click on 'Admin'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  2) Click on 'Data Subscriber'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  3) Click on 'Add New Data Subscriber'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  4) Fill in data subscriber's ID, Name and email", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  5) Click 'Submit'", {align: 'left'})
-        .moveDown();
+        doc.text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
+
+        // system setting here
+        //doc.fontSize(15);
+        //doc.text("System Settings").moveDown(0.25);
+        //doc.fontSize(12);
+        //doc.text(SYSTEM_SETTING, {align: 'left'}).moveDown();
     }
 
     // print for ALL user
@@ -84,126 +146,61 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     doc.fontSize(15);
     doc.text("Create a BOLO").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  1) Click 'Create BOLO' and select the type of BOLO you would like to create.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  2) Fill in required fields.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  3) Select available images.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  4) Add a video link (if available)", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  5) Add a summery.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  6) Click the 'Preview' Button to make sure you have added everything.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  7) Click 'Back to Create BOLO' to go back to the BOLO.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  8) Repeat Steps 2 - 7 until all information is complete.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  9) Click 'Submit' to submit your BOLO.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  10) Goto to your registered email and click on the confirmation link.", {align: 'left'})
-    .moveDown();
+    doc.text(CREATE_BOLO, {align: 'left'}).moveDown();
 
-    // print for ALL user
-    // Edit (link at bottom of BOLO)
+    // Edit
     doc.fontSize(15);
-    doc.text("Edit (link at bottom of BOLO)").moveDown(0.25);
+    doc.text("Edit").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  1) Click on 'Edit'", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  2) Select any field you want to edit", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  3) Enter any information required", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  4) Click 'Submit'", {align: 'left'})
-    .moveDown();
+    doc.text(EDIT, {align: 'left'}).moveDown();
 
-    // print for ALL user
     // Details (link at bottom of BOLO)
     doc.fontSize(15);
-    doc.text("Edit (link at bottom of BOLO)").moveDown(0.25);
+    doc.text("Details").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  1) Click on 'Details'", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  2) Review details of a selected BOLO", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  3) 3) Click 'Home' to go back to the BOLOs", {align: 'left'})
-    .moveDown();
+    doc.text(DETAILS, {align: 'left'}).moveDown();
 
-
-    // need if for admin and root
-    if ( user.tier === 4 ||  user.tier === 3 ){
-        // Archive (link at bottom of BOLO)
-        doc.fontSize(15);
-        doc.text("Archive (link at bottom of BOLO)").moveDown(0.25);
-        doc.fontSize(12);
-        doc.text("  1) Click on 'Archive'", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  2) The Bolo will be moved into the archived BOLOs", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  3) At this point you may 'Restore,'' 'Delete' or 'Purge' the BOLO", {align: 'left'})
-        .moveDown();
-    }
-
-    // print for ALL user
     // Archive (link at the top)
     doc.fontSize(15);
-    doc.text("Archive (link at the top)").moveDown(0.25);
+    doc.text("Archive").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  You may view archived BOLOs just in case you are looking for someone who fits the description of another crime.", {align: 'justify'})
-    .moveDown(0.25);
+    doc.text(ARCHIVE_ALL, {align: 'left'}).moveDown();
 
-    // need if for admin and root
+    // print for admin and root
     if ( user.tier === 4 || user.tier === 3 ){
+
+        // Archive (link at bottom of BOLO)
+        doc.fontSize(15);
+        doc.text("Archive (Admin)").moveDown(0.25);
+        doc.fontSize(12);
+        doc.text(ARCHIVE_ADMIN, {align: 'left'}).moveDown();
+
         // Data Subscriber
         doc.fontSize(15);
-        doc.text("Each BOLO has three options that you may change").moveDown(0.25);
+        doc.text("Data Subscriber", {align: 'left'}).moveDown(0.25);
         doc.fontSize(12);
-        doc.text("  1) Status", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  2) Restore", {align: 'left'})
-        .moveDown(0.25);
-        doc.text("  3) Delete", {align: 'left'})
-        .moveDown();
+        doc.text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
     }
 
 
-    // print for ALL user
     // Agency
     doc.fontSize(15);
     doc.text("Agency").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  1) Click on agency to view a list of partnering agencies.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  2) Select an agency and view contact information or verify the agency's 'Logo' and 'Shield.'", {align: 'justify'})
-    .moveDown();
+    doc.text(AGENCY_VIEW, {align: 'left'}).moveDown();
 
-    // print for ALL user
     // Search
     doc.fontSize(15);
     doc.text("Search").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  1) Select any field(s) you wish to search.", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  2) Enter information value of field(s).", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  3) Wild card search is for something you can not search with an optional search.", {align: 'justify'})
-    .moveDown(0.25);
-    doc.text("  4) Click 'Search'", {align: 'left'})
-    .moveDown();
+    doc.text(SEARCH, {align: 'left'}).moveDown();
 
-    // print for ALL user
     // Filter by Agency
     doc.fontSize(15);
     doc.text("FIlter by Agency").moveDown(0.25);
     doc.fontSize(12);
-    doc.text("  1) Click on 'Details'", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  2) Review details of a selected BOLO", {align: 'left'})
-    .moveDown(0.25);
-    doc.text("  3) Click 'Home' to go back to the BOLOs", {align: 'left'})
-    .moveDown();
+    doc.text(FILTER, {align: 'left'}).moveDown();
+
     return doc;
 }
 
