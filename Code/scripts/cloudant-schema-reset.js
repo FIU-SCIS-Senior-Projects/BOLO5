@@ -284,6 +284,9 @@ var BOLO_DESIGN_DOC = {
     "by_author": {
       "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.authorUName, null ); }"
     },
+    "by_agency":{
+      "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit(doc.agencyName, null); }"
+    },
     "by_token": {
       "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.boloToken, null ); }"
     },

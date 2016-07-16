@@ -422,7 +422,9 @@ router.get('/bolo/agencies/', function(req, res, next) {
     }
   };
   data.filter = "Agencies";
-
+  boloService.getBolosFromAgencies(req.query).then(function(bolos){
+    console.log(bolos);
+  })
   boloService.getBolosByAuthor(author).then(function(results) {
     data.bolos = results;
 

@@ -40,12 +40,14 @@ UserService.prototype.authenticate = function(username, password) {
   var account = {};
   return this.userRepository.getByUsername(username)
     .then(function(user) {
-      console.log(user);
+
       var authenticated = false;
 
       if (user === null) {
+
         account.found = false;
         account.status = true;
+
         return account;
       } else {
         account.found = true;
@@ -57,7 +59,7 @@ UserService.prototype.authenticate = function(username, password) {
         authenticated = false;
         user.accountStatus = false;
         user.incorrectLogins += 1;
-        account.status = user.accountStatus;
+        account.status = false;
         account.attemptsLeft = 0;
 
         account.email = user.email;
@@ -101,6 +103,7 @@ UserService.prototype.authenticate = function(username, password) {
       }
 
       // update the users with # of incorrect logins and account status
+      console.log(user);
       context.userRepository.update(user);
 
 

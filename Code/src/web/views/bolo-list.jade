@@ -5,32 +5,37 @@ block jumbo
     .jumbotron
         .container
             div#wrapper
-                div.col-xs-1.col-md-10
+                div
                     p Active BOLOs
-                div.col-xs-1.dropdown
-                    button.btn.btn-default(type="button" data-toggle="dropdown") Filter By
-                        span.caret
-                    ul.dropdown-menu(role="menu" id="parent-menu" aria-labelledby="dropdownMenu")
-                        -var dimensions = "width: 210px; margin: 0 auto;"
-                        a.btn.btn-default(href="/bolo/mybolos" style=dimensions) My Bolos
-                        a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) My Agency
-                        a.btn.btn-default(href="/bolo/" style=dimensions) All Bolos     
-                div.pull-right     
+                div.input-group.pull-right
+                        span
+                  select.selectpicker(id="parent-menu" title="Filter By" mobile = "true" onchange="location = this.value")
+                        option(value="/bolo/mybolos" ) My Bolos
+                        option(value="/bolo/agency/" + userAgency.id name="agencyID" ) My Agency
+                        option(value="/bolo/" ) All Bolos     
+                  
                     form-inline(role="form" action="/admin/users/create" enctype="multipart/form-data" method="post" )
                         div.input-group
                             span.input-group-btn
-                                select.selectpicker(multiple title="Select Agencies" data-width="160px")
+                                select.selectpicker(multiple title="Select Agencies" id="agency-select" data-width="160px" mobile = "true" data-selected-text-format="count>1"  )
                                     for agency in agencies
                                         //if(agency.id !== userAgency.id)
                                         option(value=agency.name ) #{agency.name}
                             button.btn.btn-default(type = "submit" value = "send" id="submit-select") Submit
                                         script.
-                                              var agencies = [];
-                                              $('.selectpicker').change(function(){
-                                                  agencies = $('.selectpicker').val();
-                                                  console.log(agencies);
-                                                })
+                                              $('#submit-select').hide();
+                                              $(window).load(function(e){
+                                              
+                                              
+                                              console.log($('#agency-select').is(":visible"))
+                                              if($('#agency-select').is(":visible")){
+                                                  console.log($('#agency-select').is(":visible"))
+                                                $('#submit-select').show();
+                                              }
                                               $('#submit-select').click(function(e){
+                                                var agencies = [];
+                                                  agencies = $('#agency-select').val();
+                                                
                                                   console.log(agencies);
                                                   console.log("CLICKED")
                                                   
@@ -40,13 +45,13 @@ block jumbo
                                                         type: 'GET',
                                                         data: {agencies},
                                                         success: function(response){
-                                                          console.log("Redirecting")
-                                                          console.log()
                                                           window.location.href = '/bolo/agencies';
                                                         }
                                                       })
                                                     }
+                                                    
                                                   })
+                                                })
                                           
                                             
 

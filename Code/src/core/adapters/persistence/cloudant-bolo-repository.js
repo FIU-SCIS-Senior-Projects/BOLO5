@@ -427,10 +427,10 @@ CloudantBoloRepository.prototype.getBolo = function (id) {
 };
 
 /*
-Bolo is retrieved by token, if bolo is unconfirmed and older
-than config.unconfirmedBoloLifetime days he will be deleted upon
-confirmation attempt.
-*/
+ *Bolo is retrieved by token, if bolo is unconfirmed and older
+ *than config.unconfirmedBoloLifetime days he will be deleted upon
+ *confirmation attempt.
+ */
 CloudantBoloRepository.prototype.getBoloByToken = function(token){
   var dateCreated;
   var confirmed;
@@ -478,7 +478,31 @@ CloudantBoloRepository.prototype.getBolosByAuthor = function (author) {
     });
 };
 
+/*
+ * Takes an agency names as a parameter and returns all the BOLOS
+ * from that agency
+ * @param agencies - array of agencies
+ */
+CloudantBoloRepository.prototype.getBolosFromAgencies = function(agencies){
 
+  var bolosFromAgencies = [];
+  for(var i = 0; i < agencies.length; i++){
+
+  return db.view( 'bolo', 'by_agency', {
+      'key': agencies[i],
+      'include_docs': true
+    }).then( function ( result ) {
+        var bolos = result.rows.map( function ( row ) {
+            return boloFromCloudant( row.doc );
+        });
+        bolosFromAgencies[i] = bolos;
+    });
+
+  }
+  console.log(bolosFromAgencies)
+  return bolosFromAgencies;
+
+}
 CloudantBoloRepository.prototype.getAttachment = function (id, attname) {
     var bufferPromise = db.getAttachment(id, attname);
     var docPromise = db.get(id);

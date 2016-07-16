@@ -35,7 +35,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     userService.authenticate(username, password)
       .then(function(account) {
-  console.log(account)
+          console.log(account)
 
         // check the status of the account
         if (account.status) {
@@ -130,7 +130,7 @@ var sendExpirationReminder = function(user, timeLeft) {
     var token = buf.toString('hex');
 
     user.resetPasswordToken = token;
-    // token expires in 5 or less
+    // token expires in 1 day 
     user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
     userService.updateUser(user.id, user);
 

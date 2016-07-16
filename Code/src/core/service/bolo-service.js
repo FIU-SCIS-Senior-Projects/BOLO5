@@ -109,7 +109,14 @@ BoloService.prototype.getBolos = function ( limit, skip ) {
 BoloService.prototype.getBolosByAgency = function ( id, limit, skip ) {
     return this.boloRepository.getBolosByAgency( id, limit, skip );
 };
-
+ /*
+  * Retrieves a collection of bolos from the array of agencies
+  * provided
+  */
+BoloService.prototype.getBolosFromAgencies = function(agencies){
+   var context = this;
+   return context.boloRepository.getBolosFromAgencies(agencies);
+}
 BoloService.prototype.getArchiveBolos = function ( limit, skip ) {
     return this.boloRepository.getArchiveBolos( limit, skip );
 };
