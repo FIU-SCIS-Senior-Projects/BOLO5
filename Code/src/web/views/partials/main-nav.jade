@@ -1,6 +1,6 @@
 include ../includes/mixins.jade
 
-+nav( "BOLO", "bolo-nav" )
++nav( "Home", "bolo-nav" )
     if userLoggedIn
         ul.nav.navbar-nav
             +dropdown_menu( 'Create' )
@@ -23,7 +23,7 @@ include ../includes/mixins.jade
     else
         ul.nav.navbar-nav.navbar-right
             +dropdown_menu( 'About Us')
-                li: a( href="/aboutUs/BOLO" ) BOLO
-                li: a( href="/aboutUs/FIU" ) FIU
-                li: a( href="/aboutUs/IBM" ) IBM
+                li: a( href="/aboutUs/BOLO" ) M.D.C.A.C.P.
+                li: a( href="/aboutUs/FIU" ) FIU's Contribution
+                li: a( href="/aboutUs/IBM" ) IBM's Contribution
                 li: a( href="/login" ) Login

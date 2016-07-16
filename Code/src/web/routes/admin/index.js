@@ -4,7 +4,9 @@
 var router  = require('express').Router();
 var users   = require('./users');
 var agency  = require('./agency');
-var dataSubscriber= require('./dataSubscriber');
+var systemSetting  = require('./systemSetting');
+var dataSubscriber = require('./dataSubscriber');
+var dataAnalysis = require('./dataAnalysis');
 
 
 var config  = require('../../config');
@@ -66,6 +68,16 @@ router.get(  pre + '/create'                , dataSubscriber.getCreateForm );
 router.post( pre + '/create'                , dataSubscriber.postCreateForm );
 router.get(  pre + '/edit/:id'              , dataSubscriber.getEditForm );
 router.post( pre + '/edit/:id'              , dataSubscriber.postEditForm );
+
+
+pre='/admin/systemSetting';
+router.use( SETNAV( 'admin-systemSetting' ) );
+router.get(  pre                            , systemSetting.getSystemSetting );
+
+
+pre='/admin/dataAnalysis';
+router.use( SETNAV( 'admin-dataAnalysis' ) );
+router.get(  pre                            , dataAnalysis.getDataAnalysis );
 
 
 router.use( SETNAV( 'admin-index' ) );
