@@ -14,7 +14,7 @@ var agencyService       = new config.AgencyService( agencyRepository );
 
 
 module.exports = router;
-router.get(  '/aboutUs/BOLO',    getAboutUsBOLO );
+router.get(  '/aboutUs/MDCACP',    getAboutMDCACP );
 router.get(  '/aboutUs/FIU',     getAboutUsFIU );
 router.get(  '/aboutUs/IBM',     getAboutUsIBM );
 
@@ -25,9 +25,9 @@ router.get(  '/aboutUs/IBM',     getAboutUsIBM );
  * @params req
  * @params res
  */
-function getAboutUsBOLO(req, res){
+function getAboutMDCACP(req, res){
     console.log('In the getAboutUsBOLO');
-    res.render('about-bolo');
+    res.render('about-MDCACP');
 }
 /**
  * This function is to display the user guide on each individual teir.
