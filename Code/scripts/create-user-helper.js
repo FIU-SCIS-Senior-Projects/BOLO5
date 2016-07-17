@@ -42,7 +42,8 @@ agencyService.searchAgencies("name:Pinecrest").then( function ( response ) {
             "agencyName" : agencies[0].name,
             "badge"     : "officerBadge",
             "sectunit"  : "officerUnit",
-            "ranktitle" : "officerRank"
+            "ranktitle" : "officerRank",
+            "accountStatus": true
         });
 
         var adminDTO = userService.formatDTO({
@@ -56,7 +57,8 @@ agencyService.searchAgencies("name:Pinecrest").then( function ( response ) {
             "agencyName" : agencies[0].name,
             "badge"     : "officerBadge",
             "sectunit"  : "officerUnit",
-            "ranktitle" : "officerRank"
+            "ranktitle" : "officerRank",
+            "accountStatus": true
         });
 
         var superDTO = userService.formatDTO({
@@ -70,7 +72,8 @@ agencyService.searchAgencies("name:Pinecrest").then( function ( response ) {
             "agencyName" : agencies[0].name,
             "badge"     : "superBadge",
             "sectunit"  : "superSect",
-            "ranktitle" : "superRank"
+            "ranktitle" : "superRank",
+            "accountStatus": true
         });
 
         var officerDTO = userService.formatDTO({
@@ -84,7 +87,8 @@ agencyService.searchAgencies("name:Pinecrest").then( function ( response ) {
             "agencyName" : agencies[0].name,
             "badge"     : "officerBadge",
             "sectunit"  : "officerUnit",
-            "ranktitle" : "officerRank"
+            "ranktitle" : "officerRank",
+            "accountStatus": true
         });
         console.log(
             "Attempting to create users..."

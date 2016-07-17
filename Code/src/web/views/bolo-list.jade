@@ -9,7 +9,7 @@ block jumbo
                     p Active BOLOs
                 div.input-group.pull-right
                         span
-                  select.selectpicker(id="parent-menu" title="Filter By" mobile = "true" onchange="location = this.value")
+                  select.selectpicker(id="parent-menu" title="Filter By" mobile = "true" onchange="location = this.value" data-width="fit")
                         option(value="/bolo/mybolos" ) My Bolos
                         option(value="/bolo/agency/" + userAgency.id name="agencyID" ) My Agency
                         option(value="/bolo/" ) All Bolos     
@@ -25,27 +25,25 @@ block jumbo
                                         script.
                                               $('#submit-select').hide();
                                               $(window).load(function(e){
-                                              
-                                              
-                                              console.log($('#agency-select').is(":visible"))
+                                                
                                               if($('#agency-select').is(":visible")){
                                                   console.log($('#agency-select').is(":visible"))
                                                 $('#submit-select').show();
                                               }
+                                              
+                                              
                                               $('#submit-select').click(function(e){
                                                 var agencies = [];
                                                   agencies = $('#agency-select').val();
-                                                
-                                                  console.log(agencies);
-                                                  console.log("CLICKED")
+          
                                                   
                                                   if(agencies.length > 0){
                                                       $.ajax({
                                                         url: '/bolo/agencies',
-                                                        type: 'GET',
+                                                        type: 'POST',
                                                         data: {agencies},
                                                         success: function(response){
-                                                          window.location.href = '/bolo/agencies';
+                                                          window.location = response.redirect;;
                                                         }
                                                       })
                                                     }
@@ -73,5 +71,5 @@ block content
 
 
     .row.text-center
-        - var route = '/bolo'
+        - var route = pageRoute;
         include ./partials/paging.jade
