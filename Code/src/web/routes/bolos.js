@@ -1110,9 +1110,8 @@ router.post('/bolo/edit/:id', function(req, res, next) {
 
     if (formDTO.fields['image_remove[]']) {
       boloDTO.images_deleted = formDTO.fields['image_remove[]'];
-      formDTO.fields['image_remove[]'].forEach(function(imgDTO) {
-      boloDTO.imagesToDelete.push(imgDTO.name);
-    })
+      boloDTO.imagesToDelete=formDTO.fields['image_remove'];
+
   }
 
     //console.log("asda", boloDTO);

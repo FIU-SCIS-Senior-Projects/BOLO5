@@ -262,9 +262,9 @@ CloudantBoloRepository.prototype.updateAfterConfirmation = function (bolo, attac
         _(newdoc).omit(blacklist).each(function (val, key) {
             doc[key] = val;
         }).run();
-        if (newdoc.images) {
-            doc._attachments = _.omit(doc._attachments, newdoc.images);
-            doc.images = _.omit(doc.images, newdoc.images);
+        if (newdoc.images_deleted) {
+            doc._attachments = _.omit(doc._attachments, newdoc.images_deleted);
+            doc.images = _.omit(doc.images, newdoc.images_deleted);
         }
         if(newdoc.imagesToDelete){
           doc._attachments = _.omit(doc._attachments, newdoc.imagesToDelete);
