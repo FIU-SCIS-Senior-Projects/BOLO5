@@ -131,7 +131,7 @@ module.exports.postCreateForm = function ( req, res ) {
           req.flash( FERR, 'Error saving new user, please try again. Every field is required.' );
           throw new FormError();
         }
-
+        formDTO.fields.accountStatus = true;
         formDTO.fields.tier = formDTO.fields.role;
         formDTO.fields.agency = formDTO.fields.agency || req.user.agency;
         formDTO.fields.notifications = [ null ];
