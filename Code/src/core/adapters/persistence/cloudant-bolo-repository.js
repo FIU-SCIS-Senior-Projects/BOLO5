@@ -427,10 +427,10 @@ CloudantBoloRepository.prototype.getBolo = function (id) {
 };
 
 /*
-Bolo is retrieved by token, if bolo is unconfirmed and older
-than config.unconfirmedBoloLifetime days he will be deleted upon
-confirmation attempt.
-*/
+ * Bolo is retrieved by token, if bolo is unconfirmed and older
+ * than config.unconfirmedBoloLifetime days he will be deleted upon
+ * confirmation attempt.
+ */
 CloudantBoloRepository.prototype.getBoloByToken = function(token){
   var dateCreated;
   var confirmed;
@@ -466,19 +466,45 @@ CloudantBoloRepository.prototype.getBoloByToken = function(token){
 /*
  * Get bolos from db by Authors username
  */
-CloudantBoloRepository.prototype.getBolosByAuthor = function (author) {
+CloudantBoloRepository.prototype.getBolosByAuthor = function (author, limit, skip) {
   return db.view( 'bolo', 'by_author', {
       'key': author,
-      'include_docs': true
+      'include_docs': true,
+      'limit': limit,
+      'skip': skip,
+      'descending': true
     }).then( function ( result ) {
         var bolos = result.rows.map( function ( row ) {
             return boloFromCloudant( row.doc );
         });
-        return bolos;
+        return {'bolos': bolos, total: result.total_rows};
     });
 };
 
+/*
+ * Takes an agency name array as a parameter and returns all the BOLOS
+ * that are confirmed from those agencies
+ * @param agencies - array of agencies
+ */
+CloudantBoloRepository.prototype.getBolosFromAgencies = function(agencies, limit, skip){
 
+
+  return db.view( 'bolo', 'by_agency',  {
+      'keys': agencies,
+      'include_docs': true,
+      'limit': limit,
+      'skip': skip,
+      'descending': true
+    }).then( function ( result ) {
+        var bolos = result.rows.map( function ( row ) {
+            return boloFromCloudant( row.doc );
+        });
+        console.log(result.rows.length);
+
+        return {'bolos': bolos, total: result.total_rows};
+    });
+
+}
 CloudantBoloRepository.prototype.getAttachment = function (id, attname) {
     var bufferPromise = db.getAttachment(id, attname);
     var docPromise = db.get(id);

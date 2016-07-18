@@ -358,11 +358,11 @@ a.thumbnail.active {
     border-left-color: #fff;
 }
 
-.dropdown-submenu.pull-left {
+.dropdown-submenu.pull-right {
     float: none;
 }
 
-.dropdown-submenu.pull-left>.dropdown-menu {
+.dropdown-submenu.pull-right>.dropdown-menu {
     left: -100%;
     margin-left: 10px;
     -webkit-border-radius: 6px 0 6px 6px;

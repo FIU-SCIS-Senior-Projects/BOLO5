@@ -5,26 +5,52 @@ block jumbo
     .jumbotron
         .container
             div#wrapper
-                div.col-xs-1.col-md-10
+                div
                     p Active BOLOs
-                div.col-xs-1.dropdown
-                    button.dropbtn.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown") Filter By:
-                        span.caret
-                    ul.dropdown-menu.multi-level(role="menu" aria-labelledby="dropdownMenu")
-                        -var dimensions = "width: 210px; margin: 0 auto;"
-                        a.btn.btn-default(href="/bolo/mybolos" style=dimensions) My Bolos
-                        a.btn.btn-default(href="/bolo/" style=dimensions) View all
-                        a.btn.btn-default(href="/bolo/agency/" + userAgency.id name="agencyID" style=dimensions) #{userAgency.name}
-                        li.dropdown-submenu
-                            a.btn.btn-default(tabindex="-1" style = dimensions) Agencies
-                            ul.dropdown-menu
-                              li
-                                  for agency in agencies
-                                      if(agency.id !== userAgency.id)
-                                          a.btn.btn-default(href="/bolo/agency/" + agency.id style = dimensions value = agency.name ) #{agency.name}
-
-
-
+                div.input-group.pull-right
+                        span
+                  select.selectpicker(id="parent-menu" title="Filter By" mobile = "true" onchange="location = this.value" data-width="fit")
+                        option(value="/bolo/mybolos" ) My Bolos
+                        option(value="/bolo/agency/" + userAgency.id name="agencyID" ) My Agency
+                        option(value="/bolo/" ) All Bolos     
+                  
+                    form-inline(role="form" action="/admin/users/create" enctype="multipart/form-data" method="post" )
+                        div.input-group
+                            span.input-group-btn
+                                select.selectpicker(multiple title="Select Agencies" id="agency-select" data-width="160px" mobile = "true" data-selected-text-format="count>1"  )
+                                    for agency in agencies
+                                        //if(agency.id !== userAgency.id)
+                                        option(value=agency.name ) #{agency.name}
+                            button.btn.btn-default(type = "submit" value = "send" id="submit-select") Submit
+                                        script.
+                                              $('#submit-select').hide();
+                                              $(window).load(function(e){
+                                                
+                                              if($('#agency-select').is(":visible")){
+                                                $('#submit-select').show();
+                                              }
+                                              
+                                              
+                                              $('#submit-select').click(function(e){
+                                                var agencies = [];
+                                                  agencies = $('#agency-select').val();
+          
+                                                  
+                                                  if(agencies.length > 0){
+                                                      $.ajax({
+                                                        url: '/bolo/agencies',
+                                                        type: 'POST',
+                                                        data: {agencies},
+                                                        success: function(response){
+                                                          window.location = response.redirect;;
+                                                        }
+                                                      })
+                                                    }
+                                                    
+                                                  })
+                                                })
+                                          
+                                            
 
 block content
     include ./partials/global-alerts.jade
@@ -44,5 +70,5 @@ block content
 
 
     .row.text-center
-        - var route = '/bolo'
+        - var route = pageRoute;
         include ./partials/paging.jade

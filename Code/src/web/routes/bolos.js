@@ -49,7 +49,7 @@ function sendBoloNotificationEmail(bolo, template) {
   var data = {};
   var someData = {};
   var sort = 'username';
-  var existWatermark=false;
+  var existWatermark = false;
 
   var doc = new PDFDocument();
 
@@ -62,8 +62,8 @@ function sendBoloNotificationEmail(bolo, template) {
   }).then(function(agency) {
     data.agency = agency;
     console.log(agency);
-    if(agency.attachments['watermark']!=null){
-      existWatermark=true;
+    if (agency.attachments['watermark'] != null) {
+      existWatermark = true;
     }
     return agencyService.getAttachment(agency.id, 'logo')
   }).then(function(logo) {
@@ -71,19 +71,19 @@ function sendBoloNotificationEmail(bolo, template) {
     return agencyService.getAttachment(data.agency.id, 'shield')
   }).then(function(shield) {
     someData.shield = shield.data;
-    if(existWatermark)
+    if (existWatermark)
       return agencyService.getAttachment(data.agency.id, 'watermark');
-   else
-    return null;
+    else
+      return null;
   }).then(function(watermark) {
-    if(existWatermark)
+    if (existWatermark)
       someData.watermark = watermark.data;
     return userService.getByUsername(bolo.authorUName);
   }).then(function(user) {
     data.user = user;
-    if(existWatermark){
-      doc.image(someData.watermark,0,0,{
-        fit:[800,800]
+    if (existWatermark) {
+      doc.image(someData.watermark, 0, 0, {
+        fit: [800, 800]
       });
     }
     doc.image(someData.featured, 15, 155, {
@@ -280,7 +280,7 @@ router.get('/bolo', function(req, res, next) {
     },
     'agencies': []
   };
-
+  data.pageRoute = '/bolo';
   boloService.getBolos(limit, skip).then(function(results) {
     data.bolos = results.bolos;
     data.filter = "All Bolos"
@@ -303,7 +303,7 @@ router.get('/bolo', function(req, res, next) {
     }
     data.paging.last = Math.ceil(results.total / limit);
 
-    console.log(req.user)
+
     agencyService.getAgencies().then(function(agencies) {
       // bind agencies to front end
       data.agencies = agencies;
@@ -340,7 +340,7 @@ router.get('/bolo/agency/:id', function(req, res, next) {
 
   boloService.getBolosByAgency(agency, limit, skip).then(function(results) {
     data.bolos = results.bolos;
-
+    data.agencyRoute = req.params.id;
     console.log('total: ' + results.total);
     data.paging.last = Math.ceil(results.total / limit);
     console.log('paging: ' + data.paging.last);
@@ -385,13 +385,11 @@ router.get('/bolo/mybolos/', function(req, res, next) {
     }
   };
   data.filter = "My Bolos";
+  data.pageRoute = '/bolo/mybolos';
 
-  boloService.getBolosByAuthor(author).then(function(results) {
-    data.bolos = results;
+  boloService.getBolosByAuthor(author, limit, skip).then(function(results) {
+    data.bolos = results.bolos;
 
-    console.log('total: ' + results.total);
-    data.paging.last = Math.ceil(results.total / limit);
-    console.log('paging: ' + data.paging.last);
     agencyService.getAgencies().then(function(agencies) {
       data.agencies = agencies;
       var i;
@@ -400,6 +398,7 @@ router.get('/bolo/mybolos/', function(req, res, next) {
           data.userAgency = agencies[i].data;
         }
       }
+        data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);      
       res.render('bolo-list', data);
     });
   }).catch(function(error) {
@@ -407,6 +406,71 @@ router.get('/bolo/mybolos/', function(req, res, next) {
   });
 });
 
+
+
+/*
+ * Grabs the agencies to filter by from a front end ajax call
+ */
+var agenciesToFilterBy;
+router.post('/bolo/agencies/', function(req, res, next) {
+
+  agenciesToFilterBy = req.body['agencies'];
+  console.log("Posted and got " + agenciesToFilterBy);
+  res.send({
+    redirect: '/bolo/agencies'
+  });
+
+});
+
+router.get('/bolo/agencies/', function(req, res, next) {
+
+  if (typeof agenciesToFilterBy === 'undefined'){
+    res.redirect('/bolo');
+  }
+  var author = req.user.username;
+  var page = parseInt(req.query.page) || 1;
+  console.log('page: ' + page);
+  var limit = config.const.BOLOS_PER_PAGE;
+  console.log('limit: ' + limit);
+  var skip = (1 <= page) ? (page - 1) * limit : 0;
+  var data = {
+    'paging': {
+      'first': 1,
+      'current': page
+    }
+  };
+
+  // parse the agenciesToFilterBy array and create a string of agencies
+  var filter = "";
+  for(var i =0; i<agenciesToFilterBy.length; i++){
+    filter += agenciesToFilterBy[i];
+    if(i + 1 < agenciesToFilterBy.length){
+      filter += ", ";
+    }
+  }
+  data.filter = filter;
+  data.pageRoute = '/bolo/agencies';
+
+  boloService.getBolosFromAgencies(agenciesToFilterBy, limit, skip).then(function(results) {
+    data.bolos = results.bolos;
+
+    agencyService.getAgencies().then(function(agencies) {
+      data.agencies = agencies;
+      var i;
+      for (i = 0; i < agencies.length; i++) {
+        if (req.user.agency === agencies[i].data.id) {
+          data.userAgency = agencies[i].data;
+        }
+      }
+        data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);
+      res.render('bolo-list', data);
+      agenciesToFilterBy = [];
+    });
+  }).catch(function(error) {
+    next(error);
+  });
+
+});
 
 // list archived bolos
 router.get('/bolo/archive', function(req, res, next) {
@@ -550,12 +614,12 @@ router.get('/bolo/search/:type', function(req, res) {
       data.agencies.push(agency.data.name);
     }
 
-    if(req.params.type === 'auto')
-        res.render('bolo-search-auto-form', data);
-    else if(req.params.type === 'boat')
-        res.render('bolo-search-boat-form', data);
+    if (req.params.type === 'auto')
+      res.render('bolo-search-auto-form', data);
+    else if (req.params.type === 'boat')
+      res.render('bolo-search-boat-form', data);
     else
-        res.render('bolo-search-form', data);
+      res.render('bolo-search-form', data);
   });
 });
 
@@ -788,26 +852,26 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
 
         var doc = new PDFDocument();
         var someData = {};
-        var checkWatermark=false;
+        var checkWatermark = false;
 
         /** @todo must handle when featured image is empty **/
 
-        agencyService.hasWatermark(pData[0].agency).then(function(hasWatermark){
-          if(hasWatermark){
-            checkWatermark=true;
-            return   agencyService.getAttachment(pData[0].agency, 'watermark');}
-          else {
-              return null;
+        agencyService.hasWatermark(pData[0].agency).then(function(hasWatermark) {
+          if (hasWatermark) {
+            checkWatermark = true;
+            return agencyService.getAttachment(pData[0].agency, 'watermark');
+          } else {
+            return null;
           }
         }).then(function(watermarkDTO) {
-          if(checkWatermark){
-          someData.watermark = watermarkDTO.data;
-            doc.image(someData.watermark,0,0,{
-              fit:[800,800]
+          if (checkWatermark) {
+            someData.watermark = watermarkDTO.data;
+            doc.image(someData.watermark, 0, 0, {
+              fit: [800, 800]
             });
           }
-        return agencyService.getAttachment(pData[0].agency, 'logo')
-          }).then(function(logoDTO) {
+          return agencyService.getAttachment(pData[0].agency, 'logo')
+        }).then(function(logoDTO) {
           someData.logo = logoDTO.data;
           doc.image(someData.logo, 15, 15, {
             height: 100
@@ -1210,7 +1274,7 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
   var someData = {};
 
   var doc = new PDFDocument();
-  var existWatermark=false;
+  var existWatermark = false;
   boloService.getAttachment(req.params.id, 'featured').then(function(attDTO) {
     someData.featured = attDTO.data;
     return boloService.getBolo(req.params.id);
@@ -1219,15 +1283,15 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return agencyService.getAgency(bolo.agency);
   }).then(function(agency) {
     data.agency = agency;
-    if(agency.attachments['watermark']!=null){
-      existWatermark=true;
+    if (agency.attachments['watermark'] != null) {
+      existWatermark = true;
     }
-    if(existWatermark)
+    if (existWatermark)
       return agencyService.getAttachment(agency.id, 'watermark');
     else
-        return null;
+      return null;
   }).then(function(watermark) {
-    if(existWatermark)
+    if (existWatermark)
       someData.watermark = watermark.data;
     return agencyService.getAttachment(data.agency.id, 'logo')
   }).then(function(logo) {
@@ -1238,10 +1302,11 @@ router.get('/bolo/details/pdf/:id' + '.pdf', function(req, res, next) {
     return userService.getByUsername(data.bolo.authorUName);
   }).then(function(user) {
     data.user = user;
-    if(existWatermark){
-    doc.image(someData.watermark, 0, 0, {
-      fit: [800, 800]
-    });}
+    if (existWatermark) {
+      doc.image(someData.watermark, 0, 0, {
+        fit: [800, 800]
+      });
+    }
     pdfService.genDetailsPdf(doc, data);
     doc.image(someData.featured, 15, 155, {
       fit: [260, 200]
