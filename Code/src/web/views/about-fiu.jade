@@ -1,17 +1,30 @@
 extends ./layout.jade
 include ./includes/mixins.jade
 
+//    This is the format laid out for you do not change it!
+//    Alphabetical by last name for each semester and for each STUDENT there
+//    four places that have to be updated according to the screen size to make
+//    this mobile responsive.
+//
+//  Sample:
+//    div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+//        a(href='#' target='_blank')   ==> like to linked in page or an about you page only.
+//            #[img( src="/img/burke.jpg" alt="", width=200)]  ==> photo
+//        h4.strong Burke, John         ==> Your name
+//        p egonz077@fiu.edu            ==> Your email
+//        p Front end development       ==> one feature you worked on (your milestone)
+//        p Graduation 5 Aug. 2016      ==> Graduation Data
+//        br
+//        br
+
 block jumbo
     .jumbotron
         .container
-            h3 FIU's contribution
-
+            a(href='https://cec.fiu.edu/' target='_blank')
+                | #[img#featured.img.center-block( src="/img/cec.jpg" alt="" )]
 block content
     div.container
         div.row
-            // a(href='http://www.cis.fiu.edu/seniorproject/' target='_blank')
-            a(href='https://cec.fiu.edu/' target='_blank')
-                #[img#featured.img.center-block( src="/img/fiu-cec.png" alt="" )]
                 br
                 br
             p For the seniors in FIU’s Department of Electrical and Computer
@@ -35,7 +48,7 @@ block content
         div.row
             div.col-xl-8.hidden-lg.hidden-md.hidden-sm.hidden-xs
                 a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
+                    | #[ img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
                     br
                 h3.strong Masoud Sadjadi, PhD
             div.col-xl-8.hidden-lg.hidden-md.hidden-sm.hidden-xs
@@ -81,7 +94,7 @@ block content
         div.row
             div.col-lg-4.hidden-md.hidden-sm.hidden-xs
                 a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
+                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
                     br
                 h3.strong Masoud Sadjadi, PhD
             div.col-lg-8.hidden-md.hidden-sm.hidden-xs
@@ -128,7 +141,7 @@ block content
         div.row
             div.hidden-xl.hidden-lg.col-md-4.hidden-sm.hidden-xs
                 a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
+                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
                     br
                 h3.strong Masoud Sadjadi, PhD
             div.hidden-xl.hidden-lg.col-md-8.hidden-sm.hidden-xs
@@ -176,7 +189,7 @@ block content
         div.row
             div.hidden-xl.hidden-lg.hidden-md.col-sm-4.hidden-xs
                 a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=200)]
+                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=200)]
                     br
                 h4.strong Masoud Sadjadi, PhD
             div.hidden-xl.hidden-lg.hidden-md.col-sm-8.hidden-xs
@@ -224,7 +237,7 @@ block content
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm
                 a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=200)]
+                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=200)]
                     br
                 h4.strong Masoud Sadjadi, PhD
                 p Dr. Sadjadi holds a B.S. degree in Hardware Engineering, an M.S.
@@ -278,7 +291,7 @@ block content
                     | Agile Software Development.
             div.col-xl-4.hidden-lg.hidden-md.hidden-sm.hidden-xs
                 a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=300)
+                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=300)]
                 h3.strong Mohsen Taheri
                     br
                     br
@@ -296,7 +309,7 @@ block content
                     | Agile Software Development.
             div.hidden-xl.col-lg-4.col-md-4.hidden-sm.hidden-xs
                 a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=300)
+                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=300)]
                 h3.strong Mohsen Taheri
                     br
                     br
@@ -314,7 +327,7 @@ block content
                     | Agile Software Development.
             div.hidden-xl.hidden-lg.hidden-md.col-sm-4.hidden-xs
                 a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=200)
+                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=200)]
                 h4.strong Mohsen Taheri
                     br
                     br
@@ -323,7 +336,7 @@ block content
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
                 a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=200)
+                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=200)]
                 h4.strong Mohsen Taheri
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
                 p Mohsen Taheri has been a PhD student of Computer Science at
@@ -344,56 +357,64 @@ block content
     div.container
         div.row
             div.col-xl-offset-3.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
@@ -405,56 +426,64 @@ block content
     div.container
         div.row
             div.col-xl-offset-3.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Vizcaino, David
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Vizcaino, David
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Vizcaino, David
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Vizcaino, David
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
@@ -466,56 +495,64 @@ block content
     div.container
         div.row
             div.col-xl-offset-3.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.col-lg-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
@@ -527,14 +564,16 @@ block content
     div.container
         div.row
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Alvarez, Edwin
                 p ealva153@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
+                    | #[img( src="/img/henao.png" alt="", width=300)]
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -542,28 +581,32 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Alvarez, Edwin
                 p ealva153@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
+                    | #[img( src="/img/henao.png" alt="", width=300)]
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -571,28 +614,32 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=300)]
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Alvarez, Edwin
                 p ealva153@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
+                    | #[img( src="/img/henao.png" alt="", width=200)]
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -600,29 +647,32 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Alvarez, Edwin
                 p ealva153@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                //
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
+                    | #[img( src="/img/henao.png" alt="", width=200)]
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -630,14 +680,16 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/fiu.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
@@ -649,7 +701,8 @@ block content
     div.container
         div.row
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/burke.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/burke.jpg" alt="", width=300)]
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -657,7 +710,8 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/gonzalez_e.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=300)]
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -665,7 +719,8 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/medina_j.png" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/medina_j.png" alt="", width=300)]
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -673,7 +728,8 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/nilton.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nilton.jpg" alt="", width=300)]
                 h4.strong Munoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
@@ -681,7 +737,8 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/burke.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/burke.jpg" alt="", width=300)]
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -689,7 +746,8 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/gonzalez_e.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=300)]
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -697,7 +755,8 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/medina_j.png" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/medina_j.png" alt="", width=300)]
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -705,7 +764,8 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                img( src="/img/nilton.jpg" alt="", width=300)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nilton.jpg" alt="", width=300)]
                 h4.strong Munoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
@@ -714,7 +774,8 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/burke.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/burke.jpg" alt="", width=200)]
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -722,7 +783,8 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/gonzalez_e.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=200)]
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -731,7 +793,8 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                img( src="/img/medina_j.png" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/medina_j.png" alt="", width=200)]
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -739,7 +802,8 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                img( src="/img/nilton.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nilton.jpg" alt="", width=200)]
                 h4.strong Munoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
@@ -748,7 +812,8 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/burke.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/burke.jpg" alt="", width=200)]
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -757,7 +822,8 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/gonzalez_e.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=200)]
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -766,7 +832,8 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/medina_j.png" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/medina_j.png" alt="", width=200)]
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -775,7 +842,8 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                img( src="/img/nilton.jpg" alt="", width=200)
+                a(href='#' target='_blank')
+                    | #[img( src="/img/nilton.jpg" alt="", width=200)]
                 h4.strong Munoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
