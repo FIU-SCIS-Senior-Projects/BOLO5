@@ -242,6 +242,74 @@ CloudantBoloRepository.prototype.update = function (bolo, attachments) {
     });
 };
 
+CloudantBoloRepository.prototype.updateAfterConfirmation = function (bolo, attachments) {
+    var context = this;
+    var newdoc = boloToCloudant(bolo);
+
+
+    var preWorkPromises = [db.get(newdoc.originalBolo)];
+
+    return Promise.all(preWorkPromises).then(function (prereqs) {
+        var doc = prereqs[0],
+            attDTOs = attachments;
+
+
+        var blacklist = [
+            'isActive', 'Type', '_id', '_attachments', 'createdOn', 'agency',
+            'author', 'authorFname', 'authorLName', 'authorUName', 'images', 'agencyName'
+        ];
+
+        _(newdoc).omit(blacklist).each(function (val, key) {
+            doc[key] = val;
+        }).run();
+        if (newdoc.images_deleted) {
+            doc._attachments = _.omit(doc._attachments, newdoc.images_deleted);
+            doc.images = _.omit(doc.images, newdoc.images_deleted);
+        }
+        if(newdoc.imagesToDelete){
+          doc._attachments = _.omit(doc._attachments, newdoc.imagesToDelete);
+          doc.images = _.omit(doc.images, newdoc.imagesToDelete);
+        }
+        if (attDTOs.length) {
+
+            _.extend(doc.images, newdoc.images);
+
+            var need_comp_attDTOs = [];
+            for (var i = 0; i < attDTOs.length; i++) {
+                if (attDTOs[i].data.length > config.const.MAX_IMG_SIZE) {
+
+                    Array.prototype.push.apply(need_comp_attDTOs,attDTOs.splice(i));
+
+                }
+
+            }
+
+            if (need_comp_attDTOs.length) {
+
+                var comp_atts = _.map(need_comp_attDTOs, imageService.compressImageFromBuffer);
+
+                return Promise.all(comp_atts).then(function (comp_attDTOs) {
+
+                    Array.prototype.push.apply(comp_attDTOs,attDTOs);
+
+                    return db.insertMultipart(doc, comp_attDTOs, doc._id);
+                });
+            }
+            else  return db.insertMultipart(doc, attDTOs, doc._id);
+        }
+        else {
+          console.log('-------------------->bolo set to update'+JSON.stringify(doc));
+          return db.insert(doc);
+        }
+
+    }).then(function (response) {
+        console.log('---->response '+response);
+        if (!response.ok) throw new Error('Unable to update BOLO');
+        return context.getBolo(response.id);
+    }).catch(function (error) {
+        throw new Error('Unable to update bolo doc: ' + error.message);
+    });
+};
 
 /**
  * Inactivate a bolo from the bolo repository.

@@ -52,7 +52,7 @@ function sendBoloNotificationEmail(bolo, template) {
   var existWatermark = false;
 
   var doc = new PDFDocument();
-
+  console.log('----->ready to send email'+JSON.stringify(bolo));
   boloService.getAttachment(bolo.id, 'featured').then(function(attDTO) {
     someData.featured = attDTO.data;
     return boloService.getBolo(bolo.id);
@@ -151,6 +151,10 @@ function sendBoloNotificationEmail(bolo, template) {
     });
 }
 
+
+
+
+
 function sendBoloToDataSubscriber(bolo, template) {
   var someData = {};
 
@@ -213,6 +217,21 @@ function sendBoloConfirmationEmail(email, bolo, token) {
       config.appURL + '/bolo/confirmBolo/' + token + '\n\n'
   })
 }
+
+function sendBoloUpdateConfirmationEmail(email, bolo, token) {
+
+  emailService.send({
+    'to': email,
+    'from': config.email.from,
+    'fromName': config.email.fromName,
+    'subject': 'BOLO Alert: Confirm BOLO ' + bolo.firstName + " " + bolo.lastName,
+    'text': 'Your BOLO was updated but not confirmed. \n' +
+      'Click on the link below to confirm: \n\n' +
+      config.appURL + '/bolo/confirmBoloUpdate/' + token + '\n\n'
+  })
+}
+
+
 
 /**
  * @todo an optimization could probably be made here by creating a view for
@@ -1068,6 +1087,13 @@ router.get('/bolo/edit/:id', function(req, res, next) {
 
   getAllBoloData(req.params.id).then(function(boloData) {
       _.extend(data, boloData);
+      if(data.bolo.pendingUpdate){
+        req.flash(GFERR,
+          'This BOLO has been updated and is pending confirmation by '+data.bolo.pendingUpdateBy
+        );
+        res.redirect('/bolo');
+      }
+      else{
       var auth = new BoloAuthorize(data.bolo, data.author, req.user);
 
       if (auth.authorizedToEdit()) {
@@ -1081,7 +1107,7 @@ router.get('/bolo/edit/:id', function(req, res, next) {
 
       }
 
-    },
+    }},
     function(reason) {
       req.flash(GFERR,
         'The BOLO you were trying to edit does not exist.'
@@ -1103,7 +1129,14 @@ router.get('/bolo/edit/:id', function(req, res, next) {
 
 // handle requests to process edits on a specific bolo
 router.post('/bolo/edit/:id', function(req, res, next) {
-  parseFormData(req, attachmentFilter).then(function(formDTO) {
+  var token;
+  return boloService.getBolo(req.params.id).then(function(bolo){
+    bolo.pendingUpdate=true;
+    bolo.pendingUpdateBy=req.user.fname + ' ' + req.user.lname + ' from ' + req.user.agencyName;
+    return boloService.updateBolo(bolo,[])
+  }).then(function(){
+    return parseFormData(req, attachmentFilter)
+  }).then(function(formDTO) {
     var boloDTO = boloService.formatDTO(formDTO.fields);
     var attDTOs = [];
 
@@ -1114,7 +1147,13 @@ router.post('/bolo/edit/:id', function(req, res, next) {
     boloDTO.lastUpdatedBy.firstName = req.user.fname;
     boloDTO.lastUpdatedBy.lastName = req.user.lname;
     boloDTO.agencyName = req.user.agencyName;
-    boloDTO.confirmed = true;
+    boloDTO.confirmed = false;
+
+    var buf = crypto.randomBytes(20)
+    token = buf.toString('hex');
+
+    boloDTO.boloToken = token;
+    boloDTO.originalBolo=req.params.id;
 
     boloDTO.record = boloDTO.record + 'Edited on ' + boloDTO.lastUpdatedOn + '\nBy ' + req.user.fname + ' ' + req.user.lname + '\nFrom ' + req.user.agencyName + '\n\n';
 
@@ -1128,28 +1167,102 @@ router.post('/bolo/edit/:id', function(req, res, next) {
       formDTO.fields['image_upload[]'].forEach(function(imgDTO) {
         var id = createUUID();
         boloDTO.images[id] = imgDTO.name;
+        boloDTO.imagestoAdd.push(imgDTO.name);
         attDTOs.push(renameFile(imgDTO, id));
       });
     }
 
     if (formDTO.fields['image_remove[]']) {
       boloDTO.images_deleted = formDTO.fields['image_remove[]'];
-    }
+      boloDTO.imagesToDelete=formDTO.fields['image_remove'];
+
+  }
 
     //console.log("asda", boloDTO);
-    var result = boloService.updateBolo(boloDTO, attDTOs);
+    var result = boloService.createBolo(boloDTO, attDTOs);
     return Promise.all([result, formDTO]);
   }).then(function(pData) {
-    if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
-    sendBoloNotificationEmail(pData[0], 'update-bolo-notification');
-    req.flash(GFMSG, 'BOLO successfully updated.');
+   if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
+    sendBoloUpdateConfirmationEmail(req.user.email, pData[0],token);
+    req.flash(GFMSG, 'BOLO pending confirmation update.');
     res.redirect('/bolo');
   }).catch(function(error) {
     next(error);
   });
 });
 
+router.get('/bolo/confirmBoloUpdate/:token', function(req, res, next){
+var bolo;
+var att=[];
+  return boloService.getBoloByToken(req.params.token)
+    .then(function(gotBolo){
+      bolo=gotBolo;
+      if(bolo.images.featured){
+        console.log('------------------>'+'getting featured');
+        return boloService.getAttachment(bolo.id, 'featured');
 
+      }
+    else return null;
+  }).then(function(featured){
+        if(featured!=null)
+          att.push(featured);
+  }).then(function()
+
+     {
+    //   console.log('---->got picture'+JSON.stringify(featured));
+      // if bolo != null
+      if (bolo) {
+
+        if (bolo === 'expired') {
+
+          req.flash(GFERR,
+            'This BOLO has expired.'
+          );
+          res.redirect("/bolo");
+
+        }
+
+
+        // bolo is confirmed
+        bolo.confirmed = true;
+        console.log('---->bolo by token'+JSON.stringify(bolo));
+
+        // send email with bolos
+        //sendBoloNotificationEmail(bolo, 'update-bolo-notification');
+
+
+
+        // update the bolo
+        return boloService.updateAfterConfirmation(bolo, att)
+          .then(function(boloUpdated) {
+            sendBoloNotificationEmail(boloUpdated, 'update-bolo-notification');
+            boloService.removeBolo(bolo.id);
+        }).then(function(){
+            req.flash(GFMSG, 'BOLO Update confirmed.');
+            res.redirect("/bolo");
+          }).catch(function(error) {
+            console.log(error)
+          })
+      } else {
+
+        req.flash(GFERR,
+          'This BOLO Update is already confirmed .'
+        );
+        res.redirect("/bolo");
+
+      }
+
+    }).catch(function(err) {
+      console.log(err);
+      req.flash(GFERR,
+        'No record of BOLO found.'
+      );
+      res.redirect("/bolo");
+
+    })
+
+
+})
 
 // handle requests to inactivate a specific bolo
 router.get('/bolo/archive/:id', function(req, res, next) {

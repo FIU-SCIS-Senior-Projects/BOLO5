@@ -72,6 +72,18 @@ BoloService.prototype.updateBolo = function ( updateDTO, attachments ) {
     });
 };
 
+BoloService.prototype.updateAfterConfirmation = function ( updateDTO, attachments ) {
+    var context = this;
+    //console.log(updateDTO)
+    var bolo = new Bolo( updateDTO );
+
+    return this.boloRepository.updateAfterConfirmation( bolo, attachments )
+    .catch( function ( error ) {
+        throw new Error( 'Unable to update BOLO.'+error );
+    });
+};
+
+
 BoloService.prototype.getBolo = function (id) {
     var context = this;
     return context.boloRepository.getBolo(id);

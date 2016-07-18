@@ -112,7 +112,12 @@ function Bolo( data ) {
         agencyRecovered         : '',
         //others
         boloToken       : null,
-        confirmed       : false
+        confirmed       : false,
+        originalBolo    :null,
+        pendingUpdate   :false,
+        pendingUpdateBy :null,
+        imagesToDelete  :{},
+        imagesToAdd     :{}
     };
 
     this.data = _.defaults( {}, data, defaults );
