@@ -1,6 +1,7 @@
 'use strict';
 var _ = require('lodash');
 var Promise = require('promise');
+var path = require('path');
 
 function PDFService() {
 
@@ -97,7 +98,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     + "  3) Click 'Home' to go back to the BOLOs\n";
 
     // Introduction for tier levels
-    doc.image('../web/public/img/BOLObanner.jpg', 10, 10,{scale: 1.0});
+    doc.image(path.resolve('src/web/public/img/BOLObanner.jpg'), 10, 10,{scale: 1.0});
     doc.fillColor('red');
     doc.text("UNCLASSIFIED// FOR OFFICIAL LAW ENFORCEMENT USE ONLY", 100, 200,{align: 'center'})
         .moveDown(.5);
