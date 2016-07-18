@@ -1,5 +1,5 @@
 These scripts are here to facilitate the initialization of the database. To
-initialize the database automatically make user you are in the scripts folder
+initialize the database automatically make sure you are in the scripts folder
 and run the command "gulp initdb". This will create your db with sample Agencies
 and Users.
 
