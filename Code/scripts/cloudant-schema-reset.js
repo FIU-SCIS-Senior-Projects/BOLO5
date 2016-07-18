@@ -282,30 +282,24 @@ var BOLO_DB = 'bolo';
 var BOLO_DESIGN_DOC = {
   "views": {
     "by_author": {
-      "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.authorUName, null ); }"
+      "map": "function ( doc ) { if ( 'bolo' === doc.Type && doc.confirmed === true ) emit( doc.authorUName, null ); }"
     },
     "by_agency":{
-      "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit(doc.agencyName, null); }"
+      "map": "function(doc) {if ('bolo' === doc.Type && doc.confirmed === true) emit(doc.agencyName, null);}"
     },
     "by_token": {
       "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.boloToken, null ); }"
     },
-    "by_agency": {
-      "map": "function ( doc ) { if ( 'bolo' === doc.Type ) emit( doc.agency,1); }"
-    },
     "all_active": {
-      "map": "function (doc) { if ( 'bolo' === doc.Type && true === doc.isActive ) {emit( doc.lastUpdatedOn,1);} }"
+      "map": "function (doc) { if ( 'bolo' === doc.Type && true === doc.isActive && doc.confirmed === true ) {emit( doc.lastUpdatedOn,1);} }"
     },
     "all_archive": {
       "map": "function (doc) { if ( 'bolo' === doc.Type && false === doc.isActive ){ emit( doc.lastUpdatedOn,1 ); }}"
     },
     "all": {
-      "map": "function (doc) { if ( 'bolo' === doc.Type ) {emit( doc.createdOn, 1 ); }}"
+      "map": "function (doc) { if ( 'bolo' === doc.Type && doc.confirmed === true) {emit( doc.createdOn, 1 ); }}"
     },
     "revs": {
-      "map": "function (doc) { if ( 'bolo' === doc.Type ) {emit( null, doc._rev ); }}"
-    },
-    "revs2": {
       "map": "function (doc) { if ( 'bolo' === doc.Type ) {emit( null, doc._rev ); }}"
     }
   },

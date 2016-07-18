@@ -103,7 +103,6 @@ UserService.prototype.authenticate = function(username, password) {
       }
 
       // update the users with # of incorrect logins and account status
-      console.log(user);
       context.userRepository.update(user);
 
 

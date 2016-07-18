@@ -387,12 +387,9 @@ router.get('/bolo/mybolos/', function(req, res, next) {
   data.filter = "My Bolos";
   data.pageRoute = '/bolo/mybolos';
 
-  boloService.getBolosByAuthor(author).then(function(results) {
-    data.bolos = results;
+  boloService.getBolosByAuthor(author, limit, skip).then(function(results) {
+    data.bolos = results.bolos;
 
-    console.log('total: ' + results.total);
-    data.paging.last = Math.ceil(results.total / limit);
-    console.log('paging: ' + data.paging.last);
     agencyService.getAgencies().then(function(agencies) {
       data.agencies = agencies;
       var i;
@@ -401,7 +398,7 @@ router.get('/bolo/mybolos/', function(req, res, next) {
           data.userAgency = agencies[i].data;
         }
       }
-        data.paging.last = Math.ceil(results.total / limit);
+        data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);      
       res.render('bolo-list', data);
     });
   }).catch(function(error) {
@@ -427,6 +424,9 @@ router.post('/bolo/agencies/', function(req, res, next) {
 
 router.get('/bolo/agencies/', function(req, res, next) {
 
+  if (typeof agenciesToFilterBy === 'undefined'){
+    res.redirect('/bolo');
+  }
   var author = req.user.username;
   var page = parseInt(req.query.page) || 1;
   console.log('page: ' + page);
@@ -454,11 +454,6 @@ router.get('/bolo/agencies/', function(req, res, next) {
   boloService.getBolosFromAgencies(agenciesToFilterBy, limit, skip).then(function(results) {
     data.bolos = results.bolos;
 
-    console.log('total: ' + results.total);
-    console.log('skip' + skip)
-    console.log("length "+ results.bolos.length);
-    data.paging.last = Math.ceil(results.bolos.length / limit);
-    console.log('paging: ' + data.paging.last);
     agencyService.getAgencies().then(function(agencies) {
       data.agencies = agencies;
       var i;
@@ -467,8 +462,9 @@ router.get('/bolo/agencies/', function(req, res, next) {
           data.userAgency = agencies[i].data;
         }
       }
-        data.paging.last = Math.ceil(results.total / limit);
+        data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);
       res.render('bolo-list', data);
+      agenciesToFilterBy = [];
     });
   }).catch(function(error) {
     next(error);

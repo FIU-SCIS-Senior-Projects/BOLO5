@@ -10,8 +10,6 @@ if ( paging && paging.first && paging.current && paging.last )
                 span.glyphicon.glyphicon-menu-left( aria-hidden="true" )
 
         - var page = paging.first;
-        script.
-              console.log(paging);
         while page <= paging.last
             if page === paging.current
                 li.active: a( href="#" ) #{page}

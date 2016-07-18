@@ -466,21 +466,24 @@ CloudantBoloRepository.prototype.getBoloByToken = function(token){
 /*
  * Get bolos from db by Authors username
  */
-CloudantBoloRepository.prototype.getBolosByAuthor = function (author) {
+CloudantBoloRepository.prototype.getBolosByAuthor = function (author, limit, skip) {
   return db.view( 'bolo', 'by_author', {
       'key': author,
-      'include_docs': true
+      'include_docs': true,
+      'limit': limit,
+      'skip': skip,
+      'descending': true
     }).then( function ( result ) {
         var bolos = result.rows.map( function ( row ) {
             return boloFromCloudant( row.doc );
         });
-        return bolos;
+        return {'bolos': bolos, total: result.total_rows};
     });
 };
 
 /*
- * Takes an agency names as a parameter and returns all the BOLOS
- * from that agency
+ * Takes an agency name array as a parameter and returns all the BOLOS
+ * that are confirmed from those agencies
  * @param agencies - array of agencies
  */
 CloudantBoloRepository.prototype.getBolosFromAgencies = function(agencies, limit, skip){

@@ -81,7 +81,7 @@ BoloService.prototype.getBolo = function (id) {
 /*
  * Get bolos by author
  */
-BoloService.prototype.getBolosByAuthor = function (author){
+BoloService.prototype.getBolosByAuthor = function (author, limit, skip){
     var context = this;
     return context.boloRepository.getBolosByAuthor(author);
 
