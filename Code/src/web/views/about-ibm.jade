@@ -4,23 +4,46 @@ include ./includes/mixins.jade
 block jumbo
     .jumbotron
         .container
-            h3 IBM's contribution
+            a(href='http://www.ibm.com/us-en/' target='_blank')
+                | #[img#featured.img.center-block( src="/img/ibm.jpg" alt="" )]
 
 block content
-    table
-        tr
-            h1 This page is under construction
-        tr
-            p &nbsp;&nbsp;&nbsp;&nbsp; IBM played a major role in bringing BOLO
-                | to life with Bluemix platform.
-        tr
-            td.col-md-4
-                img#featured.img-fluid( src="/img/caraballo.jpg" alt="", width=200 )
-                h4 Software Engineer
-                P
+    div.container
+        div.row
+            br
+            br
+            p IBM played a major role in bringing BOLO
+                | Flyer  Creator to life with their software engineers that mentored
+                | the students and their product Bluemix.
+            p Bluemix is a cloud
+                | platform as a service (PaaS) developed by IBM.
+                | It supports several programming languages and services as well
+                | as integrated DevOps to build, run, deploy and manage
+                | applications on the cloud. Bluemix is based on Cloud Foundry
+                | open technology and runs on SoftLayer infrastructure. Bluemix
+                | supports several programming languages including Java, Node.js,
+                | Go, PHP, Python, Ruby Sinatra, Ruby on Rails and can be extended
+                | to support other languages such as Scala through the use of
+                | buildpacks.
+                br
+                br
 
-            td
+        div.row
+            div.col-xl-3.col-lg-3.col-md-4.col-sm-6.col-xs-12
+                img#featured.img-fluid( src="/img/caraballo.jpg" alt="", width=200 )
+                h3.strong Juan Caraballo
+                p IBM Software Engineer
+                p Student mentor
+                br
+                br
+                br
+                br
+            div.col-xl-offset-3.col-xl-3.col-lg-offset-3.col-lg-3.col-md-4.col-sm-6.col-xs-12
                 img#featured.img-fluid( src="/img/robert_loredo.png" alt="", width=200 )
-                h4 Software Engineer
-                h4 IBM Support
-                p
+                h3.strong Robert Loredo
+                p IBM Software Engineer
+                p Student mentor
+                br
+                br
+                br
+                br
