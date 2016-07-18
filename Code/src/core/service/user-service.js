@@ -51,6 +51,7 @@ UserService.prototype.authenticate = function(username, password) {
         return account;
       } else {
         account.found = true;
+        account.email = user.email;
       }
 
       // if incorrect login attempts is greater than the max allowed lock the account
@@ -62,7 +63,7 @@ UserService.prototype.authenticate = function(username, password) {
         account.status = false;
         account.attemptsLeft = 0;
 
-        account.email = user.email;
+
         account.agency = user.agency;
         account.id = user.id;
         account.username = user.fname + " " + user.lname;
@@ -103,7 +104,6 @@ UserService.prototype.authenticate = function(username, password) {
       }
 
       // update the users with # of incorrect logins and account status
-      console.log(user);
       context.userRepository.update(user);
 
 

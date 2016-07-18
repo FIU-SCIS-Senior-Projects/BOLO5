@@ -130,7 +130,7 @@ var sendExpirationReminder = function(user, timeLeft) {
     var token = buf.toString('hex');
 
     user.resetPasswordToken = token;
-    // token expires in 1 day 
+    // token expires in 1 day
     user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
     userService.updateUser(user.id, user);
 
@@ -296,18 +296,12 @@ router.post('/login',
  *
  * Destory any sessions belonging to the requesting client.
  */
-router.get('/logout',
-  function(req, res, next) {
-    req.logout()
-    next();
-  },
-
-  function(req, res) {
-
-    req.flash('messages', 'Successfully logged out.');
-    res.redirect('/login');
-  }
-);
+ router.get('/logout', function (req, res){
+   
+   req.session.destroy(function (err) {
+     res.redirect('/login');
+   });
+ });
 
 router.get('/forgotPassword',
   function(req, res) {
