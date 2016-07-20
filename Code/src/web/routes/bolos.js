@@ -417,7 +417,7 @@ router.get('/bolo/mybolos/', function(req, res, next) {
           data.userAgency = agencies[i].data;
         }
       }
-        data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);      
+        data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);
       res.render('bolo-list', data);
     });
   }).catch(function(error) {
@@ -483,7 +483,7 @@ router.get('/bolo/agencies/', function(req, res, next) {
       }
         data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);
       res.render('bolo-list', data);
-      agenciesToFilterBy = [];
+    
     });
   }).catch(function(error) {
     next(error);
