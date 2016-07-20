@@ -4,8 +4,8 @@
 var router  = require('express').Router();
 var users   = require('./users');
 var agency  = require('./agency');
-var systemSetting  = require('./systemSetting');
-var dataSubscriber = require('./dataSubscriber');
+var systemSetting  = require('./systemSetting');        // @Author John Burke
+var dataSubscriber = require('./dataSubscriber');       // @Author John Burke
 var dataAnalysis = require('./dataAnalysis');
 
 
@@ -69,12 +69,12 @@ router.post( pre + '/create'                , dataSubscriber.postCreateForm );
 router.get(  pre + '/edit/:id'              , dataSubscriber.getEditForm );
 router.post( pre + '/edit/:id'              , dataSubscriber.postEditForm );
 
-
+// @Author John Burke
 pre='/admin/systemSetting';
 router.use( SETNAV( 'admin-systemSetting' ) );
 router.get(  pre                            , systemSetting.getSystemSetting );
 
-
+// @Author John Burke
 pre='/admin/dataAnalysis';
 router.use( SETNAV( 'admin-dataAnalysis' ) );
 router.get(  pre                            , dataAnalysis.getDataAnalysis );
