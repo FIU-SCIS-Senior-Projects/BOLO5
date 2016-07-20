@@ -226,14 +226,15 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
     doc.fillColor('red');
     doc.text(data.bolo.category, 0, 115, {align: 'center'})
         .moveDown();
-    doc.fontSize(11);
+
 
     // this will display the status only if it is not New
     if(data.bolo.status !== "New"){
         doc.fillColor('red');
-        doc.text(data.bolo.status, 100, 140, {align: 'left'})
+        doc.text(data.bolo.status, 65 , 130, {align: 'left'})//original 100, 140
             .moveDown();
     }
+    doc.fontSize(11);
     doc.fillColor('black');
     doc.fontSize(11);
     doc.font('Times-Roman')
