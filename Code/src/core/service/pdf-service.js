@@ -229,6 +229,7 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
 
 
     // this will display the status only if it is not New
+    doc.fontSize(23);
     if(data.bolo.status !== "New"){
         doc.fillColor('red');
         doc.text(data.bolo.status, 65 , 130, {align: 'left'})//original 100, 140
