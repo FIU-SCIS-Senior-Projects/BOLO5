@@ -59,6 +59,7 @@ var session = expressSession({
     /** @todo confirm the next two options **/
     'resave': true,
     'saveUninitialized': true,
+    'proxy': true,
     'cookie': {
         path: '/',
         httpOnly: true,
@@ -71,7 +72,7 @@ var session = expressSession({
      * required for this option or the cookie will not be set per the
      * documentation.
      */
-    // 'cookie': { secure: true }
+     //'cookie': { secure: true }
 });
 app.use(session);
 
