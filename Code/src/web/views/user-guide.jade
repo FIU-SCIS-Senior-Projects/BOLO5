@@ -1,6 +1,8 @@
 extends ./layout.jade
 include ./includes/mixins.jade
 
+// Author John Burke
+
 block jumbo
     .jumbotron
         .container
@@ -26,6 +28,7 @@ block content
             | a drop down menu to Create BOLO, Archive, Agency Directory, Search,
             | Admin for the Administration and root users, a dropdown for user
             | setting and a dropdown to Filter by Agency.
+        br
 
     if (tier === 'ADMINISTRATOR' || tier === 'ROOT')
         h3 User Management
@@ -34,6 +37,8 @@ block content
         P &nbsp;&nbsp;&nbsp;&nbsp;3) Click on "Add New User"
         P &nbsp;&nbsp;&nbsp;&nbsp;4) Fill in empty fields
         P &nbsp;&nbsp;&nbsp;&nbsp;5) Click "Submit"
+        br
+
     if (tier === 'ROOT')
         h3  Agency management
         P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
@@ -42,13 +47,35 @@ block content
         P &nbsp;&nbsp;&nbsp;&nbsp;4) Fill in empty fields
         P &nbsp;&nbsp;&nbsp;&nbsp;5) Select new agency logo and shield images
         P &nbsp;&nbsp;&nbsp;&nbsp;6) Click "Submit"
-        P
+        br
+
         h3 Data Subscriber
         P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
         P &nbsp;&nbsp;&nbsp;&nbsp;2) Click on "Data Subscriber"
         P &nbsp;&nbsp;&nbsp;&nbsp;3) Click on "Add New Data Subscriber"
         P &nbsp;&nbsp;&nbsp;&nbsp;4) Fill in data subscriber's ID, Name and email
         P &nbsp;&nbsp;&nbsp;&nbsp;5) Click "Submit"
+        br
+
+        h3 System Settings
+        P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
+        P &nbsp;&nbsp;&nbsp;&nbsp;2) Click on "System Settings"
+        P &nbsp;&nbsp;&nbsp;&nbsp;3) Select the number of minutes for the system to time out for all users
+        P &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Time can be set between 10 and 240 minutes (recommended less than 60 minutes)
+        P &nbsp;&nbsp;&nbsp;&nbsp;4) Set the number of brute force login attempts between 3 and 10
+        P &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* A user locked out of the system will be required to reset their password
+        P &nbsp;&nbsp;&nbsp;&nbsp;5) click "Submit"
+        br
+
+        h3 Data Analysis
+        P &nbsp;&nbsp;&nbsp;&nbsp;1) Click on "Admin"
+        P &nbsp;&nbsp;&nbsp;&nbsp;2) Click on "Data Analysis"
+        P &nbsp;&nbsp;&nbsp;&nbsp;3) Select an "Agency"
+        P &nbsp;&nbsp;&nbsp;&nbsp;4) Select a "Start Date"
+        P &nbsp;&nbsp;&nbsp;&nbsp;5) Select an "End Date"
+        P &nbsp;&nbsp;&nbsp;&nbsp;6) Click "Submit"
+        br
+
     if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
         h3 Create BOLO
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Create BOLO" and select the type
@@ -64,46 +91,67 @@ block content
         p &nbsp;&nbsp;&nbsp;&nbsp;9) Click "Submit" to submit your BOLO.
         p &nbsp;&nbsp;&nbsp;&nbsp;10) Goto to your registered email and click on
             | the confirmation link.
-        p
+        br
+
         h3 Edit (link at bottom of BOLO)
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Edit"
         p &nbsp;&nbsp;&nbsp;&nbsp;2) Select any field you want to edit
         p &nbsp;&nbsp;&nbsp;&nbsp;3) Enter any information required
         p &nbsp;&nbsp;&nbsp;&nbsp;4) Click "Submit"
-        p
+        br
+
         H3 Details (link at bottom of BOLO)
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Details"
         p &nbsp;&nbsp;&nbsp;&nbsp;2) Review details of a selected BOLO
         p &nbsp;&nbsp;&nbsp;&nbsp;3) Click "Home" to go back to the BOLOs
-        p
+        br
+
+        h3 Filter by (Button)
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Filter By"
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Select filter:
+        p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* My BOLO
+        p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* My Agency
+        p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* All BOLOs
+        br
+
+        h3 Select Agencies
+        p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Select Agency"
+        p &nbsp;&nbsp;&nbsp;&nbsp;2) Select several agencies
+        p &nbsp;&nbsp;&nbsp;&nbsp;3) Click "Submit"
+        br
+
     if (tier === 'ADMINISTRATOR' || tier === 'ROOT')
         h3 Archive (link at bottom of BOLO)
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Click "Archive"
         p &nbsp;&nbsp;&nbsp;&nbsp;2) The Bolo will be moved into the archived BOLOs
         p &nbsp;&nbsp;&nbsp;&nbsp;3) At this point you may "Restore," "Delete"
             | or "Purge" the BOLO
-        p
+        br
     if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
         h3 Archive (link at the top)
         P You may view archived BOLOs just in case you are looking for someone
             | who fits the description of another crime.
+        br
     if (tier === 'ADMINISTRATOR' || tier === 'ROOT')
         P Each BOLO has three options that you may change.
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Status
         p &nbsp;&nbsp;&nbsp;&nbsp;2) Restore
         p &nbsp;&nbsp;&nbsp;&nbsp;3) Delete
+        br
     if (tier === 'SUPERVISOR' || tier === 'ADMINISTRATOR' || tier === 'ROOT' || tier === 'OFFICER')
         h3 Agency
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Click on agency to view a list of partnering
             | agencies.
         p &nbsp;&nbsp;&nbsp;&nbsp;2) Select an agency and view contact information
             | or verify the agency's "Logo" and "Shield."
+        br
         h3 Search
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Select any field(s) you wish to search.
         p &nbsp;&nbsp;&nbsp;&nbsp;2) Enter information value of field(s).
         p &nbsp;&nbsp;&nbsp;&nbsp;3) Wild card search is for something you can not
             | search with an optional search.
         p &nbsp;&nbsp;&nbsp;&nbsp;4) Click "Search"
+        br
         h3 Filter by Agency
         p &nbsp;&nbsp;&nbsp;&nbsp;1) Click Filter By Agency
         p &nbsp;&nbsp;&nbsp;&nbsp;2) Select how you would like to view existing BOLO

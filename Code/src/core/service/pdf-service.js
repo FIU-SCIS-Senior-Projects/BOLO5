@@ -9,14 +9,15 @@ function PDFService() {
 
 
 /**
- * This function builds the user guide according to the user's tier.
+ * This function builds a PDF of the user's guide according to the user's tier.
  * tier 4 === ROOT
  * tier 3 === ADMINSTRATION
  * tier 2 === SUPERVISOR
  * tier 1 === OFFICER
  *
- *@params user
- *@params doc
+ * @params user
+ * @params doc
+ * @Author John Burke
  */
 PDFService.prototype.genUserGuide = function(user, doc) {
     var INTRO = "   logging in you will be brought to the home page. This is where you will be "
@@ -47,8 +48,20 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  4) Fill in data subscriber's ID, Name and email\n"
         + "  5) Click 'Submit'\n";
 
-    // system settings here
-    // var SYSTEM_SETTING = "";
+     var SYSTEM_SETTING = "  1) Click on 'Admin'\n"
+        + "  2) Click on 'System Settings'\n"
+        + "  3) Select the number of minutes for the system to time out for all users\n"
+        + "     * Time can be set between 10 and 240 minutes (recommended less than 60 minutes)\n"
+        + "  4) Set the number of brute force login attempts between 3 and 10\n"
+        + "     * A user locked out of the system will be required to reset their password\n"
+        + "  5) click 'Submit'\n";
+
+     var DATA_ANALYSIS = "  1) Click on 'Admin'\n"
+         + "  2) Click on 'Data Analysis'\n"
+         + "  3) Select an 'Agency'\n";
+         + "  4) Select a 'Start Date'\n"
+         + "  5) Select an End Date\n"
+         + "  6) Click 'Submit'\n"
 
     var CREATE_BOLO = "  1) Click 'Create BOLO' and select the type of BOLO you would like to create.\n"
         + "  2) Fill in required fields.\n"
@@ -69,6 +82,17 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     var DETAILS = "  1) Click on 'Details'\n"
         + "  2) Review details of a selected BOLO\n"
         + "  3) Click 'Back' to go back to the BOLOs\n"
+
+    var FILTER_BY = "  1) Click 'Filter By'\n"
+        + "  2) Select filter:\n"
+        + "     * My BOLO\n"
+        + "     * My Agency\n"
+        + "     * All BOLOs\n";
+
+    var FILTER_BY_AGENCY = "  1) Click 'Select Agency'\n"
+        + "  2) Select several agencies\n"
+        + "  3) Click 'Submit'\n";
+
 
     var ARCHIVE_ALL = "  You may view archived BOLOs just in case "
         + "you are looking for someone who fits the description of "
@@ -97,8 +121,10 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     + "  2) Review details of a selected BOLO\n"
     + "  3) Click 'Home' to go back to the BOLOs\n";
 
-    // Introduction for tier levels
+    // This is the file path for the live website
     doc.image(path.resolve('src/web/public/img/BOLObanner.jpg'), 10, 10,{scale: 1.0});
+
+    // Introduction for tier levels
     doc.fillColor('red');
     doc.text("UNCLASSIFIED// FOR OFFICIAL LAW ENFORCEMENT USE ONLY", 100, 200,{align: 'center'})
         .moveDown(.5);
@@ -113,10 +139,8 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     if ( user.tier === 4  || user.tier === 3 ){
 
         // User management
-        doc.fontSize(15);
-        doc.text("User Management").moveDown(0.25);
-        doc.fontSize(12);
-        doc.text(USER_MANAGENT, {align: 'left'}).moveDown();
+        doc.fontSize(15).text("User Management").moveDown(0.25);
+        doc.fontSize(12).text(USER_MANAGENT, {align: 'left'}).moveDown();
     }
 
 
@@ -124,83 +148,71 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     if ( user.tier === 4){
 
         // agency management
-        doc.fontSize(15);
-        doc.text("Agencgy Management").moveDown(0.25);
-        doc.fontSize(12);
-        doc.text(AGENCY_MANAGMENT, {align: 'left'}).moveDown();
+        doc.fontSize(15).text("Agencgy Management").moveDown(0.25);
+        doc.fontSize(12).text(AGENCY_MANAGMENT, {align: 'left'}).moveDown();
 
         // Data Subscriber
-        doc.fontSize(15);
-        doc.text("Data Subscriber").moveDown(0.25);
-        doc.fontSize(12);
-        doc.text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
+        doc.fontSize(15).text("Data Subscriber").moveDown(0.25);
+        doc.fontSize(12).text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
 
-        // system setting here
-        //doc.fontSize(15);
-        //doc.text("System Settings").moveDown(0.25);
-        //doc.fontSize(12);
-        //doc.text(SYSTEM_SETTING, {align: 'left'}).moveDown();
+        // system setting
+        doc.fontSize(15).text("System Settings").moveDown(0.25);
+        doc.fontSize(12).text(SYSTEM_SETTING, {align: 'left'}).moveDown();
+
+        // Data Analysis
+        doc.fontSize(15).text("Data Analysis").moveDown(0.25);
+        doc.fontSize(12).text(DATA_ANALYSIS, {align: 'left'}).moveDown();
     }
 
     // print for ALL user
     // Create BOLO
-    doc.fontSize(15);
-    doc.text("Create a BOLO").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(CREATE_BOLO, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("Create a BOLO").moveDown(0.25);
+    doc.fontSize(12).text(CREATE_BOLO, {align: 'left'}).moveDown();
 
     // Edit
-    doc.fontSize(15);
-    doc.text("Edit").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(EDIT, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("Edit").moveDown(0.25);
+    doc.fontSize(12).text(EDIT, {align: 'left'}).moveDown();
 
     // Details (link at bottom of BOLO)
-    doc.fontSize(15);
-    doc.text("Details").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(DETAILS, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("Details").moveDown(0.25);
+    doc.fontSize(12).text(DETAILS, {align: 'left'}).moveDown();
+
+    // Filter by
+    doc.fontSize(15).text("Filter").moveDown(0.25);
+    doc.fontSize(12).text(FILTER_BY, {align: 'left'}).moveDown();
+
+    // Filter by Agency
+    doc.fontSize(15).text("Select Agency").moveDown(0.25);
+    doc.fontSize(12).text(FILTER_BY_AGENCY, {align: 'left'}).moveDown();
 
     // Archive (link at the top)
-    doc.fontSize(15);
-    doc.text("Archive").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(ARCHIVE_ALL, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("Archive").moveDown(0.25);
+    doc.fontSize(12).text(ARCHIVE_ALL, {align: 'left'}).moveDown();
 
     // print for admin and root
     if ( user.tier === 4 || user.tier === 3 ){
 
         // Archive (link at bottom of BOLO)
-        doc.fontSize(15);
-        doc.text("Archive (Admin)").moveDown(0.25);
-        doc.fontSize(12);
-        doc.text(ARCHIVE_ADMIN, {align: 'left'}).moveDown();
+        doc.fontSize(15).text("Archive (Admin)").moveDown(0.25);
+        doc.fontSize(12).text(ARCHIVE_ADMIN, {align: 'left'}).moveDown();
 
         // Data Subscriber
-        doc.fontSize(15);
-        doc.text("Data Subscriber", {align: 'left'}).moveDown(0.25);
-        doc.fontSize(12);
-        doc.text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
+        doc.fontSize(15).text("Data Subscriber", {align: 'left'}).moveDown(0.25);
+        doc.fontSize(12).text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
     }
 
 
     // Agency
-    doc.fontSize(15);
-    doc.text("Agency").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(AGENCY_VIEW, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("Agency").moveDown(0.25);
+    doc.fontSize(12).text(AGENCY_VIEW, {align: 'left'}).moveDown();
 
     // Search
-    doc.fontSize(15);
-    doc.text("Search").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(SEARCH, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("Search").moveDown(0.25);
+    doc.fontSize(12).text(SEARCH, {align: 'left'}).moveDown();
 
     // Filter by Agency
-    doc.fontSize(15);
-    doc.text("FIlter by Agency").moveDown(0.25);
-    doc.fontSize(12);
-    doc.text(FILTER, {align: 'left'}).moveDown();
+    doc.fontSize(15).text("FIlter by Agency").moveDown(0.25);
+    doc.fontSize(12).text(FILTER, {align: 'left'}).moveDown();
 
     return doc;
 }

@@ -9,6 +9,10 @@ var config              = require('../../config');
 
 /**
  * Respond with a form to create a Data Subscriber.
+ *
+ *@params req
+ *@params res
+ *@Author John Burke
  */
 module.exports.getSystemSetting = function (req, res) {
     res.render('system-setting');//pending

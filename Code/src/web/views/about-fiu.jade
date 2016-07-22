@@ -1,27 +1,32 @@
 extends ./layout.jade
 include ./includes/mixins.jade
 
-//    This is the format laid out for you do not change it!
-//    Alphabetical by last name for each semester and for each STUDENT there
+// @Author John Burke
+
+//    READ ME:
+//    This is the format laid out for you DO NOT CHANGE IT OR DEVIATE FROM IT!
+//    Alphabetical order by last name for each STUDENT and there are
 //    four places that have to be updated according to the screen size to make
-//    this mobile responsive.
+//    this fully mobile responsive for all five screen sizes. If there are four
+//    students in you group then copy and paste from the last semester and keep
+//    everyone in alphabetical order. If there are two students in your group
+//    then copy the first semester. this will provide an appropriate template
+//    for you to use.
 //
 //  Sample:
 //    div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-//        a(href='#' target='_blank')   ==> like to linked in page or an about you page only.
-//            | #[img( src="/img/burke.jpg" alt="", width=200)]  ==> photo
-//        h4.strong Burke, John         ==> Your name
-//        p egonz077@fiu.edu            ==> Your email
-//        p Front end development       ==> one feature you worked on (your milestone)
-//        p Graduation 5 Aug. 2016      ==> Graduation Data
+//        img( src="/img/burke.jpg" alt="", width=200)  ==> photo
+//        h4.strong Burke, John                         ==> Your name
+//        p egonz077@fiu.edu                            ==> Your email
+//        p Front end development       ==> ONE Milestone feature you worked only
+//        p Graduation 5 Aug. 2016                      ==> Graduation Data
 //        br
 //        br
 
 block jumbo
     .jumbotron
         .container
-            a(href='https://cec.fiu.edu/' target='_blank')
-                | #[img#featured.img.center-block( src="/img/cec.jpg" alt="" )]
+            img#featured.img.center-block( src="/img/cec.jpg" alt="" )
 block content
     div.container
         div.row
@@ -46,14 +51,15 @@ block content
                 br
     div.container
         div.row
-            h2.strong The Professor
+            div.hidden-xs
+                h2.strong(align='center') The Professor
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                h2.strong(align='center') Professor
     div.container
         div.row
             div.col-xl-8.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    | #[ img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
-                    br
-                h3.strong Masoud Sadjadi, PhD
+                img#featured.img.center-block( src="/img/sadjadi.jpg" alt="", width=300)
+                h3.strong(align='center') Masoud Sadjadi, PhD
             div.col-xl-8.hidden-lg.hidden-md.hidden-sm.hidden-xs
                 p Dr. Sadjadi holds a B.S. degree in Hardware Engineering, an M.S.
                     | degree in Software Engineering, and a Ph.D. degree in Computer
@@ -96,10 +102,8 @@ block content
     div.container
         div.row
             div.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
-                    br
-                h3.strong Masoud Sadjadi, PhD
+                img#featured.img.center-block( src="/img/sadjadi.jpg" alt="", width=300)
+                h3.strong(align='center') Masoud Sadjadi, PhD
             div.col-lg-8.hidden-md.hidden-sm.hidden-xs
                 p Dr. Sadjadi holds a B.S. degree in Hardware Engineering, an M.S.
                     | degree in Software Engineering, and a Ph.D. degree in Computer
@@ -143,10 +147,8 @@ block content
                     br
         div.row
             div.hidden-xl.hidden-lg.col-md-4.hidden-sm.hidden-xs
-                a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=300)]
-                    br
-                h3.strong Masoud Sadjadi, PhD
+                img#featured.img.center-block( src="/img/sadjadi.jpg" alt="", width=300)
+                h3.strong(align='center') Masoud Sadjadi, PhD
             div.hidden-xl.hidden-lg.col-md-8.hidden-sm.hidden-xs
                 p Dr. Sadjadi holds a B.S. degree in Hardware Engineering, an M.S.
                     | degree in Software Engineering, and a Ph.D. degree in Computer
@@ -191,10 +193,8 @@ block content
                     br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.col-sm-4.hidden-xs
-                a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=200)]
-                    br
-                h4.strong Masoud Sadjadi, PhD
+                img#featured.img.center-block( src="/img/sadjadi.jpg" alt="", width=200)
+                h4.strong(align='center') Masoud Sadjadi, PhD
             div.hidden-xl.hidden-lg.hidden-md.col-sm-8.hidden-xs
                 p Dr. Sadjadi holds a B.S. degree in Hardware Engineering, an M.S.
                     | degree in Software Engineering, and a Ph.D. degree in Computer
@@ -239,10 +239,8 @@ block content
                     br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm
-                a(href='http://users.cis.fiu.edu/~sadjadi/' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/sadjadi.jpg" alt="", width=200)]
-                    br
-                h4.strong Masoud Sadjadi, PhD
+                img#featured.img.center-block( src="/img/sadjadi.jpg" alt="", width=200)
+                h4.strong(align='center') Masoud Sadjadi, PhD
                 p Dr. Sadjadi holds a B.S. degree in Hardware Engineering, an M.S.
                     | degree in Software Engineering, and a Ph.D. degree in Computer
                     | Science. He is currently an Associate Professor in the School
@@ -283,7 +281,10 @@ block content
                     br
     div.container
         div.row
-            h2.strong Teacher's Assistant
+            div.hidden-xs
+                h2.strong(align='center') The Professor's Assistant
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                h2.strong(align='center') Professor's Assistant
     div.container
         div.row
             div.col-xl-8.hidden-lg.hidden-md.hidden-sm.hidden-xs
@@ -296,13 +297,12 @@ block content
                     | main focus of his research is on Software Engineering and
                     | Agile Software Development.
             div.col-xl-4.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=300)]
-                h3.strong Mohsen Taheri
-                    br
-                    br
-                    br
-                    br
+                img#featured.img.center-block( src="/img/mohsen.jpg" alt="", width=300)
+                h3.strong(align='center') Mohsen Taheri
+                br
+                br
+                br
+                br
         div.row
             div.hidden-xl.col-lg-8.col-md-8.hidden-sm.hidden-xs
                 p Mohsen Taheri has been a PhD student of Computer Science at
@@ -314,13 +314,12 @@ block content
                     | main focus of his research is on Software Engineering and
                     | Agile Software Development.
             div.hidden-xl.col-lg-4.col-md-4.hidden-sm.hidden-xs
-                a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=300)]
-                h3.strong Mohsen Taheri
-                    br
-                    br
-                    br
-                    br
+                img#featured.img.center-block( src="/img/mohsen.jpg" alt="", width=300)
+                h3.strong(align='center') Mohsen Taheri
+                br
+                br
+                br
+                br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.col-sm-8.hidden-xs
                 p Mohsen Taheri has been a PhD student of Computer Science at
@@ -332,18 +331,16 @@ block content
                     | main focus of his research is on Software Engineering and
                     | Agile Software Development.
             div.hidden-xl.hidden-lg.hidden-md.col-sm-4.hidden-xs
-                a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=200)]
-                h4.strong Mohsen Taheri
-                    br
-                    br
-                    br
-                    br
+                img#featured.img.center-block( src="/img/mohsen.jpg" alt="", width=200)
+                h4.strong(align='center') Mohsen Taheri
+                br
+                br
+                br
+                br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='http://vip.fiu.edu/#/contact' target='_blank')
-                    | #[img#featured.img.left-block( src="/img/mohsen.jpg" alt="", width=200)]
-                h4.strong Mohsen Taheri
+                img#featured.img.center-block( src="/img/mohsen.jpg" alt="", width=200)
+                h4.strong(align='center') Mohsen Taheri
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
                 p Mohsen Taheri has been a PhD student of Computer Science at
                     | Florida International University (FIU) since Fall 2014. He
@@ -359,71 +356,51 @@ block content
                     br
     div.container
         div.row
-            h2.strong The Developers
+            div.col-xs-12
+                h2.strong(align='center') The Developers
     div.container
         div.row
-            h3.strong Spring 2015
+            div.hidden-xs
+                h2.strong Spring 2015
     div.container
         div.row
             div.col-xl-offset-3.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/danae-perez-a15747105' target='blank')
-                    | #[img( src="/img/perez_danae.jpg" alt="", width=300)]
+                img( src="/img/perez_danae.jpg" alt="", width=300)
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/icxe-vidal-596577b0' target='blank')
-                    | #[img( src="/img/vidal_icxe.jpg" alt="", width=300)]
+                img( src="/img/vidal_icxe.jpg" alt="", width=300)
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/danae-perez-a15747105' target='blank')
-                    | #[img( src="/img/perez_danae.jpg" alt="", width=300)]
+                img( src="/img/perez_danae.jpg" alt="", width=300)
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/icxe-vidal-596577b0' target='blank')
-                    | #[img( src="/img/vidal_icxe.jpg" alt="", width=300)]
+                img( src="/img/vidal_icxe.jpg" alt="", width=300)
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                a(href='https://www.linkedin.com/in/danae-perez-a15747105' target='blank')
-                    | #[img( src="/img/perez_danae.jpg" alt="", width=200)]
+                img( src="/img/perez_danae.jpg" alt="", width=200)
                 h4.strong Perez, Danae I.
                 p dpere241@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href='https://www.linkedin.com/in/icxe-vidal-596577b0' target='blank')
-                    | #[img( src="/img/vidal_icxe.jpg" alt="", width=200)]
-                h4.strong Vidal, Icxe
-                p ivida002@fiu.edu
-                p Graduation May 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/danae-perez-a15747105' target='blank')
-                    | #[img( src="/img/perez_danae.jpg" alt="", width=200)]
-                h4.strong Perez, Danae I.
-                p dpere241@fiu.edu
-                p Graduation May 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/icxe-vidal-596577b0' target='blank')
-                    | #[img( src="/img/vidal_icxe.jpg" alt="", width=200)]
+                img( src="/img/vidal_icxe.jpg" alt="", width=200)
                 h4.strong Vidal, Icxe
                 p ivida002@fiu.edu
                 p Graduation May 2015
@@ -431,137 +408,135 @@ block content
                 br
     div.container
         div.row
-            h2.strong Summer 2015
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                h2.strong(align='center') Spring 2015
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/perez_danae.jpg" alt="", width=200)
+                h4.strong(align='center') Perez, Danae I.
+                p(align='center') dpere241@fiu.edu
+                p(align='center') Graduation May 2015
+                br
+                br
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/vidal_icxe.jpg" alt="", width=200)
+                h4.strong(align='center') Vidal, Icxe
+                p(align='center') ivida002@fiu.edu
+                p(align='center') Graduation May 2015
+                br
+                br
+    div.container
+        div.row
+            div.hidden-xs
+                h2.strong Summer 2015
     div.container
         div.row
             div.col-xl-offset-3.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/yamila-fleitas-00839a77' target='blank')
-                    | #[img( src="/img/fleitas,_yamila.jpg" alt="", width=300)]
+                img( src="/img/fleitas,_yamila.jpg" alt="", width=300)
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/davidviz' target ='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=300)]
+                img( src="/img/vizcaino_david.jpg" alt="", width=300)
                 h4.strong Vizcaino, David
+                p Back End
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/yamila-fleitas-00839a77' target='blank')
-                    | #[img( src="/img/fleitas,_yamila.jpg" alt="", width=300)]
+                img( src="/img/fleitas,_yamila.jpg" alt="", width=300)
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/davidviz' target ='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=300)]
+                img( src="/img/vizcaino_david.jpg" alt="", width=300)
                 h4.strong Vizcaino, David
+                p Back End
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                a(href='https://www.linkedin.com/in/yamila-fleitas-00839a77' target='blank')
-                    | #[img( src="/img/fleitas,_yamila.jpg" alt="", width=200)]
+                img( src="/img/fleitas,_yamila.jpg" alt="", width=200)
                 h4.strong Fleitas, Yamila
                 p yflei001@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href='https://www.linkedin.com/in/davidviz' target ='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=200)]
+                img( src="/img/vizcaino_david.jpg" alt="", width=200)
                 h4.strong Vizcaino, David
-                p dvizc002@fiu.edu
-                p Graduation Aug 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/yamila-fleitas-00839a77' target='blank')
-                    | #[img( src="/img/fleitas,_yamila.jpg" alt="", width=200)]
-                h4.strong Fleitas, Yamila
-                p yflei001@fiu.edu
-                p Graduation Aug 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/davidviz' target ='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=200)]
-                h4.strong Vizcaino, David
+                p Back End
                 p dvizc002@fiu.edu
                 p Graduation Aug 2015
                 br
                 br
     div.container
         div.row
-            h2.strong Fall 2015
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                h2.strong(align='center') Summer 2015
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/fleitas,_yamila.jpg" alt="", width=200)
+                h4.strong(align='center') Fleitas, Yamila
+                p(align='center') yflei001@fiu.edu
+                p(align='center') Graduation Aug 2015
+                br
+                br
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/vizcaino_david.jpg" alt="", width=200)
+                h4.strong(align='center') Vizcaino, David
+                p(align='center') Back End
+                p(align='center') dvizc002@fiu.edu
+                p(align='center') Graduation Aug 2015
+                br
+                br
+    div.container
+        div.row
+            div.hidden-xs
+                h2.strong Fall 2015
     div.container
         div.row
             div.col-xl-offset-3.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/rodney-sanchez-4966784a' target='_blank')
-                    | #[img( src="/img/rodney_sanchez.jpg" alt="", width=300)]
+                img( src="/img/rodney_sanchez.jpg" alt="", width=300)
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.col-lg-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/ryan-del-rosario-b247659' target='_blank')
-                    | #[img( src="/img/del_rosario.jpg" alt="", width=300)]
+                img( src="/img/del_rosario.jpg" alt="", width=300)
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/rodney-sanchez-4966784a' target='_blank')
-                    | #[img( src="/img/rodney_sanchez.jpg" alt="", width=300)]
+                img( src="/img/rodney_sanchez.jpg" alt="", width=300)
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/ryan-del-rosario-b247659' target='_blank')
-                    | #[img( src="/img/del_rosario.jpg" alt="", width=300)]
+                img( src="/img/del_rosario.jpg" alt="", width=300)
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                a(href='https://www.linkedin.com/in/rodney-sanchez-4966784a' target='_blank')
-                    | #[img( src="/img/rodney_sanchez.jpg" alt="", width=200)]
+                img( src="/img/rodney_sanchez.jpg" alt="", width=200)
                 h4.strong Rodney, Sanchez
                 p rsantamarina@outlook.com
                 p Graduation Dec 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href='https://www.linkedin.com/in/ryan-del-rosario-b247659' target='_blank')
-                    | #[img( src="/img/del_rosario.jpg" alt="", width=200)]
-                h4.strong del Rosario, Ryan
-                p delrosario.ryan@gmail.com
-                p Graduation Dec 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/rodney-sanchez-4966784a' target='_blank')
-                    | #[img( src="/img/rodney_sanchez.jpg" alt="", width=200)]
-                h4.strong Rodney, Sanchez
-                p rsantamarina@outlook.com
-                p Graduation Dec 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/ryan-del-rosario-b247659' target='_blank')
-                    | #[img( src="/img/del_rosario.jpg" alt="", width=200)]
+                img( src="/img/del_rosario.jpg" alt="", width=200)
                 h4.strong del Rosario, Ryan
                 p delrosario.ryan@gmail.com
                 p Graduation Dec 2015
@@ -569,7 +544,26 @@ block content
                 br
     div.container
         div.row
-            h2.strong Spring 2016
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                h2.strong(align='center') Fall 2015
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/rodney_sanchez.jpg" alt="", width=200)
+                h4.strong(align='center') Rodney, Sanchez
+                p(align='center') rsantamarina@outlook.com
+                p(align='center') Graduation Dec 2015
+                br
+                br
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/del_rosario.jpg" alt="", width=200)
+                h4.strong(align='center') del Rosario, Ryan
+                p(align='center') delrosario.ryan@gmail.com
+                p(align='center') Graduation Dec 2015
+                br
+                br
+    div.container
+        div.row
+            div.hidden-xs
+                h2.strong Spring 2016
     div.container
         div.row
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
@@ -580,8 +574,7 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
-                    | #[img( src="/img/henao.png" alt="", width=300)]
+                img( src="/img/henao.png" alt="", width=300)
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -589,16 +582,14 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/lmart296' target='blank')
-                    | #[img( src="/img/martin_leo.jpg" alt="", width=300)]
+                img( src="/img/martin_leo.jpg" alt="", width=300)
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href="https://www.linkedin.com/in/piero-messarina-a84649112" target='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=300)]
+                img( src="/img/nopic.png" alt="", width=300)
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
@@ -612,8 +603,7 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
-                    | #[img( src="/img/henao.png" alt="", width=300)]
+                img( src="/img/henao.png" alt="", width=300)
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -621,16 +611,14 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/lmart296' target='blank')
-                    | #[img( src="/img/martin_leo.jpg" alt="", width=300)]
+                img( src="/img/martin_leo.jpg" alt="", width=300)
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href="https://www.linkedin.com/in/piero-messarina-a84649112" target='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=300)]
+                img( src="/img/nopic.png" alt="", width=300)
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
@@ -644,8 +632,7 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
-                    | #[img( src="/img/henao.png" alt="", width=200)]
+                img( src="/img/henao.png" alt="", width=200)
                 h4.strong Henao, Alejandro
                 p Microservice architecture
                 p ahena001@fiu.edu
@@ -653,48 +640,14 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                a(href='https://www.linkedin.com/in/lmart296' target='blank')
-                    | #[img( src="/img/martin_leo.jpg" alt="", width=200)]
+                img( src="/img/martin_leo.jpg" alt="", width=200)
                 h4.strong Martin, Leonardo
                 p lmart296@fiu.edu
                 p Graduation May 2015
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href="https://www.linkedin.com/in/piero-messarina-a84649112" target='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=200)]
-                h4.strong Messarina, Piero
-                p piero.messarina@gmail.com
-                p Graduation May 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
                 img( src="/img/nopic.png" alt="", width=200)
-                h4.strong Alvarez, Edwin
-                p ealva153@fiu.edu
-                p Graduation May 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/alejandro-henao-97a542112' target='_blank')
-                    | #[img( src="/img/henao.png" alt="", width=200)]
-                h4.strong Henao, Alejandro
-                p Microservice architecture
-                p ahena001@fiu.edu
-                p Graduation May 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/lmart296' target='blank')
-                    | #[img( src="/img/martin_leo.jpg" alt="", width=200)]
-                h4.strong Martin, Leonardo
-                p lmart296@fiu.edu
-                p Graduation May 2015
-                br
-                br
-            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href="https://www.linkedin.com/in/piero-messarina-a84649112" target='blank')
-                    | #[img( src="/img/nopic.png" alt="", width=200)]
                 h4.strong Messarina, Piero
                 p piero.messarina@gmail.com
                 p Graduation May 2015
@@ -702,12 +655,45 @@ block content
                 br
     div.container
         div.row
-            h2.strong Summer 2016
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                h2.strong(align='center') Spring 2016
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/nopic.png" alt="", width=200)
+                h4.strong(align='center') Alvarez, Edwin
+                p(align='center') ealva153@fiu.edu
+                p(align='center') Graduation May 2015
+                br
+                br#featured.img.center-block
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/henao.png" alt="", width=200)
+                h4.strong(align='center') Henao, Alejandro
+                p(align='center') Microservice architecture
+                p(align='center') ahena001@fiu.edu
+                p(align='center') Graduation May 2015
+                br
+                br
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/martin_leo.jpg" alt="", width=200)
+                h4.strong(align='center') Martin, Leonardo
+                p(align='center') lmart296@fiu.edu
+                p(align='center') Graduation May 2015
+                br
+                br
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/nopic.png" alt="", width=200)
+                h4.strong(align='center') Messarina, Piero
+                p(align='center') piero.messarina@gmail.com
+                p(align='center') Graduation May 2015
+                br
+                br
+    div.container
+        div.row
+            div.hidden-xs
+                h2.strong Summer 2016
     div.container
         div.row
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/john-burke-b3255086' target='_blank')
-                    | #[img( src="/img/burke.jpg" alt="", width=300)]
+                img( src="/img/burke.jpg" alt="", width=300)
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -715,8 +701,7 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='#' target='_blank')
-                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=300)]
+                img( src="/img/gonzalez_e.jpg" alt="", width=300)
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -724,8 +709,7 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/jorgejmr89' target='_blank')
-                    | #[img( src="/img/medina_j.png" alt="", width=300)]
+                img( src="/img/medina_j.png" alt="", width=300)
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -733,8 +717,7 @@ block content
                 br
                 br
             div.col-xl-3.hidden-lg.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/nilton-mu%C3%B1oz-a71707a' target='_blank')
-                    | #[img( src="/img/munez_nilton.jpg" alt="", width=300)]
+                img( src="/img/munez_nilton.jpg" alt="", width=300)
                 h4.strong Muñoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
@@ -742,8 +725,7 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/john-burke-b3255086' target='_blank')
-                    | #[img( src="/img/burke.jpg" alt="", width=300)]
+                img( src="/img/burke.jpg" alt="", width=300)
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -751,8 +733,7 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='#' target='_blank')
-                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=300)]
+                img( src="/img/gonzalez_e.jpg" alt="", width=300)
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -760,8 +741,7 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-8.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/jorgejmr89' target='_blank')
-                    | #[img( src="/img/medina_j.png" alt="", width=300)]
+                img( src="/img/medina_j.png" alt="", width=300)
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -769,8 +749,7 @@ block content
                 br
                 br
             div.hidden-xl.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                a(href='https://www.linkedin.com/in/nilton-mu%C3%B1oz-a71707a' target='_blank')
-                    | #[img( src="/img/munez_nilton.jpg" alt="", width=300)]
+                img( src="/img/munez_nilton.jpg" alt="", width=300)
                 h4.strong Muñoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
@@ -779,8 +758,7 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                a(href='https://www.linkedin.com/in/john-burke-b3255086' target='_blank')
-                    | #[img( src="/img/burke.jpg" alt="", width=200)]
+                img( src="/img/burke.jpg" alt="", width=200)
                 h4.strong Burke, John
                 p jburk045@fiu.edu
                 p Front end
@@ -788,8 +766,7 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href='#' target='_blank')
-                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=200)]
+                img( src="/img/gonzalez_e.jpg" alt="", width=200)
                 h4.strong Gonzalez, Emmanuel
                 p egonz077@fiu.edu
                 p Application Security
@@ -798,8 +775,7 @@ block content
                 br
         div.row
             div.hidden-xl.hidden-lg.col-md-8.col-sm-8.hidden-xs
-                a(href='https://www.linkedin.com/in/jorgejmr89' target='_blank')
-                    | #[img( src="/img/medina_j.png" alt="", width=200)]
+                img( src="/img/medina_j.png" alt="", width=200)
                 h4.strong Medina, Jorge
                 p jmedi116@fiu.edu
                 p Back end
@@ -807,51 +783,50 @@ block content
                 br
                 br
             div.hidden-xl.hidden-lg.col-md-4.col-sm-4.hidden-xs
-                a(href='https://www.linkedin.com/in/nilton-mu%C3%B1oz-a71707a' target='_blank')
-                    | #[img( src="/img/munez_nilton.jpg" alt="", width=200)]
+                img( src="/img/munez_nilton.jpg" alt="", width=200)
                 h4.strong Muñoz, Nilton
                 p nmuno013@fiu.edu
                 p Bolo Templates
                 p Graduation 5 Aug. 2016
                 br
                 br
+    div.container
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/john-burke-b3255086' target='_blank')
-                    | #[img( src="/img/burke.jpg" alt="", width=200)]
-                h4.strong Burke, John
-                p jburk045@fiu.edu
-                p Front end
-                p Graduation 5 Aug. 2016
-                br
-                br
+                h2.strong(align='center') Spring 2016
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='#' target='_blank')
-                    | #[img( src="/img/gonzalez_e.jpg" alt="", width=200)]
-                h4.strong Gonzalez, Emmanuel
-                p egonz077@fiu.edu
-                p Application Security
-                p Graduation 5 Aug. 2016
+                img#featured.img.center-block( src="/img/burke.jpg" alt="", width=200)
+                h4.strong(align='center') Burke, John
+                p(align='center') jburk045@fiu.edu
+                p(align='center') Front end
+                p(align='center') Graduation 5 Aug. 2016
                 br
                 br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/jorgejmr89?' target='_blank')
-                    | #[img( src="/img/medina_j.png" alt="", width=200)]
-                h4.strong Medina, Jorge
-                p jmedi116@fiu.edu
-                p Back end
-                p Graduation 5 Aug. 2016
+                img#featured.img.center-block( src="/img/gonzalez_e.jpg" alt="", width=200)
+                h4.strong(align='center') Gonzalez, Emmanuel
+                p(align='center') egonz077@fiu.edu
+                p(align='center') Application Security
+                p(align='center') Graduation 5 Aug. 2016
                 br
                 br
         div.row
             div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
-                a(href='https://www.linkedin.com/in/nilton-mu%C3%B1oz-a71707a' target='_blank')
-                    | #[img( src="/img/munez_nilton.jpg" alt="", width=200)]
-                h4.strong Muñoz, Nilton
-                p nmuno013@fiu.edu
-                p Bolo Templates
-                p Graduation 5 Aug. 2016
+                img#featured.img.center-block( src="/img/medina_j.png" alt="", width=200)
+                h4.strong(align='center') Medina, Jorge
+                p(align='center') jmedi116@fiu.edu
+                p(align='center') Back end
+                p(align='center') Graduation 5 Aug. 2016
+                br
+                br
+        div.row
+            div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-12
+                img#featured.img.center-block( src="/img/munez_nilton.jpg" alt="", width=200)
+                h4.strong(align='center') Muñoz, Nilton
+                p(align='center') nmuno013@fiu.edu
+                p(align='center') Bolo Templates
+                p(align='center') Graduation 5 Aug. 2016
                 br
                 br

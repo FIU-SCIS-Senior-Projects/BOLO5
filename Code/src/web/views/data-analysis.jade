@@ -1,9 +1,8 @@
 extends ./layout.jade
 include ./includes/mixins.jade
-// $( document ).ready( function() {
-    // Don't forget to wrap all you jQuery code inside the ready function.
-    //$( 'input#datepicker' ).datepicker();
-//} );
+
+// Author John Burke
+
 block jumbo
     .jumbotron
         .container
@@ -59,6 +58,6 @@ block content
         div.hidden-lg.hidden-md
             br
             p I apologize for the inconvenience, you have been temporary restricted
-                | from this action because you may not have enough memory from your device
+                | from this action because you might be on a mobile device
     else
         h1 Well this is embarrassing! Who are you?
