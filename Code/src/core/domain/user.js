@@ -143,6 +143,26 @@ User.prototype.isValid = function () {
 };
 
 /**
+ * Ensure the consistency of user data.
+ *
+ * @returns {bool} true if passes validation, false oherwise
+ *
+ * This is used by updateActivateUser in user-service.js
+ */
+User.prototype.isValid2 = function () {
+   var data = this.data;
+   var usernamecheck = typeof data.username;
+   var emailcheck = typeof data.email;
+   var passwordcheck = typeof data.password;
+   var tiercheck = typeof data.tier;
+   var agencycheck = typeof data.agency;
+   return schema.username.type === usernamecheck &&
+     schema.email.type === emailcheck &&
+     schema.password.type === passwordcheck &&
+     schema.agency.type === agencycheck;
+};
+
+/**
  * Chack if the supplied password is equal to the stored password. Will only
  * validate if the stored passwod is hashed.
  *

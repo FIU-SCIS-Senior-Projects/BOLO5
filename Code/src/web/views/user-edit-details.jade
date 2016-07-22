@@ -9,6 +9,41 @@ block jumbo-desc
 block admin-content
     - var route = "/admin/users/" + user.id;
 
+    if (tier === 'ROOT')
+        if(user.accountStatus === false)
+            div.col-xs-12
+                button#activation.btn.btn-success.pull-right(
+                type='submit'
+                style='margin-bottom:25px;'
+                ) Activate User
+        else
+            div.col-xs-12
+                button#activation.btn.btn-danger.pull-right(
+                type='submit'
+                style='margin-bottom:25px;'
+                ) Deactivate User
+        script.
+            $('#activation').click(function (data) {
+                var res = data.toElement.getAttribute('class').indexOf('btn-danger');
+                if (res !== -1)
+                    var result = confirm('Deactivate User?');
+                else
+                    var result = confirm('Activate User?');
+                if(result === true){
+                    $.ajax({
+                        url: '/admin/users/Activation',
+                        type: 'POST',
+                        data: {user: !{JSON.stringify(user)}},
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log('redirect');
+                            if (typeof data.redirect == 'string')
+                                window.location = data.redirect;
+                        }
+                    })
+                }
+            });
+
     h3 Username: #{user.username} <br>
 
     form(action=route + "/edit-details" enctype="multipart/form-data" method="post")
