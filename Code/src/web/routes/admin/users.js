@@ -269,6 +269,7 @@ module.exports.postPasswordReset = function ( req, res ) {
     var userID = req.params.id;
 
     parseFormData( req ).then( function ( formDTO ) {
+      
         var validationErrors = passwordUtil.validatePassword(
             formDTO.fields.password, formDTO.fields.confirm
         );

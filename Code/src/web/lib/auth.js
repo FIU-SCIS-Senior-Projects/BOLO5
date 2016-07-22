@@ -95,6 +95,16 @@ passport.use(new LocalStrategy(
           }
         } else {
 
+          /* Check wether account has been suspended or the user has just locked himself out of the system */
+          if(account.locked){
+
+            return done(null, false, {
+              'message': 'You account has been suspended. Please contact your agency administrator'
+            });
+
+          }
+          else{
+
           // send email to user and admins
           sendAccountLockedEmail(account);
           sendAccountLockedEmailToAdmins(account);
@@ -103,6 +113,7 @@ passport.use(new LocalStrategy(
             'message': 'You account has been locked. You have been sent an email to reset your password'
           });
 
+          }
         }
 
 
@@ -297,7 +308,7 @@ router.post('/login',
  * Destory any sessions belonging to the requesting client.
  */
  router.get('/logout', function (req, res){
-   
+
    req.session.destroy(function (err) {
      res.redirect('/login');
    });
@@ -323,6 +334,10 @@ router.post('/forgotPassword',
       userService.getByEmail(email).then(function(user) {
         if (!user) {
           req.flash(FERR, 'Error: Unregistered email address.');
+          return res.redirect('back');
+        }
+        if(user.accountStatus2 === false){
+          req.flash(FERR, 'Your account has been suspended. Please contact your agency administrator');
           return res.redirect('back');
         }
 
