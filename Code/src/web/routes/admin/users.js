@@ -163,8 +163,8 @@ module.exports.postCreateForm = function ( req, res ) {
 
                 data.agencyDomain = agencies[agency].domain;
             }
-            res.redirect('back')
-            //res.render('userService', data)
+            //res.redirect('back')
+            res.render('user-create-form', data)
           })
     })
     .catch( function ( error ) {
