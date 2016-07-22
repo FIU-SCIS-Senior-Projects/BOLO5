@@ -90,6 +90,7 @@ function User ( data ) {
         'boloConfirmationToken' : null,
         'boloTokenExpiration'   : null,
         "accountStatus"         : true,
+        "accountStatus2"         : false,
         "incorrectLogins"       : 0
     };
 
