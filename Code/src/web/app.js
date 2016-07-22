@@ -129,14 +129,14 @@ app.use( function ( req, res, next ) {
 /* To be uncommented when going into production. This ensures that the site
  * is always using https
  */
-app.use (function (req, res, next) {
-   var schema = (req.headers['x-forwarded-proto'] || '').toLowerCase();
-   if (schema === 'https') {
-     next();
-   } else {
-     res.redirect('https://' + req.headers.host + req.url);
-   }
- });
+// app.use (function (req, res, next) {
+//    var schema = (req.headers['x-forwarded-proto'] || '').toLowerCase();
+//    if (schema === 'https') {
+//      next();
+//    } else {
+//      res.redirect('https://' + req.headers.host + req.url);
+//    }
+//  });
 
 app.get( '/', isAuthenticated, function ( req, res, next ) {
     res.redirect( '/bolo' );
