@@ -270,7 +270,7 @@ module.exports.postPasswordReset = function ( req, res ) {
     var userID = req.params.id;
 
     parseFormData( req ).then( function ( formDTO ) {
-
+      
         var validationErrors = passwordUtil.validatePassword(
             formDTO.fields.password, formDTO.fields.confirm
         );
@@ -385,7 +385,7 @@ module.exports.activationUser = function(req, res){
     var user = req.body.user;
 
         if (user.data.accountStatus === 'true' && user.data.accountStatus2 === 'false') {
-            user.data.accountStatus = false;
+            user.data.accountStatus = true;
             user.data.accountStatus2 = false;
         }
         else{

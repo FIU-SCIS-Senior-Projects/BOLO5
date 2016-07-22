@@ -45,7 +45,7 @@ UserService.prototype.authenticate = function(username, password) {
   var account = {};
   return this.userRepository.getByUsername(username)
     .then(function(user) {
-      console.log(user);
+
       var authenticated = false;
 
       if (user === null) {
@@ -61,9 +61,6 @@ UserService.prototype.authenticate = function(username, password) {
         console.log("The locked status is: " + account.locked);
       }
 
-      if(account.locked === true){
-        return account;
-      }
       // if incorrect login attempts is greater than the max allowed lock the account
       if (user.incorrectLogins + 1 >= config.MAX_INCORRECT_LOGINS) {
 

@@ -173,7 +173,7 @@ var sendPasswordExpiredEmail = function(user) {
 
     user.resetPasswordToken = token;
     // Token will expire in 24 hours
-    user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
+    user.resetPasswordExpires = Date.now() + 24 * 60 * 60;
     userService.updateUser(user.id, user);
 
     emailService.send({
@@ -198,7 +198,7 @@ var sendAccountLockedEmail = function(account) {
     userService.getByEmail(account.email).then(function(user) {
 
       user.resetPasswordToken = token;
-      user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
+      user.resetPasswordExpires = Date.now() + 3600000;
       userService.updateUser(user.id, user);
       console.log("Sending account locked email to %s", account.email)
       emailService.send({
@@ -336,7 +336,7 @@ router.post('/forgotPassword',
           req.flash(FERR, 'Error: Unregistered email address.');
           return res.redirect('back');
         }
-        if(user.accountStatus2 === true){
+        if(user.accountStatus2 === false){
           req.flash(FERR, 'Your account has been suspended. Please contact your agency administrator');
           return res.redirect('back');
         }
