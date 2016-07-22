@@ -132,6 +132,7 @@ module.exports.postCreateForm = function ( req, res ) {
           throw new FormError();
         }
         formDTO.fields.accountStatus = true;
+        formDTO.fields.accountStatus2 = false;
         formDTO.fields.tier = formDTO.fields.role;
         formDTO.fields.agency = formDTO.fields.agency || req.user.agency;
         formDTO.fields.notifications = [ null ];
@@ -382,19 +383,23 @@ module.exports.activationUser = function(req, res){
 
     var user = req.body.user;
 
-        if (user.data.accountStatus === 'true') {
+        if (user.data.accountStatus === 'true' && user.data.accountStatus2 === 'false') {
             user.data.accountStatus = true;
-
+            user.data.accountStatus2 = false;
         }
-        else
+        else{
             user.data.accountStatus = false;
+            user.data.accountStatus2 = true;
+        }
         user.data.accountStatus = !(user.data.accountStatus);
+        user.data.accountStatus2 = !(user.data.accountStatus2);
         console.log(user.data.accountStatus);
+        console.log(user.data.accountStatus2);
         userService.updateActivateUser(user, []).then(function (pData) {
-            if (user.data.accountStatus === true) {
+            if (user.data.accountStatus === true && user.data.accountStatus === false) {
                 req.flash(FMSG, 'User Activation successful.');
             }
-            else {
+            if (user.data.accountStatus === false && user.data.accountStatus === true) {
                 req.flash(FMSG, 'User Deactivation successful.');
             }
             res.send({redirect: '/admin/users'});

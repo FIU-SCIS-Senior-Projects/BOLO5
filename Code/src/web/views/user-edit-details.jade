@@ -10,7 +10,7 @@ block admin-content
     - var route = "/admin/users/" + user.id;
 
     if (tier === 'ROOT' || tier === 'ADMINISTRATOR')
-        if(user.accountStatus === false)
+        if(user.accountStatus === false && user.accountStatus2 === true)
             div.col-xs-12
                 button#activation.btn.btn-success.pull-right(
                 type='submit'
