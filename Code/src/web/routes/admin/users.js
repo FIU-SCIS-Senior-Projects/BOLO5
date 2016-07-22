@@ -383,7 +383,7 @@ module.exports.getDelete = function ( req, res ) {
 module.exports.activationUser = function(req, res){
 
     var user = req.body.user;
-
+console.log(user);
         if (user.data.accountStatus === 'true' && user.data.accountStatus2 === 'false') {
             user.data.accountStatus = false;
             user.data.accountStatus2 = false;
@@ -392,6 +392,7 @@ module.exports.activationUser = function(req, res){
             user.data.accountStatus = false;
             user.data.accountStatus2 = true;
         }
+        user.data.incorrectLogins = parseInt(req.body.user.incorrectLogins);
         user.data.accountStatus = !(user.data.accountStatus);
         user.data.accountStatus2 = !(user.data.accountStatus2);
         console.log(user.data.accountStatus);

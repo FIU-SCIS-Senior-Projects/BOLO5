@@ -45,7 +45,7 @@ UserService.prototype.authenticate = function(username, password) {
   var account = {};
   return this.userRepository.getByUsername(username)
     .then(function(user) {
-      console.log(user);
+
       var authenticated = false;
 
       if (user === null) {
@@ -58,7 +58,6 @@ UserService.prototype.authenticate = function(username, password) {
         account.found = true;
         account.email = user.email;
         account.locked = user.accountStatus2;
-        console.log("The locked status is: " + account.locked);
       }
 
       if(account.locked === true){
