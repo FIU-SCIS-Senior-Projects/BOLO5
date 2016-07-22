@@ -14,7 +14,7 @@ block admin-content
         if ferrs.confirmation
             +alert_error_array( ferrs.confirmation )
 
-    button.btn.btn-primary(onclick='history.go(-1);') Go back        
+    button.btn.btn-primary(onclick='history.go(-1);') Restore Previous Form        
     form( action="/admin/users/create" enctype="multipart/form-data" method="post" )
         +input_text( "username", "Username ", "", true, user1 )
         if (tier === 'ROOT')
