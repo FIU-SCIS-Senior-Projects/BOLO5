@@ -374,3 +374,34 @@ module.exports.getDelete = function ( req, res ) {
         }
     );
 };
+
+/**
+ * ACtivate or deactivate Users
+ */
+module.exports.activationUser = function(req, res){
+
+    var user = req.body.user;
+
+        if (user.data.accountStatus === 'true') {
+            user.data.accountStatus = true;
+
+        }
+        else
+            user.data.accountStatus = false;
+        user.data.accountStatus = !(user.data.accountStatus);
+        console.log(user.data.accountStatus);
+        userService.updateActivateUser(user, []).then(function (pData) {
+            if (user.data.accountStatus === true) {
+                req.flash(FMSG, 'User Activation successful.');
+            }
+            else {
+                req.flash(FMSG, 'User Deactivation successful.');
+            }
+            res.send({redirect: '/admin/users'});
+
+        }).catch(function (error) {
+            req.flash(GFERR, "Error in user deactivation:" + error);
+            res.send({redirect: '/admin/users'});
+        })
+
+};

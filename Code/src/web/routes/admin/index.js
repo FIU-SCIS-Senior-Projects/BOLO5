@@ -48,7 +48,7 @@ router.post( pre + '/:id/reset-password'    , users.postPasswordReset );
 router.get(  pre + '/:id/edit-details'      , users.getEditDetails );
 router.post( pre + '/:id/edit-details'      , users.postEditDetails );
 router.get(  pre + '/:id/delete'            , users.getDelete );
-
+router.post( pre + '/activation'            , users.activationUser);
 
 pre = '/admin/agency';
 router.use( SETNAV( 'admin-agency' ) );

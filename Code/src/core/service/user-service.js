@@ -26,6 +26,11 @@ function UserService(userRepository, agencyService) {
   this.userRepository = userRepository;
   this.agencyService = agencyService;
 }
+
+//function UserService2 ( userRepository ) {///////////////////////
+//    this.userRepository = userRepository;/////////////////////
+//}
+
 /**
  * Authenticate a username and password pair.
  * protracts agaisnt brute force logins to users
@@ -378,4 +383,67 @@ UserService.prototype.getByEmail = function(email) {
 
 UserService.prototype.getByToken = function(email) {
   return this.userRepository.getByToken(email);
+};
+
+/**
+ * Create a new User in the system used by activate deactivate user
+ *
+ * @param {object} userActivateData - User to update
+ */
+
+UserService.prototype.updateActivateUser = function ( userActivateData) {
+    var context = this;
+    var updated = new User( userActivateData);
+    var validatename = 0;
+
+    if ( ! updated.isValid2() ) {
+        throw new Error( "Invalid user data" );
+    }
+
+     return context.userRepository.getUsersByAgency().then(function (users){
+
+                users.forEach(function(currentUser) {
+                    if(currentUser.data.username === updated.username ){
+                        validatename++;
+                        if(currentUser.data.id === updated.id){
+                            validatename--;
+                        }
+                    }
+                });
+
+                if(validatename<1){
+
+                    return context.userRepository.getById( updated.data.id )
+                    .then( function ( original ) {
+                        // If you do not put this field the role is missing
+                        updated.data.tier = original.data.tier;
+
+                        original.diff( updated ).forEach( function ( key ) {
+                            original.data[key] = updated.data[key];
+                        });
+
+
+                        return context.userRepository.update( original);
+                    })
+                    .then( function ( updated ) {
+                        return updated;
+                    })
+                    .catch( function ( error ) {
+                        return Promise.reject( new Error("User does not exist.!!!") );
+                    });
+                }
+                else{
+                    return Promise.reject(new Error("User already registered!!!"));
+                }
+        });
+};
+
+/**
+ * Return user by id
+ *
+ * @param id - user id
+ */
+UserService.prototype.getById = function ( id ) {
+    var context = this;
+    return context.userRepository.getById( id );
 };

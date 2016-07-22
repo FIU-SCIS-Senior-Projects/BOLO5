@@ -29,7 +29,7 @@ block admin-content
             thead
                 tr
                     if(currentUser.tier > 3)
-                      th Agency                                              
+                      th Agency
                     th Username
                     th Name
                     th Email
@@ -38,13 +38,15 @@ block admin-content
             tbody
                 each userInTable in users
                   if(userInTable.agency == currentUser.agency && userInTable.tier <= currentUser.tier || currentUser.tier > 3)
-                    tr 
+                    tr
                         if(currentUser.tier > 3)
                           td #{userInTable.agencyName}
                         td #{userInTable.username}
                         td #{userInTable.fname} #{userInTable.lname}
                         td #{userInTable.email}
                         td #{userInTable.roleName()}
+                        if(userInTable.accountStatus === false)
+                            td.text-warning disabled
                         td: a.text-large(href="/admin/users/" + userInTable.id)
                             span.glyphicon.glyphicon-cog( aria-hidden="true" )
 

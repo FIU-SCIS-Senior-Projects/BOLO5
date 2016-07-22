@@ -21,7 +21,7 @@ block admin-content
         else
           +input_text( "email", "Email", "Email Username", true, email1 )
           +input_text_static( "domain", "Domain", "", false, agencyDomain)
-            
+
         +input_text( "fname", "First Name", "", true, fname1 )
         +input_text( "lname", "Last Name", "", true,  lname1 )
         +input_text( "password", "Password", "", true,  "", "password" )
@@ -35,7 +35,7 @@ block admin-content
                       if (role != 'ROOT' || tier === 'ROOT')
                         - var formattedRole = _.startCase( role.toLowerCase() );
                         option( value=role, selected ) #{formattedRole}
-          
+
         if ( agencies )
           if (tier === 'ROOT')
             .form-group
@@ -46,7 +46,7 @@ block admin-content
                             option( value=agency.id selected ) #{agency.name}
                         else
                             option( value=agency.id ) #{agency.name}
-          else 
+          else
             option #{user.agency.name}
 
         +input_text( "badge", "Badge No.", "", true,  badge1 )
