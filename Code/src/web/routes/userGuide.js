@@ -1,8 +1,6 @@
 /* jshint node: true */
 'use strict';
 
-
-
 var _                   = require('lodash');
 var Promise             = require('promise');
 var router              = require('express').Router();
@@ -25,6 +23,7 @@ router.get(  '/userGuide/pdf'            , downloadUserGuide);
  *
  * @params req
  * @params res
+ *@Author John Burke
  */
 function getUserGuide(req, res){
     console.log('In the getUserGuide');
@@ -37,6 +36,7 @@ function getUserGuide(req, res){
  *
  * @params req
  * @params res
+ * @Author John Burke
  */
 function downloadUserGuide(req, res) {
 

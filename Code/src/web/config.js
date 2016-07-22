@@ -70,7 +70,10 @@ config.days = 30;
 
 config.unconfirmedBoloLifetime = config.days * 24 * 60 * 60 * 1000;
 
-//
+/**
+ * System timeout
+ * @Author John Burke
+ */
 config.max_age = 10 * 10 * 6000;
 
 // # of tries a user can attempt a login without being locked out of the system.
