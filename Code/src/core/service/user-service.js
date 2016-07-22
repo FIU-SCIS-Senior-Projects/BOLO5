@@ -58,7 +58,6 @@ UserService.prototype.authenticate = function(username, password) {
         account.found = true;
         account.email = user.email;
         account.locked = user.accountStatus2;
-        console.log("The locked status is: " + account.locked);
       }
 
       // if incorrect login attempts is greater than the max allowed lock the account
