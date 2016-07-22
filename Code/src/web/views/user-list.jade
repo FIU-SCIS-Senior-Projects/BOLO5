@@ -45,7 +45,7 @@ block admin-content
                         td #{userInTable.fname} #{userInTable.lname}
                         td #{userInTable.email}
                         td #{userInTable.roleName()}
-                        if(userInTable.accountStatus === false)
+                        if(userInTable.accountStatus === false && userInTable.accountStatus2 === true)
                             td.text-warning disabled
                         td: a.text-large(href="/admin/users/" + userInTable.id)
                             span.glyphicon.glyphicon-cog( aria-hidden="true" )
