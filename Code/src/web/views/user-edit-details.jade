@@ -9,7 +9,7 @@ block jumbo-desc
 block admin-content
     - var route = "/admin/users/" + user.id;
 
-    if (tier === 'ROOT')
+    if (tier === 'ROOT' || tier === 'ADMINISTRATOR')
         if(user.accountStatus === false)
             div.col-xs-12
                 button#activation.btn.btn-success.pull-right(

@@ -12,6 +12,7 @@ block jumbo
         .col-xs-14.col-md-6
           .pull-left
             a.btn.btn-default.pull-right( href="/bolo/details/pdf/" + bolo.id + '.pdf',target="_blank" ) Generate PDF
+            button.btn.btn-primary(onclick='history.go(-1);') Go Back
         .col-xs-14.col-md-6
           .pull-right
             if((bolo.record)&&(tier > 2))
