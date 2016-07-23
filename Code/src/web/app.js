@@ -140,9 +140,9 @@ app.use( function ( req, res, next ) {
 //    }
 //  });
 //
-// app.get( '/', isAuthenticated, function ( req, res, next ) {
-//     res.redirect( '/bolo' );
-// });
+ app.get( '/', isAuthenticated, function ( req, res, next ) {
+     res.redirect( '/bolo' );
+ });
 
 app.use( auth.router );
 app.use( routes.aboutUs);                       // Author John Burke
