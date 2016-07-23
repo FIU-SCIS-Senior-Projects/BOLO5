@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var jade = require('jade');
 var moment = require('moment');
+var tz     = require('moment-timezone');
 var path = require('path');
 var Promise = require('promise');
 var router = require('express').Router();
@@ -483,7 +484,7 @@ router.get('/bolo/agencies/', function(req, res, next) {
       }
         data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);
       res.render('bolo-list', data);
-    
+
     });
   }).catch(function(error) {
     next(error);
@@ -754,7 +755,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     var boloDTO = boloService.formatDTO(formDTO.fields);
     var attDTOs = [];
     var fi = {};
-    boloDTO.createdOn = moment().format(config.const.DATE_FORMAT);
+    boloDTO.createdOn = moment().tz("America/Miami").format(config.const.DATE_FORMAT);
     boloDTO.createdOn = boloDTO.createdOn.toString();
     console.log("BOLO created on:" + boloDTO.createdOn);
     boloDTO.lastUpdatedOn = boloDTO.createdOn;
