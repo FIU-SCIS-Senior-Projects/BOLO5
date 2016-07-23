@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var jade = require('jade');
 var moment = require('moment');
+var tz     = require('moment-timezone');
 var path = require('path');
 var Promise = require('promise');
 var router = require('express').Router();
@@ -303,7 +304,7 @@ router.get('/bolo', function(req, res, next) {
   boloService.getBolos(limit, skip).then(function(results) {
     data.bolos = results.bolos;
     data.filter = "All Bolos"
-    var now = moment().format(config.const.DATE_FORMAT);
+    var now = moment().tz("America/New_York").format(config.const.DATE_FORMAT);
     var then = "";
     var minutes_in_week = 10080;
     for (var i in data.bolos) {
@@ -483,7 +484,7 @@ router.get('/bolo/agencies/', function(req, res, next) {
       }
         data.paging.last = Math.ceil((Math.ceil(results.total/limit) * results.bolos.length) /limit);
       res.render('bolo-list', data);
-    
+
     });
   }).catch(function(error) {
     next(error);
@@ -754,7 +755,7 @@ router.post('/bolo/create', _bodyparser, function(req, res, next) {
     var boloDTO = boloService.formatDTO(formDTO.fields);
     var attDTOs = [];
     var fi = {};
-    boloDTO.createdOn = moment().format(config.const.DATE_FORMAT);
+    boloDTO.createdOn = moment().tz("America/New_York").format(config.const.DATE_FORMAT);
     boloDTO.createdOn = boloDTO.createdOn.toString();
     console.log("BOLO created on:" + boloDTO.createdOn);
     boloDTO.lastUpdatedOn = boloDTO.createdOn;
@@ -1045,7 +1046,7 @@ router.post('/bolo/update/:id', function(req, res, next) {
 
     if (auth.authorizedToEdit()) {
       data.bolo.status = bolo_status;
-      var temp = moment().format(config.const.DATE_FORMAT);
+      var temp = moment().tz("America/New_York").format(config.const.DATE_FORMAT);
       data.bolo.lastUpdatedOn = temp.toString();
       data.bolo.agencyName = req.user.agencyName;
       var att = [];
@@ -1143,7 +1144,7 @@ router.post('/bolo/edit/:id', function(req, res, next) {
     if (formDTO.fields.status === '') {
       boloDTO.status = 'Updated';
     }
-    boloDTO.lastUpdatedOn = moment().format(config.const.DATE_FORMAT);
+    boloDTO.lastUpdatedOn = moment().tz("America/New_York").format(config.const.DATE_FORMAT);
     boloDTO.lastUpdatedBy.firstName = req.user.fname;
     boloDTO.lastUpdatedBy.lastName = req.user.lname;
     boloDTO.agencyName = req.user.agencyName;

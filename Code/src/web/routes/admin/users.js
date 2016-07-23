@@ -383,7 +383,7 @@ module.exports.getDelete = function ( req, res ) {
 module.exports.activationUser = function(req, res){
 
     var user = req.body.user;
-console.log(user);
+
         if (user.data.accountStatus === 'true' && user.data.accountStatus2 === 'false') {
             user.data.accountStatus = true;
             user.data.accountStatus2 = false;
