@@ -126,7 +126,9 @@ app.use( function ( req, res, next ) {
     next();
 });
 
-/* To be uncommented when going into production. This ensures that the site
+/*
+ * TODO
+ * To be uncommented when going into production. This ensures that the site
  * is always using https
  */
 // app.use (function (req, res, next) {
@@ -137,10 +139,10 @@ app.use( function ( req, res, next ) {
 //      res.redirect('https://' + req.headers.host + req.url);
 //    }
 //  });
-
-app.get( '/', isAuthenticated, function ( req, res, next ) {
-    res.redirect( '/bolo' );
-});
+//
+// app.get( '/', isAuthenticated, function ( req, res, next ) {
+//     res.redirect( '/bolo' );
+// });
 
 app.use( auth.router );
 app.use( routes.aboutUs);                       // Author John Burke
