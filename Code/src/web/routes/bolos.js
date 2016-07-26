@@ -46,7 +46,7 @@ var cleanTemporaryFiles = formUtil.cleanTempFiles;
 /**
  * Send email notification of a new bolo.
  */
-function sendBoloNotificationEmail(bolo, template) {
+function sendBoloNotificationEmail(bolo, template, creatorEmail) {
   var data = {};
   var someData = {};
   var sort = 'username';
@@ -130,7 +130,8 @@ function sendBoloNotificationEmail(bolo, template) {
       var html = jade.renderFile(tmp, tdata);
       console.log("SENDING EMAIL SUCCESSFULLY");
       return emailService.send({
-        'to': subscribers,
+        'to':creatorEmail,
+        'bcc':  subscribers,
         'from': config.email.from,
         'fromName': config.email.fromName,
         'subject': 'BOLO Alert: ' + bolo.category,
@@ -993,7 +994,7 @@ router.get('/bolo/confirmBolo/:token', function(req, res, next) {
         bolo.confirmed = true;
 
         // send email with bolos
-        sendBoloNotificationEmail(bolo, 'new-bolo-notification');
+        sendBoloNotificationEmail(bolo, 'new-bolo-notification', req.user.email);
         var att = [];
 
         // update the bolo
@@ -1236,7 +1237,7 @@ var att=[];
         // update the bolo
         return boloService.updateAfterConfirmation(bolo, att)
           .then(function(boloUpdated) {
-            sendBoloNotificationEmail(boloUpdated, 'update-bolo-notification');
+            sendBoloNotificationEmail(boloUpdated, 'update-bolo-notification', req.user.email);
             boloService.removeBolo(bolo.id);
         }).then(function(){
             req.flash(GFMSG, 'BOLO Update confirmed.');
