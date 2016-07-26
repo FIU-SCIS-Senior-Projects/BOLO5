@@ -2,7 +2,6 @@ extends ./layout.jade
 include ./includes/mixins.jade
 
 // Author John Burke
-
 block jumbo
     .jumbotron
         .container
@@ -11,22 +10,22 @@ block jumbo
 block content
     script.
         $(document).ready(function() {
-          // Default Icon Trigger
-          $('.datepicker').datepicker({
-             showOn: "button",
-             buttonImage: "http://jqueryui.com/resources/demos/images/calendar.gif",
-             buttonText: "Select date",
-             changeMonth: true,
-             changeYear: true,
-             minDate: new Date(2016, 7-1, 15),
-             maxDate: 0
-         });
+            // Default Icon Trigger
+            $('.datepicker').datepicker({
+                showOn: "button",
+                buttonImage: "http://jqueryui.com/resources/demos/images/calendar.gif",
+                buttonText: "Select date",
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(2016, 7-1, 15),
+                maxDate: 0
+            });
         });
     if (tier === 'ROOT')
         div.container
             div.row
                 div.col-lg-3.col-md-4.hidden-sm.hidden-xs
-                    h3 Analysis Parameters:
+                    h4 Analysis Parameters:
                         .form-group
                         select#anim
                             option(value='') Agency
@@ -37,7 +36,7 @@ block content
         div.container
             div.row
                 div.col-lg-3.col-md-4.hidden-sm.hidden-xs
-                    h3 From Date:
+                    h4 From Date:
                     form
                         .form-group
                             input.datepicker.form-control
@@ -45,7 +44,7 @@ block content
         div.container
             div.row
                 div.col-lg-3.col-md-4.hidden-sm.hidden-xs
-                    h3 To Date:
+                    h4 To Date:
                     form
                         .form-group
                             input.datepicker.form-control
