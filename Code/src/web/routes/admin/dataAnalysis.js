@@ -34,7 +34,7 @@ module.exports.getDataAnalysis = function (req, res) {
 
 module.exports.downloadCsv=function(req,res){
       boloService.getBolos().then(function(results){
-
+          console.log(req.query);//===========================>  {}
           return json2csv({data: results.bolos, fields:all_fields})
       }).then(function(file){
               res.setHeader('Content-Type', 'text/csv');
