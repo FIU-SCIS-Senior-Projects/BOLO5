@@ -67,6 +67,9 @@ var bolo_indexer = function(doc) {
   if (typeof(doc.hairColor) !== 'undefined') {
     index("hairColor", doc.hairColor);
   }
+  if (typeof(doc.tattoos) !== 'undefined') {
+    index("tattoos", doc.tattoos);
+  }
 
   //For Theft - Auto
   if (typeof(doc.vehicleMake) !== 'undefined') {
@@ -85,7 +88,7 @@ var bolo_indexer = function(doc) {
     index("vehicleStyle", doc.vehicleStyle);
   }
   if (typeof(doc.vehicleLicenseState) !== 'undefined') {
-    index("vehicleLicensePlate", doc.vehicleLicenseState);
+    index("vehicleLicenseState", doc.vehicleLicenseState);
   }
   if (typeof(doc.vehicleLicensePlate) !== 'undefined') {
     index("vehicleLicensePlate", doc.vehicleLicensePlate);

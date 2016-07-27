@@ -24,7 +24,7 @@ block content
     if (tier === 'ROOT')
         div.container
             div.row
-                div.col-lg-3.col-md-4.hidden-sm.hidden-xs
+                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
                     h4 Analysis Parameters:
                         .form-group
                         select#anim
@@ -35,7 +35,7 @@ block content
                             <br>
         div.container
             div.row
-                div.col-lg-3.col-md-4.hidden-sm.hidden-xs
+                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
                     h4 From Date:
                     form
                         .form-group
@@ -43,7 +43,7 @@ block content
 
         div.container
             div.row
-                div.col-lg-3.col-md-4.hidden-sm.hidden-xs
+                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
                     h4 To Date:
                     form
                         .form-group
@@ -51,9 +51,10 @@ block content
         <br>
         <br>
         div
-            div.col-lg-3.col-md-4.hidden-sm.hidden-xs
+            div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
                 .form-group
-                    button.btn.btn-default( name = "option" type = "submit" value = "submit") SUBMIT
+                    a.btn.btn-default.pull-left( name = "option" type = "submit" value = "submit") SUBMIT
+                    a.btn.btn-default.pull-right( href="/admin/dataAnalysis/bolotocsv",target="_blank" ) All Data
         div.hidden-lg.hidden-md
             br
             p I apologize for the inconvenience, you have been temporary restricted

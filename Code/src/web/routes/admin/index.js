@@ -78,6 +78,7 @@ router.get(  pre                            , systemSetting.getSystemSetting );
 pre='/admin/dataAnalysis';
 router.use( SETNAV( 'admin-dataAnalysis' ) );
 router.get(  pre                            , dataAnalysis.getDataAnalysis );
+router.get(  pre + '/bolotoCsv'             , dataAnalysis.downloadCsv  )
 
 
 router.use( SETNAV( 'admin-index' ) );
