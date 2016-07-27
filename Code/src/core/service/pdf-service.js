@@ -20,7 +20,7 @@ function PDFService() {
  * @Author John Burke
  */
 PDFService.prototype.genUserGuide = function(user, doc) {
-    var INTRO = "   logging in you will be brought to the home page. This is where you will be "
+    var INTRO = "   Logging in you will be brought to the home page. This is where you will be "
         + "able to view your BOLOs. Each BOLO has several buttons on it that will be "
         + "explained later. From the home page, you will see several other links across "
         + "the top (mobile will be in a dropdown menu accessible from the top right corner) "
@@ -28,6 +28,29 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "down menu to Create BOLO, Archive, Agency Directory, Search, Admin for the "
         + "Administration and root users, a dropdown for user setting and a dropdown to "
         + "Filter by Agency";
+
+    var USER_SETTINGS = "  1) Click on your 'Name'\n"
+        + "  2) Click on 'Settings'\n"
+        + "  3) Click on 'Update Your Account Details'\n"
+        + "  4) Update neccessary fields\n"
+        + "  *** If you demote yourself you cannot get back unless someone else promotes you.\n"
+        + "  5) Click 'Submit'\n";
+
+    var PASSWORD = "  1) Click on your 'Name'\n"
+        + "  2) Click on 'Settings'\n"
+        + "  3) Click 'Change Password'\n"
+        + "  4) Enter new password\n"
+        + "  5) enter confirmation password\n"
+        + "  6 Click 'Submit'\n";
+
+    var NOTIFICATIONS = "  1) Click on your 'Name'\n"
+        + "  2) Click on 'Settings'\n"
+        + "  3) Click on 'Notifications'\n"
+        + "  4) Click on 'Subscribe to other Agencies'\n"
+        + "  5) Select agencies to recieve notifications\n"
+        + "  *** You may unsubribe from an angency ***\n"
+        + "  6) Select agencies to remove from list of Agencies\n"
+        + "  7) Click 'Unscribe Selected'\n";
 
     var USER_MANAGENT = "  1) Click on 'Admin'\n"
         + "  2) Click on 'User Management'\n"
@@ -63,7 +86,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
          + "  5) Select an End Date\n"
          + "  6) Click 'Submit'\n"
 
-    var CREATE_BOLO = "  1) Click 'Create BOLO' and select the type of BOLO you would like to create.\n"
+    var CREATE_BOLO = "  1) Click 'Create' and select the type of BOLO you would like to create.\n"
         + "  2) Fill in required fields.\n"
         + "  3) Select available images.\n"
         + "  4) Add a video link (if available)\n"
@@ -83,7 +106,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  2) Review details of a selected BOLO\n"
         + "  3) Click 'Back' to go back to the BOLOs\n"
 
-    var FILTER_BY = "  1) Click 'Filter By'\n"
+    var FILTER_BY_ME = "  1) Click 'Filter By'\n"
         + "  2) Select filter:\n"
         + "     * My BOLO\n"
         + "     * My Agency\n"
@@ -108,13 +131,13 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  3) Delete'\n";
 
     var AGENCY_VIEW = "  1) Click on agency to view a list of partnering agencies.\n"
-        + "  2) Select an agency and view contact information or verify the "
-        + "agency's 'Logo' and 'Shield.'\n";
+        + "  2) Select an agency and view contact information or verify the"
+        + " agency's 'Logo' and 'Shield.'\n";
 
      var SEARCH = "  1) Select any field(s) you wish to search.\n"
         + "  2) Enter information value of field(s).\n"
-        + "  3) Wild card search is for something you can not search with an "
-        + "optional search.\n"
+        + "  3) Wild card search is for something you can not search with an"
+        + " optional search.\n"
         + "  4) Click 'Search'\n";
 
     var FILTER = "  1) Click on 'Details'\n"
@@ -130,10 +153,19 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         .moveDown(.5);
     doc.fillColor('black');
     doc.font('Times-Roman');
-    doc.fontSize(15);
-    doc.text("Introduction",{align: 'center'}).moveDown(0.5);
-    doc.fontSize(12);
-    doc.text(INTRO,{align: 'left'}).moveDown(2);
+
+    // Introduction
+    doc.fontSize(15).text("Introduction",{align: 'center'}).moveDown(0.5);
+    doc.fontSize(12).text(INTRO,{align: 'left'}).moveDown(2);
+
+    // Password Reset
+    doc.fontSize(15).text("Password Reset").moveDown(0.25);
+    doc.fontSize(12).text(PASSWORD, {align: 'left'}).moveDown();
+
+    // Notifications
+    doc.fontSize(15).text("Notifications").moveDown(0.25);
+    doc.fontSize(12).text(NOTIFICATIONS, {align: 'left'}).moveDown();
+
 
     // print for root and admin
     if ( user.tier === 4  || user.tier === 3 ){
@@ -177,9 +209,9 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     doc.fontSize(15).text("Details").moveDown(0.25);
     doc.fontSize(12).text(DETAILS, {align: 'left'}).moveDown();
 
-    // Filter by
-    doc.fontSize(15).text("Filter").moveDown(0.25);
-    doc.fontSize(12).text(FILTER_BY, {align: 'left'}).moveDown();
+    // Filter by Me
+    doc.fontSize(15).text("Filter By").moveDown(0.25);
+    doc.fontSize(12).text(FILTER_BY_ME, {align: 'left'}).moveDown();
 
     // Filter by Agency
     doc.fontSize(15).text("Select Agency").moveDown(0.25);
@@ -200,7 +232,6 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         doc.fontSize(15).text("Data Subscriber", {align: 'left'}).moveDown(0.25);
         doc.fontSize(12).text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
     }
-
 
     // Agency
     doc.fontSize(15).text("Agency").moveDown(0.25);
@@ -441,9 +472,19 @@ PDFService.prototype.genDetailsPdf = function(doc, data) {
     }
     else {  //PDF for general bolo
 
-        doc.font('Times-Roman')
-            .text("Name: " + data.bolo.firstName + " " + data.bolo.lastName, 300)
-            .moveDown();
+        // Display First name
+        if(data.bolo.firstName !== "" ){
+            doc.font('Times-Roman')
+                .text("First Name: " + data.bolo.firstName , 300)
+                .moveDown();
+        }
+
+        // Display last name
+        if(data.bolo.lastName !== "" ){
+            doc.font('Times-Roman')
+                .text("Last Name: " +  data.bolo.lastName, 300)
+                .moveDown();
+        }
 
         // Display race only if there is a value in it
         if(data.bolo['race'] !== ""){
@@ -819,9 +860,19 @@ PDFService.prototype.genPreviewPDF = function(doc, data) {
     }
     else {  //PDF for general bolo
 
-        doc.font('Times-Roman')
-            .text("Name: " + data.bolo.firstName + " " + data.bolo.lastName, 300)
-            .moveDown();
+        // Display First name
+        if(data.bolo.firstName !== "" ){
+            doc.font('Times-Roman')
+                .text("First Name: " + data.bolo.firstName , 300)
+                .moveDown();
+        }
+
+        // Display last name
+        if(data.bolo.lastName !== "" ){
+            doc.font('Times-Roman')
+                .text("Last Name: " +  data.bolo.lastName, 300)
+                .moveDown();
+        }
 
         // Display Race only if there is a value in it
         if(data.bolo['race'] !== ""){

@@ -6,14 +6,10 @@ include ./includes/mixins.jade
 block jumbo
     .jumbotron
         .container
-            .row
-              div.col-xs-12
-                 p User's Guide
-            .row
-              .col-xs-12.col-md-6
-                .pull-left
-                    a.btn.btn-default(href= '/userGuide/pdf' target="_blank") Generate PDF
-                    |&nbsp;
+            img#featured.img.center-block(src="/img/chiefsofpolice.png" alt="", style="height:200px;")
+            p(align='center') User's Guide
+            a.btn.btn-default(href='/userGuide/pdf' target="_blank") Generate PDF
+                |&nbsp;
             br
 
 block content

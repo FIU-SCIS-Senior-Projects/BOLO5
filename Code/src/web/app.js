@@ -140,6 +140,7 @@ app.use( function ( req, res, next ) {
 //    }
 //  });
 //
+
 app.get( '/', isAuthenticated, function ( req, res, next ) {
     res.redirect( '/bolo' );
 });

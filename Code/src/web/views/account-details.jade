@@ -36,8 +36,7 @@ block account-content
             td #{agency.name}
 
     if ( ! /root/i.test( user.roleName() ) )
-        .bs-callout.bs-callout-info
-            p Please contact your Agency administrator for changes to your
-                | account details.
+        p.strong(style='color:red;') Please contact your Agency administrator to
+            | make changes to your account details.
     else
-        a( href='/admin/users/' + user.id +'/edit-details' ) Update Your Account Details
+        a( href='/admin/users/' + user.id +'/edit-details' ) Update Details

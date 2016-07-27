@@ -8,7 +8,7 @@ block jumbo
         .container
             .row
               div.col-xs-12
-                 h2 System Settings
+                 h3 System Settings
             br
 
 block content
@@ -16,19 +16,31 @@ block content
         <br> <br> <br>
         div.container
             div.row
-                div.col-lg-4.col-md-6.col-sm-6.col-xs-12
+                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.col-md-offset-3.col-md-6.col-sm-offset-3.col-sm-6.hidden-xs
                     label Brute Force Login (3 - 10) Attempts&nbsp;&nbsp;
                     input(type='number', name='brute', min='3', max='10')
                     <br>
                     <br>
             div.row
-                div.col-lg-4.col-md-6.col-sm-6.col-xs-12
+                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.col-md-offset-3.col-md-6.col-sm-offset-3.col-sm-6.hidden-xs
                     label System Timeout (10 - 240) Minutes&nbsp;&nbsp;
                     input(type='number', name='minutes', min='10', max='240')
                     <br>
                     <br>
             div.row
-                div.col-lg-4.col-md-6.col-sm-6.col-xs-12
+                div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-offset-2.col-xs-8
+                    label Brute Force Login Attempts&nbsp;&nbsp;
+                    input(type='number', name='brute', min='3', max='10')
+                    <br>
+                    <br>
+            div.row
+                div.hidden-xl.hidden-lg.hidden-md.hidden-sm.col-xs-offset-2.col-xs-8
+                    label System Timeout Minutes&nbsp;&nbsp;&nbsp;
+                    input(type='number', name='minutes', min='10', max='240')
+                    <br>
+                    <br>
+            div.row
+                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.col-md-offset-3.col-md-6.col-sm-offset-3.col-sm-6.col-xs-offset-2.col-xs-8
                     input(type='submit', data-inline='true', value='Submit')
 
     else
