@@ -52,9 +52,12 @@ block content
         <br>
         div
             div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
+                +check_box("matchFields","All Fields",true)
+                //.form-group
+                //    button.btn.btn-primary( type="submit" value="save") Search
                 .form-group
-                    a.btn.btn-default.pull-left( name = "option" type = "submit" value = "submit") SUBMIT
-                    a.btn.btn-default.pull-right( href="/admin/dataAnalysis/bolotocsv",target="_blank" ) All Data
+                    a.btn.btn-default.pull-left( href="/admin/dataAnalysis/bolotocsv" type = "submit" value = "submit") SUBMIT
+                    a.btn.btn-default.pull-right( href="/admin/dataAnalysis/bolotocsv", target="_blank") All Data
         div.hidden-lg.hidden-md
             br
             p I apologize for the inconvenience, you have been temporary restricted
