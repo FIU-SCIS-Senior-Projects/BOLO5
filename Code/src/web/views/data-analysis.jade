@@ -24,7 +24,7 @@ block admin-content
             select.selectpicker(data-actions-box="true" id="agency-select" title="Select an Agency" mobile = "true" data-width="200px" multiple data-selected-text-format="count>1")
                   for agency in agencies
                       option(value=agency.name ) #{agency.name}
-                      
+
             br
             br
             h4 Start Date:
@@ -36,7 +36,7 @@ block admin-content
                 .form-group
                     input.datepicker.form-control
             <br>
-            +check_box("matchFields","All Data",true)
+            //+check_box("matchFields","All Data",true)
             .form-group
                 a.btn.btn-default.pull-left( id="download-button" type = "submit" value = "submit") Download
                 a.btn.btn-default.pull-right( href="/admin/dataAnalysis/bolotocsv", target="_blank") All Data
@@ -51,8 +51,8 @@ block admin-content
         $('#download-button').click(function(e){
           var agencies = [];
           agencies = $('#agency-select').val();
-        
-          
+
+
           if(agencies.length > 0){
                console.log("TRUE")
                var $this = $(this);
@@ -62,9 +62,9 @@ block admin-content
                 data: {agencies},
                 success: function(pathToFile){
                   window.location = pathToFile;
-              
+
                 }
               })
             }
-      
+
           });
