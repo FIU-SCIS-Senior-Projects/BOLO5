@@ -1,66 +1,70 @@
-extends ./layout.jade
-include ./includes/mixins.jade
+extends ./admin-layout.jade
 
 // Author John Burke
-block jumbo
-    .jumbotron
-        .container
-            h3 Down Load data for Analysis
+block jumbo-desc
+    p Admin Portal: Data Analysis
 
-block content
-    script.
-        $(document).ready(function() {
-            // Default Icon Trigger
-            $('.datepicker').datepicker({
-                showOn: "button",
-                buttonImage: "http://jqueryui.com/resources/demos/images/calendar.gif",
-                buttonText: "Select date",
-                changeMonth: true,
-                changeYear: true,
-                minDate: new Date(2016, 7-1, 15),
-                maxDate: 0
-            });
-        });
+block admin-content
     if (tier === 'ROOT')
-        div.container
-            div.row
-                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                    h4 Analysis Parameters:
-                        .form-group
-                        select#anim
-                            option(value='') Agency
-                            option(value='#') Auto Theft
-                            option(value='#') Boat Theft
-                            option(value='#') All
-                            <br>
-        div.container
-            div.row
-                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                    h4 From Date:
-                    form
-                        .form-group
-                            input.datepicker.form-control
+        script.
+            $(document).ready(function() {
+                // Default Icon Trigger
+                $('.datepicker').datepicker({
+                    showOn: "button",
+                    buttonImage: "http://jqueryui.com/resources/demos/images/calendar.gif",
+                    buttonText: "Select date",
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: new Date(2016, 7-1, 15),
+                    maxDate: 0
+                });
+            });
+        .col-xl-offset-2.col-xl-6.col-lg-offset-2.col-lg-6.hidden-md.hidden-sm.hidden-xs
+            p.lead Retrieve data for analysis
+            select.selectpicker(data-actions-box="true" id="agency-select" title="Select an Agency" mobile = "true" data-width="200px" multiple data-selected-text-format="count>1")
+                  for agency in agencies
+                      option(value=agency.name ) #{agency.name}
 
-        div.container
-            div.row
-                div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                    h4 To Date:
-                    form
-                        .form-group
-                            input.datepicker.form-control
-        <br>
-        <br>
-        div
-            div.col-xl-offset-4.col-xl-4.col-lg-offset-4.col-lg-4.hidden-md.hidden-sm.hidden-xs
-                +check_box("matchFields","All Fields",true)
-                //.form-group
-                //    button.btn.btn-primary( type="submit" value="save") Search
-                .form-group
-                    a.btn.btn-default.pull-left( href="/admin/dataAnalysis/bolotocsv" type = "submit" value = "submit") SUBMIT
-                    a.btn.btn-default.pull-right( href="/admin/dataAnalysis/bolotocsv", target="_blank") All Data
-        div.hidden-lg.hidden-md
             br
-            p I apologize for the inconvenience, you have been temporary restricted
+            br
+            h4 Start Date:
+            form
+                .form-group
+                    input.datepicker.form-control
+            h4 End Date:
+            form
+                .form-group
+                    input.datepicker.form-control
+            <br>
+            //+check_box("matchFields","All Data",true)
+            .form-group
+                a.btn.btn-default.pull-left( id="download-button" type = "submit" value = "submit") Download
+                a.btn.btn-default.pull-right( href="/admin/dataAnalysis/bolotocsv", target="_blank") All Data
+        .hidden-lg.hidden-xl
+            br
+            h3.strong(style='color:red;') I apologize for the inconvenience, you are temporary restricted
                 | from this action because you might be on a mobile device
     else
-        h1 Well this is embarrassing! Who are you?
+        h1.strong(style='color:red;') Well this is embarrassing! Who are you?
+
+    script.
+        $('#download-button').click(function(e){
+          var agencies = [];
+          agencies = $('#agency-select').val();
+
+
+          if(agencies.length > 0){
+               console.log("TRUE")
+               var $this = $(this);
+              $.ajax({
+                url: '/admin/dataAnalysis/bolotoCsv',
+                type: 'GET',
+                data: {agencies},
+                success: function(pathToFile){
+                  window.location = pathToFile;
+
+                }
+              })
+            }
+
+          });
