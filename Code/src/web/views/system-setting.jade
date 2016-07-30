@@ -8,9 +8,11 @@ block jumbo-desc
             br
 
 block admin-content
+    - var route = '/admin/systemSetting';
     if ( tier === 'ROOT' )
         .col-xl-offset-2.col-xl-6.col-lg-offset-2.col-lg-6.col-md-offset-2.col-md-6
             p.lead Set the system settings
+            form( action=( route + form_action ) enctype="multipart/form-data" method="post" )
             .form-group
                 label Brute Force Login (3 - 10) Attempts&nbsp;&nbsp;
                 input(type='number', name='brute', min='3', max='10')

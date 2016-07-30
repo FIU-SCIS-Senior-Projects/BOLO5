@@ -73,6 +73,7 @@ router.post( pre + '/edit/:id'              , dataSubscriber.postEditForm );
 pre='/admin/systemSetting';
 router.use( SETNAV( 'admin-systemSetting' ) );
 router.get(  pre                            , systemSetting.getSystemSetting );
+router.post(  pre                            , systemSetting.postSystemSetting );
 
 // @Author John Burke
 pre='/admin/dataAnalysis';

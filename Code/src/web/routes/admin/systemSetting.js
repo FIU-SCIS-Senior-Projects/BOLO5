@@ -17,3 +17,9 @@ var config              = require('../../config');
 module.exports.getSystemSetting = function (req, res) {
     res.render('system-setting');//pending
 };
+
+
+module.exports.postSystemSetting = function (req, res) {
+    var loginAttempts=req.query['brute'];
+    var timeoutMinutes=req.query['minutes'];
+};

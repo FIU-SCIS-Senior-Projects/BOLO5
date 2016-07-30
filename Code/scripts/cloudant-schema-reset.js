@@ -280,6 +280,23 @@ var dataSubscriber_indexer = function (doc) {
     }
 };
 
+var systemSettings_indexer = function (doc) {
+
+    index("default", doc._id);
+    if (typeof(doc.name) !== 'undefined') {
+        index("name", doc.name );
+    }
+    if (typeof(doc.loginAttempts) !== 'undefined') {
+        index("loginAttempts", doc.loginAttempts );
+    }
+    if (typeof(doc.sessionMinutes) !== 'undefined') {
+        index("sessionMinutes", doc.sessionMinutes );
+    }
+    if (typeof(doc.Type) !== 'undefined') {
+        index("Type", doc.Type);
+    }
+};
+
 var BOLO_DB = 'bolo';
 
 var BOLO_DESIGN_DOC = {
@@ -410,6 +427,30 @@ var DATASUBSCRIBER_DESIGN_DOC = {
     }
 };
 
+var SYSTEMSETTINGS_DESIGN_DOC = {
+    "views": {
+      "all": {
+          "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc._id, 1 ); }"
+      },
+        "by_systemSettings": {
+            "map": "function ( doc ) { if ( 'systemSettings' === doc.Type) emit( doc.name, null ); }"
+        },
+        "all_active": {
+            "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc.name, null ); }"
+        },
+        "revs": {
+            "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( null, doc._rev ); }"
+        }
+    },
+
+    indexes: {
+        systemSettings: {
+            analyzer: {name: 'standard'},
+            index: systemSettings_indexer
+        }
+    }
+};
+
 
 
 function updateDesign(dbname, designname, doc){
@@ -460,14 +501,25 @@ function createIndex(dbname) {
         });
   });
 }
+//used when adding new Design documents to the DB
+function createDesign(dbname, designname, doc) {
+  return new Promise(function(resolve, reject) {
+    var db = cloudant.db.use(dbname);
+    db.insert(doc, '_design/' + designname, function(err, body) {
+      if (err) reject(err);
+      resolve(body);
+    });
+  });
+}
 
 function updateDB() {
       var ad = updateDesign(BOLO_DB, 'agency', AGENCY_DESIGN_DOC);
       var bd = updateDesign(BOLO_DB, 'bolo', BOLO_DESIGN_DOC);
       var ud = updateDesign(BOLO_DB, 'users', USERS_DESIGN_DOC);
-	     var dd=updateDesign(BOLO_DB, 'dataSubscriber', DATASUBSCRIBER_DESIGN_DOC)
+	    var dd=updateDesign(BOLO_DB, 'dataSubscriber', DATASUBSCRIBER_DESIGN_DOC)
+      var ss=updateDesign(BOLO_DB, 'systemSettings', SYSTEMSETTINGS_DESIGN_DOC)
 
-      return Promise.all([ad])
+      return Promise.all([ss])
     .then(function(responses) {
       console.log('> Design documents created. ');
 
