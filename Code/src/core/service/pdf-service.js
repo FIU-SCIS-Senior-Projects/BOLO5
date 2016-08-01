@@ -20,50 +20,58 @@ function PDFService() {
  * @Author John Burke
  */
 PDFService.prototype.genUserGuide = function(user, doc) {
-    var INTRO = "   Logging in you will be brought to the home page. This is where you will be "
-        + "able to view your BOLOs. Each BOLO has several buttons on it that will be "
-        + "explained later. From the home page, you will see several other links across "
-        + "the top (mobile will be in a dropdown menu accessible from the top right corner) "
-        + "of your screen). These links will also be explained shortly and include a drop "
-        + "down menu to Create BOLO, Archive, Agency Directory, Search, Admin for the "
-        + "Administration and root users, a dropdown for user setting and a dropdown to "
-        + "Filter by Agency";
+    var INTRO = "   Welcome to the BOLO Flyer Crator, a Situational Awareness "
+        + "Multi-Jurisdictional Resource. Every user of BOLO has access to "
+        + "different features and therefore a different user's guide will be "
+        + "custom tailored specific to each user. Upon logging into BOLO you "
+        + "will be brought to the home page. This is where you view your BOLOs "
+        + "along with other BOLOs from officers within your agency. In addition "
+        + "to viewing BOLOs from your agency, you may also opt to view BOLOs "
+        + "from other agencies too. The first instruction will be the most "
+        + "important tailored for you. If you are root or admin, it will be user "
+        + "and agency management. for other user it will be how to create a bolo. "
+        + "A BOLO can have up to several buttons on it that will be explained. "
+        + "From the home page you will also see several other links accessible "
+        + "across the top. For mobile devices will have a dropdown menu accessible "
+        + "from the top right corner of your screen. All these links will be "
+        + "explained shortly in easy to follow step by step instructions. If some "
+        + "reason you notice something wrong with your user details (i.e. your "
+        + "have a name changeor something of that nature), you will need to "
+        + "contact your agency administration immediately.\n";
 
-    var USER_SETTINGS = "  1) Click on your 'Name'\n"
-        + "  2) Click on 'Settings'\n"
-        + "  3) Click on 'Update Your Account Details'\n"
-        + "  4) Update neccessary fields\n"
-        + "  *** If you demote yourself you cannot get back unless someone else promotes you.\n"
-        + "  5) Click 'Submit'\n";
-
-    var PASSWORD = "  1) Click on your 'Name'\n"
-        + "  2) Click on 'Settings'\n"
-        + "  3) Click 'Change Password'\n"
-        + "  4) Enter new password\n"
-        + "  5) enter confirmation password\n"
-        + "  6 Click 'Submit'\n";
-
-    var NOTIFICATIONS = "  1) Click on your 'Name'\n"
-        + "  2) Click on 'Settings'\n"
-        + "  3) Click on 'Notifications'\n"
-        + "  4) Click on 'Subscribe to other Agencies'\n"
-        + "  5) Select agencies to recieve notifications\n"
-        + "  *** You may unsubribe from an angency ***\n"
-        + "  6) Select agencies to remove from list of Agencies\n"
-        + "  7) Click 'Unscribe Selected'\n";
-
-    var USER_MANAGENT = "  1) Click on 'Admin'\n"
-        + "  2) Click on 'User Management'\n"
-        + "  3) Click on 'Add New User'\n"
-        + "  4) Fill in the empty fields\n"
-        + "  5) Click 'Submit'\n";
-
-    var AGENCY_MANAGMENT = "  1) Click on 'Admin'\n"
+    var AGENCY_MANAGMENT_ROOT = "  1) Click on 'Admin'\n"
         + "  2) Click on 'Agency Management'\n"
+        + "  * * * Create a new Agency\n"
         + "  3) Click on 'Add new agency'\n"
-        + "  4) Fill in empty fields\n"
-        + "  5) Select new agency logo and shield images\n"
-        + "  6) Click 'Submit'\n";
+        + "  4) Enter or Modify any fields required\n"
+        + "  5) Enter 'Logo' image\n"
+        + "  6) Enter 'Shield' image\n"
+        + "  7) Enter 'Water  Mark' image\n"
+        + "  8) Click 'Submit'\n"
+        + "  * * * Up date an Angency\n"
+        + "  3) Click on 'Blue Astric' to the left on the agency\n"
+        + "  4) Enter or Modify any fields required\n"
+        + "  5) Enter or update 'Logo' image\n"
+        + "  6) Enter or update 'Shield' image\n"
+        + "  7) Enter or update 'Water  Mark' image\n"
+        + "  8) Click 'Submit'\n";
+
+    var AGENCY_MANAGMENT_ADMIN = "  1) Click on 'Admin'\n"
+        + "  2) Click on 'Agency Management'\n"
+        + "  3) Click on 'Blue Astric' to the left on the agency\n"
+        + "  4) Enter or Modify any fields required\n"
+        + "  5) Enter or update 'Logo' image\n"
+        + "  6) Enter or update 'Shield' image\n"
+        + "  7) Enter or update 'Water  Mark' image\n"
+        + "  8) Chose to allow officers to opt out of viewing BOLOs from their agency\n"
+        + "  9) Click 'Submit'\n";
+
+     var DATA_ANALYSIS = "  1) Click on 'Admin'\n"
+         + "  2) Click on 'Data Analysis'\n"
+         + "  3) Select an 'Agency'\n";
+         + "  4) Select a 'Start Date'\n"
+         + "  5) Select an End Date\n"
+         + "  6) Click 'Submit'\n"
 
     var DATA_SUBSCRIBER = "  1) Click on 'Admin'\n"
         + "  2) Click on 'Data Subscriber'\n"
@@ -79,30 +87,64 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "     * A user locked out of the system will be required to reset their password\n"
         + "  5) click 'Submit'\n";
 
-     var DATA_ANALYSIS = "  1) Click on 'Admin'\n"
-         + "  2) Click on 'Data Analysis'\n"
-         + "  3) Select an 'Agency'\n";
-         + "  4) Select a 'Start Date'\n"
-         + "  5) Select an End Date\n"
-         + "  6) Click 'Submit'\n"
+     var USER_MANAGENT_ROOT = "  1) Click on 'Admin'\n"
+         + "  2) Click on 'User Management'\n"
+         + "  * * * Add a new user's profile\n"
+         + "  3) Click on 'Add New User'\n"
+         + "  4) Fill in the empty fields\n"
+         + "  5) Click 'Submit'\n";
+         + "  * * * Update a user's profile '\n"
+         + "  3) Click on blue 'Astric' on the right of the user\n"
+         + "  4) Update required fields\n"
+         + "  5) Click 'Submit'\n";
 
-    var CREATE_BOLO = "  1) Click 'Create' and select the type of BOLO you would like to create.\n"
-        + "  2) Fill in required fields.\n"
-        + "  3) Select available images.\n"
-        + "  4) Add a video link (if available)\n"
-        + "  5) Add a summery.\n"
-        + "  6) Click the 'Preview' Button to make sure you have added everything.\n"
-        + "  7) Click 'Back to Create BOLO' to go back to the BOLO.\n"
-        + "  8) Repeat Steps 2 - 7 until all information is complete.\n"
-        + "  9) Click 'Submit' to submit your BOLO.\n"
-        + "  10) Goto to your registered email and click on the confirmation link.\n";
+    var CREATE_GEN = "  1) Click 'Create' and select Auto, Boat or General BOLO.\n"
+        + "  * * * Select Auto BOLO\n"
+        + "  2) Enter the reported time and date (required)\n"
+        + "  3) Fill in additional fields.\n"
+        + "  4) Upload available images.\n"
+        + "  5) Add a video link (if available)\n"
+        + "  6) FIll in the summery.\n"
+        + "  7) Click the 'Preview' Button to make sure you have added everything.\n"
+        + "  8) Click 'Back to Create BOLO' to go back to the BOLO.\n"
+        + "  9) Repeat Steps 2 - 7 until all information is complete.\n"
+        + "  10) Click 'Submit' to submit your BOLO.\n"
+        + "  11) Goto to your registered email and click on the confirmation link.\n";
+        + "  * * * Select BOAT BOLO\n"
+        + "  2) Enter the reported time and date (required)\n"
+        + "  3) Fill in additional fields.\n"
+        + "  4) Fill in propulsion and trailer details\n"
+        + "  5) Upload available images.\n"
+        + "  6) Add a video link (if available)\n"
+        + "  7) FIll in the summery.\n"
+        + "  8) Click the 'Preview' Button to make sure you have added everything.\n"
+        + "  9) Click 'Back to Create BOLO' to go back to the BOLO.\n"
+        + "  10) Repeat Steps 2 - 7 until all information is complete.\n"
+        + "  11) Click 'Submit' to submit your BOLO.\n"
+        + "  12) Goto to your registered email and click on the confirmation link.\n";
+        + "  * * * Select General BOLO\n"
+        + "  2) Enter the reported time and date (required)\n"
+        + "  3) Select a category (required)\n"
+        + "  4) Fill in additional fields.\n"
+        + "  5) Upload available images.\n"
+        + "  6) Add a video link (if available)\n"
+        + "  7) FIll in the summery.\n"
+        + "  8) Click the 'Preview' Button to make sure you have added everything.\n"
+        + "  9) Click 'Back to Create BOLO' to go back to the BOLO.\n"
+        + "  10) Repeat Steps 2 - 7 until all information is complete.\n"
+        + "  11) Click 'Submit' to submit your BOLO.\n"
+        + "  12) Goto to your registered email and click on the confirmation link.\n";
 
     var EDIT = "  1) Click on 'Edit'\n"
-        + "  2) Select any field you want to edit\n"
-        + "  3) Enter any information required\n"
+        + "  2) Enter the recovered date and time (required)\n"
+        + "  2) Select any field you want to update\n"
+        + "  3) View your updates before posting\n"
         + "  4) Click 'Submit'\n";
+        + "  5) Confirmation email will be sent\n"
+        + "  6) go to our email and confirm the BOLO\n";
 
-    var DETAILS = "  1) Click on 'Details'\n"
+    var DETAILS = "  You can only see this option if you created the BOLO BOLO\n"
+        + "  1) Click on 'Details'\n"
         + "  2) Review details of a selected BOLO\n"
         + "  3) Click 'Back' to go back to the BOLOs\n"
 
@@ -115,7 +157,6 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     var FILTER_BY_AGENCY = "  1) Click 'Select Agency'\n"
         + "  2) Select several agencies\n"
         + "  3) Click 'Submit'\n";
-
 
     var ARCHIVE_ALL = "  You may view archived BOLOs just in case "
         + "you are looking for someone who fits the description of "
@@ -144,44 +185,66 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     + "  2) Review details of a selected BOLO\n"
     + "  3) Click 'Home' to go back to the BOLOs\n";
 
+    // Root is the only one who can adjust their own account details and they can
+    // do that from user settings I never used this variable
+    var USER_SETTINGS = "  1) Click on your 'Username'\n"
+        + "  2) Click on 'Settings' from the dropdown \n"
+        + "  3) Click on 'Update Your Account Details'\n"
+        + "  4) Update neccessary fields\n"
+        + "  *** If you demote yourself you cannot get back unless someone else promotes you.\n"
+        + "  5) Click 'Submit'\n";
+
+    var NOTIFICATIONS = "  1) Click on your 'Username'\n"
+        + "  2) Click on 'Settings' from the dropdown\n"
+        + "  3) Click on 'Notifications'\n"
+        + "  4) Click on 'Subscribe to other Agencies at the bottom left'\n"
+        + "  5) Select agencies to recieve notifications\n"
+        + "  *** You may also unsubribe from an angency ***\n"
+        + "  6) Select agencies to remove from your list of Agencies\n"
+        + "  7) Click 'Unscribe Selected'\n";
+
+    var PASSWORD = "  1) Click on your 'Username'\n"
+        + "  2) Click on 'Settings' from the dropdown\n"
+        + "  3) Click 'Change Password'\n"
+        + "  4) Enter new password\n"
+        + "  5) enter confirmation password\n"
+        + "  6) Click 'Submit'\n";
+
+
     // This is the file path for the live website
     doc.image(path.resolve('src/web/public/img/BOLObanner.jpg'), 10, 10,{scale: 1.0});
 
     // Introduction for tier levels
-    doc.fillColor('red');
-    doc.text("UNCLASSIFIED// FOR OFFICIAL LAW ENFORCEMENT USE ONLY", 100, 200,{align: 'center'})
-        .moveDown(.5);
-    doc.fillColor('black');
     doc.font('Times-Roman');
+    doc.fillColor('red');
+    doc.fontSize(12).text("UNCLASSIFIED// FOR OFFICIAL LAW ENFORCEMENT USE ONLY", 100, 200,{align: 'center'})
+        .moveDown(.5);
+
+    // set
+    doc.fillColor('black');
 
     // Introduction
     doc.fontSize(15).text("Introduction",{align: 'center'}).moveDown(0.5);
     doc.fontSize(12).text(INTRO,{align: 'left'}).moveDown(2);
 
-    // Password Reset
-    doc.fontSize(15).text("Password Reset").moveDown(0.25);
-    doc.fontSize(12).text(PASSWORD, {align: 'left'}).moveDown();
+    // print for admin
+    if ( user.tier === 3){
 
-    // Notifications
-    doc.fontSize(15).text("Notifications").moveDown(0.25);
-    doc.fontSize(12).text(NOTIFICATIONS, {align: 'left'}).moveDown();
-
-
-    // print for root and admin
-    if ( user.tier === 4  || user.tier === 3 ){
-
-        // User management
-        doc.fontSize(15).text("User Management").moveDown(0.25);
-        doc.fontSize(12).text(USER_MANAGENT, {align: 'left'}).moveDown();
+        // agency management
+        doc.fontSize(15).text("Agencgy Management").moveDown(0.25);
+        doc.fontSize(12).text(AGENCY_MANAGMENT_ADMIN, {align: 'left'}).moveDown();
     }
-
 
     // print for root
     if ( user.tier === 4){
 
         // agency management
         doc.fontSize(15).text("Agencgy Management").moveDown(0.25);
-        doc.fontSize(12).text(AGENCY_MANAGMENT, {align: 'left'}).moveDown();
+        doc.fontSize(12).text(AGENCY_MANAGMENT_ROOT, {align: 'left'}).moveDown();
+
+        // Data Analysis
+        doc.fontSize(15).text("Data Analysis").moveDown(0.25);
+        doc.fontSize(12).text(DATA_ANALYSIS, {align: 'left'}).moveDown();
 
         // Data Subscriber
         doc.fontSize(15).text("Data Subscriber").moveDown(0.25);
@@ -190,10 +253,14 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         // system setting
         doc.fontSize(15).text("System Settings").moveDown(0.25);
         doc.fontSize(12).text(SYSTEM_SETTING, {align: 'left'}).moveDown();
+    }
 
-        // Data Analysis
-        doc.fontSize(15).text("Data Analysis").moveDown(0.25);
-        doc.fontSize(12).text(DATA_ANALYSIS, {align: 'left'}).moveDown();
+    // print for root and admin
+    if ( user.tier === 4  || user.tier === 3 ){
+
+        // User management
+        doc.fontSize(15).text("User Management").moveDown(0.25);
+        doc.fontSize(12).text(USER_MANAGENT, {align: 'left'}).moveDown();
     }
 
     // print for ALL user
@@ -244,6 +311,15 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     // Filter by Agency
     doc.fontSize(15).text("FIlter by Agency").moveDown(0.25);
     doc.fontSize(12).text(FILTER, {align: 'left'}).moveDown();
+
+    // Notifications
+    doc.fontSize(15).text("Notifications").moveDown(0.25);
+    doc.fontSize(12).text(NOTIFICATIONS, {align: 'left'}).moveDown();
+
+    // Password Reset
+    doc.fontSize(15).text("Password Reset").moveDown(0.25);
+    doc.fontSize(12).text(PASSWORD, {align: 'left'}).moveDown();
+
 
     return doc;
 }

@@ -79,7 +79,7 @@ block admin-content
                         - var logo_url = route + "/asset/" + agency.id + "/logo";
                         a.details-img( href=logo_url )
                             img( src=logo_url alt="Logo Image" )
-
+                br
         .form-group
             label.control-label( for="image_upload" ) Upload New Shield Image
 
@@ -92,7 +92,7 @@ block admin-content
                         - var shield_url = route + "/asset/" + agency.id + "/shield";
                         a( href=shield_url )
                             img( src=shield_url alt="Shield Image" )
-
+                br
         .form-group
             label.control-label( for="image_upload" ) Upload New Watermark Image
 
@@ -106,9 +106,9 @@ block admin-content
                         a( href=watermark_url )
                             img( src=watermark_url alt="Watermark Image" )
         if(agency.preventUnsubscription===true)
-          +check_boxChecked("preventUnsubscription","Prevent Agency's users from unsubscribing",true)
+          +check_boxChecked("preventUnsubscription","Prevent Officers from unsubscribing",true)
         else
-          +check_box("preventUnsubscription","Prevent Agency's users from unsubscribing",true)
+          +check_box("preventUnsubscription","Prevent Officers from unsubscribing",true)
 
         .form-group
             button.btn.btn-primary( type="submit" value="save" ) Submit
