@@ -87,7 +87,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "     * A user locked out of the system will be required to reset their password\n"
         + "  5) click 'Submit'\n";
 
-     var USER_MANAGENT_ROOT = "  1) Click on 'Admin'\n"
+     var USER_MANAGENT = "  1) Click on 'Admin'\n"
          + "  2) Click on 'User Management'\n"
          + "  * * * Add a new user's profile\n"
          + "  3) Click on 'Add New User'\n"
@@ -98,7 +98,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
          + "  4) Update required fields\n"
          + "  5) Click 'Submit'\n";
 
-    var CREATE_GEN = "  1) Click 'Create' and select Auto, Boat or General BOLO.\n"
+    var CREATE_BOLO = "  1) Click 'Create' and select Auto, Boat or General BOLO.\n"
         + "  * * * Select Auto BOLO\n"
         + "  2) Enter the reported time and date (required)\n"
         + "  3) Fill in additional fields.\n"
@@ -135,28 +135,35 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  11) Click 'Submit' to submit your BOLO.\n"
         + "  12) Goto to your registered email and click on the confirmation link.\n";
 
-    var EDIT = "  1) Click on 'Edit'\n"
-        + "  2) Enter the recovered date and time (required)\n"
-        + "  2) Select any field you want to update\n"
-        + "  3) View your updates before posting\n"
-        + "  4) Click 'Submit'\n";
-        + "  5) Confirmation email will be sent\n"
-        + "  6) go to our email and confirm the BOLO\n";
+    var EDIT =  "  * You can only see this option if you created the BOLO\n"
+        + "  1) Click on 'Edit'\n"
+        + "  2) Select a 'Status'\n"
+        + "  3) Enter the recovered date and time (required)\n"
+        + "  * If you select cancelled you can skip to step (6)\n"
+        + "  4) Select and fill any field you want to update\n"
+        + "  5) View your updates before posting\n"
+        + "  6) Click 'Submit'\n";
+        + "  7) Confirmation email will be sent to your email\n"
+        + "  8) Go to our email and confirm the BOLO\n";
 
-    var DETAILS = "  You can only see this option if you created the BOLO BOLO\n"
-        + "  1) Click on 'Details'\n"
+    var DETAILS = "  1) Click on 'Details'\n"
         + "  2) Review details of a selected BOLO\n"
-        + "  3) Click 'Back' to go back to the BOLOs\n"
+        + "  3) Select 'Generate PDF' \n"
+        + "  4) Select 'Deatils'\n"
+        + "  * details shows who has edit this BOLO in the past\n"
+        + "  5) Click 'Back' to go back to the BOLOs\n"
 
     var FILTER_BY_ME = "  1) Click 'Filter By'\n"
         + "  2) Select filter:\n"
         + "     * My BOLO\n"
         + "     * My Agency\n"
-        + "     * All BOLOs\n";
+        + "     * All BOLOs\n"
+        + "  3) Results BOLOs will display";
 
-    var FILTER_BY_AGENCY = "  1) Click 'Select Agency'\n"
-        + "  2) Select several agencies\n"
-        + "  3) Click 'Submit'\n";
+    var FILTER_BY_AGENCY = "  1) Click 'Select Agencies'\n"
+        + "  2) Select one or several agencies\n"
+        + "  3) Click 'Submit'\n"
+        + "  4) Results BOLOs will display";
 
     var ARCHIVE_ALL = "  You may view archived BOLOs just in case "
         + "you are looking for someone who fits the description of "
@@ -184,15 +191,6 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     var FILTER = "  1) Click on 'Details'\n"
     + "  2) Review details of a selected BOLO\n"
     + "  3) Click 'Home' to go back to the BOLOs\n";
-
-    // Root is the only one who can adjust their own account details and they can
-    // do that from user settings I never used this variable
-    var USER_SETTINGS = "  1) Click on your 'Username'\n"
-        + "  2) Click on 'Settings' from the dropdown \n"
-        + "  3) Click on 'Update Your Account Details'\n"
-        + "  4) Update neccessary fields\n"
-        + "  *** If you demote yourself you cannot get back unless someone else promotes you.\n"
-        + "  5) Click 'Submit'\n";
 
     var NOTIFICATIONS = "  1) Click on your 'Username'\n"
         + "  2) Click on 'Settings' from the dropdown\n"
@@ -269,19 +267,19 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     doc.fontSize(12).text(CREATE_BOLO, {align: 'left'}).moveDown();
 
     // Edit
-    doc.fontSize(15).text("Edit").moveDown(0.25);
+    doc.fontSize(15).text("Edit a BOLO").moveDown(0.25);
     doc.fontSize(12).text(EDIT, {align: 'left'}).moveDown();
 
     // Details (link at bottom of BOLO)
-    doc.fontSize(15).text("Details").moveDown(0.25);
+    doc.fontSize(15).text("View Details of a BOLO").moveDown(0.25);
     doc.fontSize(12).text(DETAILS, {align: 'left'}).moveDown();
 
     // Filter by Me
-    doc.fontSize(15).text("Filter By").moveDown(0.25);
+    doc.fontSize(15).text("Filter By Me").moveDown(0.25);
     doc.fontSize(12).text(FILTER_BY_ME, {align: 'left'}).moveDown();
 
     // Filter by Agency
-    doc.fontSize(15).text("Select Agency").moveDown(0.25);
+    doc.fontSize(15).text("Filter by Agency").moveDown(0.25);
     doc.fontSize(12).text(FILTER_BY_AGENCY, {align: 'left'}).moveDown();
 
     // Archive (link at the top)
@@ -294,10 +292,6 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         // Archive (link at bottom of BOLO)
         doc.fontSize(15).text("Archive (Admin)").moveDown(0.25);
         doc.fontSize(12).text(ARCHIVE_ADMIN, {align: 'left'}).moveDown();
-
-        // Data Subscriber
-        doc.fontSize(15).text("Data Subscriber", {align: 'left'}).moveDown(0.25);
-        doc.fontSize(12).text(DATA_SUBSCRIBER, {align: 'left'}).moveDown();
     }
 
     // Agency
