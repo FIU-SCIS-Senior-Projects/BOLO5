@@ -47,7 +47,7 @@ function systemSettings(data) {
         'name'          : '',
         'loginAttempts'       : '',
         'sessionMinutes'       : '',
-        'dataSubscriber_id'     : ''
+        'systemSettings_id'     : ''
     };
 
     this.data = _.extend({}, dataSubscriberTemplate, data);

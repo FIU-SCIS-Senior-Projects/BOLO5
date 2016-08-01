@@ -28,6 +28,10 @@ config.UserRepository   = require( path.join( core, 'adapters/persistence/clouda
 config.dataSubscriberService    = require( path.join( core, 'service/dataSubscriber-service') );
 config.dataSubscriberRepository = require( path.join( core, 'adapters/persistence/cloudant-dataSubscriber-repository' ) );
 
+config.systemSettingsService    = require( path.join( core, 'service/systemSettings-service') );
+config.systemSettingsRepository = require( path.join( core, 'adapters/persistence/Cloudant-systemSettings-repository' ) );
+
+
 config.EmailService     = require( path.join( core, 'service/email-service' ) );
 
 config.PDFService       = require( path.join( core, 'service/pdf-service' ) );
