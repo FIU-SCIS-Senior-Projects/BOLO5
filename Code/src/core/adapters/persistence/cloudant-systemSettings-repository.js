@@ -8,7 +8,7 @@ var uuid = require('node-uuid');
 var path = require('path');
 
 var db = require('../../lib/cloudant-promise').db.use('bolo');
-var systemSettings = require('../../domain/systemSettings.js');
+var SystemSettings = require('../../domain/systemSettings.js');
 
 var DOCTYPE = 'systemSettings';
 
@@ -24,7 +24,7 @@ module.exports = CloudantsystemSettingsRepository;
  * @private
  */
 function systemSettingsFromCloudant(systemSettings_doc) {
-    var systemSettings = new systemSettings(systemSettings_doc);
+    var systemSettings = new SystemSettings(systemSettings_doc);
     systemSettings.data.id = systemSettings.data._id;
     delete systemSettings.data._id;
     delete systemSettings.data._rev;
@@ -89,10 +89,11 @@ CloudantsystemSettingsRepository.prototype.insert = function (systemSettings) {
     var context = this;
     var newdoc = systemSettingsToCloudant(systemSettings);
     newdoc._id = createsystemSettingsID();
+    console.log(JSON.stringify(newdoc));
     return  db.insert(newdoc, newdoc._id)
         .then(function (response) {
             if (!response.ok){console.log(response.ok); throw new Error(response.reason);}
-            return context.getsystemSettings(response.id);
+            return context.getSystemSettingsById(response.id );
         })
         .catch(function (error) {
           console.log(error.reason);
@@ -110,17 +111,19 @@ CloudantsystemSettingsRepository.prototype.insert = function (systemSettings) {
  */
 CloudantsystemSettingsRepository.prototype.update = function ( systemSettings ) {
     var systemSettingsToUpdate = systemSettingsToCloudant( systemSettings );
+    var opts = { 'include_docs': true };
+    var view = 'by_systemSettings';
+    opts.key='systemSettings';
+    var context=this;
 
-
-    var currentsystemSettingsRev = db.get( systemSettings.data.id );
+    var currentsystemSettingsRev = db.view( 'systemSettings',view,opts );
 
     return Promise.all([ currentsystemSettingsRev ])
         .then( function ( data ) {
-            var doc = data[0]
-
-            systemSettingsToUpdate._rev = doc._rev;
-
-
+          return data[0].rows[0].doc._id})
+          .then(function(id){
+              context.delete(id);
+          }).then(function(){
 
             return db.insert( systemSettingsToUpdate );
 
@@ -141,8 +144,12 @@ CloudantsystemSettingsRepository.prototype.update = function ( systemSettings ) 
  */
 
 
-CloudantsystemSettingsRepository.prototype.getsystemSettings = function (id) {
-    return db.get(id)
+CloudantsystemSettingsRepository.prototype.getsystemSettings = function () {
+  var opts = { 'include_docs': true };
+  var view = 'by_systemSettings';
+  opts.key='systemSettings';
+  opts.limit=1;
+    return db.view( 'systemSettings',view,opts )
         .then(function (systemSettings_doc) {
             return systemSettingsFromCloudant(systemSettings_doc);
         })
@@ -151,9 +158,15 @@ CloudantsystemSettingsRepository.prototype.getsystemSettings = function (id) {
         });
 };
 
-
-
-
+CloudantsystemSettingsRepository.prototype.getSystemSettingsById = function (id) {
+    return db.get(id)
+        .then(function (systemSettings_doc) {
+            return systemSettingsFromCloudant(systemSettings_doc);
+        })
+        .catch( function ( error ) {
+            return Promise.reject( new Error("Settings does not exist.") );
+        });
+};
 
 CloudantsystemSettingsRepository.prototype.delete = function ( id ) {
     // **UNDOCUMENTED BEHAVIOR**
@@ -169,7 +182,7 @@ CloudantsystemSettingsRepository.prototype.delete = function ( id ) {
     })
     .catch( function ( error ) {
         return new Error(
-            'Failed to delete System Settings document: ' + error.error + ' / ' + error.reason
+            'Failed to delete System Settings: ' + error.error + ' / ' + error.reason
         );
     });
 };

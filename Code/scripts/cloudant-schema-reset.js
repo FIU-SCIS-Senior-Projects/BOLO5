@@ -429,16 +429,16 @@ var DATASUBSCRIBER_DESIGN_DOC = {
 
 var SYSTEMSETTINGS_DESIGN_DOC = {
     "views": {
+      "by_systemSettings": {
+        "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc.name, null ); }"
+      },
       "all": {
           "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc._id, 1 ); }"
       },
-        "by_systemSettings": {
-            "map": "function ( doc ) { if ( 'systemSettings' === doc.Type) emit( doc.name, null ); }"
-        },
-        "all_active": {
+      "all_active": {
             "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc.name, null ); }"
         },
-        "revs": {
+      "revs": {
             "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( null, doc._rev ); }"
         }
     },
@@ -517,9 +517,9 @@ function updateDB() {
       var bd = updateDesign(BOLO_DB, 'bolo', BOLO_DESIGN_DOC);
       var ud = updateDesign(BOLO_DB, 'users', USERS_DESIGN_DOC);
 	    var dd=updateDesign(BOLO_DB, 'dataSubscriber', DATASUBSCRIBER_DESIGN_DOC)
-      var ss=updateDesign(BOLO_DB, 'systemSettings', SYSTEMSETTINGS_DESIGN_DOC)
+      var ss=createDesign(BOLO_DB, 'systemSettings', SYSTEMSETTINGS_DESIGN_DOC)
 
-      return Promise.all([ss])
+      return Promise.all([ad,bd,ud,dd,ss])
     .then(function(responses) {
       console.log('> Design documents created. ');
 

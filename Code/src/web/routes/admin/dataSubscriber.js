@@ -95,6 +95,7 @@ module.exports.getCreateForm = function (req, res) {
  */
 module.exports.postCreateForm = function ( req, res, next ) {
     parseFormData( req ).then( function ( formDTO ) {
+      console.log('got dto');
         var dataSubscriberDTO = dataSubscriberService.formatDTO( formDTO.fields );
         var formFields = validateFields(formDTO.fields);
 

@@ -266,6 +266,7 @@ router.get('/login',
     next();
   },
   function(req, res) {
+    config.setSystemSettings();
     res.render('login', {
       'loginToken': req.csrfToken(),
       'error': req.flash('error'),

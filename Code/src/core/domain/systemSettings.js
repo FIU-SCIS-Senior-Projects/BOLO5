@@ -10,10 +10,10 @@ module.exports = systemSettings;
 
 
 var schema = {
-    'name': {
-        'required'  : true,
-        'type'      : 'string'
-    },
+  'name': {
+      'required'  : true,
+      'type'      : 'string'
+  },
     'loginAttempts': {
         'required'  : true,
         'type'      : 'string'
@@ -21,12 +21,7 @@ var schema = {
     'sessionMinutes': {
         'required'  : true,
         'type'      : 'boolean'
-    },
-    'settings_id':{
-        'required'  : true,
-        'type'      : 'string'
     }
-
 };
 
 var required = Object.keys( schema ).filter( function ( key ) {
@@ -43,14 +38,12 @@ var required = Object.keys( schema ).filter( function ( key ) {
  */
 function systemSettings(data) {
     var systemSettingsTemplate = {
-        'id'            : '',
-        'name'          : '',
+        'name'                :'systemSettings',
         'loginAttempts'       : '',
-        'sessionMinutes'       : '',
-        'systemSettings_id'     : ''
+        'sessionMinutes'       : ''
     };
 
-    this.data = _.extend({}, dataSubscriberTemplate, data);
+    this.data = _.extend({}, systemSettingsTemplate, data);
     Entity.setDataAccessors( this.data, this );
 }
 
@@ -68,12 +61,10 @@ systemSettings.prototype.same = function ( other ) {
     var namecheck = typeof data.name;
     var loginAttemptscheck = typeof data.loginAttempts;
     var sessionMinutescheck = typeof data.sessionMinutes;
-    var idcheck = typeof data.systemSettings_id;
 
     return schema.name.type === namecheck &&
       schema.loginAttempts.type === loginAttemptscheck &&
-      schema.sessionMinutes.type === sessionMinutescheck &&
-      schema.systemSetting_id.type === idcheck;
+      schema.sessionMinutes.type === sessionMinutescheck;
  };
 
 /**

@@ -11,16 +11,16 @@ block admin-content
 
     if ( tier === 'ROOT' )
         .col-xl-offset-2.col-xl-6.col-lg-offset-2.col-lg-6.col-md-offset-2.col-md-6
+          form( action=('/admin/systemSetting') enctype="multipart/form-data" method="post" )
             p.lead Set the system settings
-            form( action=('admin/systemSetting') enctype="multipart/form-data" method="post" )
             .form-group
                 label Brute Force Login (3 - 10) Attempts&nbsp;&nbsp;
-                input(type='number', name='brute', min='3', max='10')
+                input(type='number', name='loginAttempts', min='3', max='10', value=systemSettings.loginAttempts)
             .form-group
                 label System Timeout (10 - 240) Minutes&nbsp;&nbsp;
-                input(type='number', name='minutes', min='10', max='240')
+                input(type='number', name='sessionMinutes', min='10', max='240', value=systemSettings.sessionMinutes)
             .form-group
-                button.btn.btn-primary( type="submit" value="save" ) Submit
+                button.btn.btn-primary( type="submit" value="submit" ) Submit
 
 
     else
