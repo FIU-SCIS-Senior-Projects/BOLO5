@@ -6,19 +6,6 @@ block jumbo-desc
 
 block admin-content
     if (tier === 'ROOT')
-        script.
-            $(document).ready(function() {
-                // Default Icon Trigger
-                $('.datepicker').datepicker({
-                    showOn: "button",
-                    buttonImage: "http://jqueryui.com/resources/demos/images/calendar.gif",
-                    buttonText: "Select date",
-                    changeMonth: true,
-                    changeYear: true,
-                    minDate: new Date(2016, 7-1, 15),
-                    maxDate: 0
-                });
-            });
         .col-xl-offset-2.col-xl-6.col-lg-offset-2.col-lg-6.hidden-md.hidden-sm.hidden-xs
             p.lead Retrieve data for analysis
             select.selectpicker(data-actions-box="true" id="agency-select" title="Select an Agency" mobile = "true" data-width="200px" multiple data-selected-text-format="count>1")
@@ -27,15 +14,6 @@ block admin-content
 
             br
             br
-            h4 Start Date:
-            form
-                .form-group
-                    input.datepicker.form-control
-            h4 End Date:
-            form
-                .form-group
-                    input.datepicker.form-control
-            <br>
             .form-group
                 a.btn.btn-default.pull-left( id="download-button" type = "submit" value = "submit") Download
         .hidden-lg.hidden-xl

@@ -38,4 +38,6 @@ gulp.task("initdb", function(){
     .pipe(exec.reporter(reportOptions))
     .pipe(exec('node create-subscriber-helper.js', options))
     .pipe(exec.reporter(reportOptions));
+    .pipe(exec('node create-settings.js', options))
+    .pipe(exec.reporter(reportOptions));
 })
