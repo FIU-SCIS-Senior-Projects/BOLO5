@@ -20,64 +20,70 @@ function PDFService() {
  * @Author John Burke
  */
 PDFService.prototype.genUserGuide = function(user, doc) {
-    var INTRO = "   Welcome to the BOLO Flyer Crator, a Situational Awareness "
+    var INTRO = "   Welcome to the BOLO Flyer Creator, a Situational Awareness "
         + "Multi-Jurisdictional Resource. Every user of BOLO has access to "
         + "different features and therefore a different user's guide will be "
         + "custom tailored specific to each user. Upon logging into BOLO you "
         + "will be brought to the home page. This is where you view your BOLOs "
         + "along with other BOLOs from officers within your agency. In addition "
         + "to viewing BOLOs from your agency, you may also opt to view BOLOs "
-        + "from other agencies too. The first instruction will be the most "
-        + "important tailored for you. If you are root or admin, it will be user "
-        + "and agency management. for other user it will be how to create a bolo. "
+        + "from other agencies. The first instruction will be the most "
+        + "important tailored for you. If you are the root or an admin it will be the "
+        + "settings under the Admin link. For other users it will be how to create a bolo. "
         + "A BOLO can have up to several buttons on it that will be explained. "
-        + "From the home page you will also see several other links accessible "
-        + "across the top. For mobile devices will have a dropdown menu accessible "
+        + "From any page you will also see several other links accessible "
+        + "across the top. For mobile devices you will have a dropdown menu accessible "
         + "from the top right corner of your screen. All these links will be "
         + "explained shortly in easy to follow step by step instructions. If some "
         + "reason you notice something wrong with your user details (i.e. your "
-        + "have a name changeor something of that nature), you will need to "
+        + "have a name change or something of that nature), you will need to "
         + "contact your agency administration immediately.\n";
 
     var AGENCY_MANAGMENT_ROOT = "  1) Click on 'Admin'\n"
         + "  2) Click on 'Agency Management'\n"
         + "  * * * Create a new Agency\n"
         + "  3) Click on 'Add new agency'\n"
-        + "  4) Enter or Modify any fields required\n"
-        + "  5) Enter 'Logo' image\n"
-        + "  6) Enter 'Shield' image\n"
-        + "  7) Enter 'Water  Mark' image\n"
+        + "  4) Fill in all fields (required)\n"
+        + "  5) Enter a 'Logo' image(required)\n"
+        + "  6) Enter a 'Shield' image(required)\n"
+        + "  7) Enter a 'Water  Mark' image (optional)\n"
         + "  8) Click 'Submit'\n"
         + "  * * * Up date an Angency\n"
-        + "  3) Click on 'Blue Astric' to the left on the agency\n"
+        + "  3) Click on 'Blue Asterisk' to the right on the agency\n"
         + "  4) Enter or Modify any fields required\n"
-        + "  5) Enter or update 'Logo' image\n"
-        + "  6) Enter or update 'Shield' image\n"
+        + "  5) Enter or Update 'Logo' image\n"
+        + "  6) Enter or Update 'Shield' image\n"
         + "  7) Enter or update 'Water  Mark' image\n"
         + "  8) Click 'Submit'\n";
 
     var AGENCY_MANAGMENT_ADMIN = "  1) Click on 'Admin'\n"
         + "  2) Click on 'Agency Management'\n"
-        + "  3) Click on 'Blue Astric' to the left on the agency\n"
-        + "  4) Enter or Modify any fields required\n"
+        + "  3) Click on 'Blue Asterisk' to the right on the agency\n"
+        + "  4) Enter or Modify any fields\n"
         + "  5) Enter or update 'Logo' image\n"
         + "  6) Enter or update 'Shield' image\n"
         + "  7) Enter or update 'Water  Mark' image\n"
-        + "  8) Chose to allow officers to opt out of viewing BOLOs from their agency\n"
+        + "  8) Choose to allow officers to opt out of viewing BOLOs from their agency\n"
         + "  9) Click 'Submit'\n";
 
      var DATA_ANALYSIS = "  1) Click on 'Admin'\n"
          + "  2) Click on 'Data Analysis'\n"
-         + "  3) Select an 'Agency'\n";
-         + "  4) Select a 'Start Date'\n"
-         + "  5) Select an End Date\n"
-         + "  6) Click 'Submit'\n"
+         + "  3) Select one or more 'Agencies'\n";
+         + "  4) Click 'Download'\n"
 
     var DATA_SUBSCRIBER = "  1) Click on 'Admin'\n"
         + "  2) Click on 'Data Subscriber'\n"
+        + "  * * Add a new Subscriber * *\n"
         + "  3) Click on 'Add New Data Subscriber'\n"
         + "  4) Fill in data subscriber's ID, Name and email\n"
-        + "  5) Click 'Submit'\n";
+        + "  5) Click 'Submit'\n"
+        + "  * * Update a Subscriber * *\n"
+        + "  3) Click on 'Blue Asterisk' to the right on the agency\n"
+        + "  4) Update data subscriber's ID, Name or email\n"
+        + "  5) Click 'Submit'\n"
+        + "  * * Activate or Deactivate a subscriber * *\n"
+        + "  3) Click on 'Blue Asterisk' to the right on the agency\n"
+        + "  4) Click on 'Activate/Deactivate' button\n";
 
      var SYSTEM_SETTING = "  1) Click on 'Admin'\n"
         + "  2) Click on 'System Settings'\n"
@@ -89,18 +95,42 @@ PDFService.prototype.genUserGuide = function(user, doc) {
 
      var USER_MANAGENT = "  1) Click on 'Admin'\n"
          + "  2) Click on 'User Management'\n"
-         + "  * * * Add a new user's profile\n"
+         + "  * * Add a new user's profile * *\n"
          + "  3) Click on 'Add New User'\n"
          + "  4) Fill in the empty fields\n"
-         + "  5) Click 'Submit'\n";
-         + "  * * * Update a user's profile '\n"
-         + "  3) Click on blue 'Astric' on the right of the user\n"
+         + "  5) Click 'Submit'\n"
+         + "  * * Update a user's profile * *\n"
+         + "  3) Click on blue 'Asterisk' on the right of the user\n"
          + "  4) Update required fields\n"
          + "  5) Click 'Submit'\n";
 
-    var CREATE_BOLO = "  1) Click 'Create' and select Auto, Boat or General BOLO.\n"
-        + "  * * * Select Auto BOLO\n"
-        + "  2) Enter the reported time and date (required)\n"
+    var CREATE_BOLO = "  Click 'Create' and Select Auto, Boat or General BOLO.\n"
+        + "  * * Select Auto BOLO * *\n"
+        + "  1) Enter the reported time and date (required)\n"
+        + "  2) Fill in additional fields.\n"
+        + "  3) Upload available images.\n"
+        + "  4) Add a video link (if available)\n"
+        + "  5) FIll in the summery.\n"
+        + "  6) Click the 'Preview' Button to make sure you have added everything.\n"
+        + "  7) Click 'Back to Create BOLO' to go back to the BOLO.\n"
+        + "  8) Repeat Steps 2 - 7 until all information is complete.\n"
+        + "  9) Click 'Submit' to submit your BOLO.\n"
+        + "  10) Goto to your registered email and click on the confirmation link.\n"
+        + "  * * Select BOAT * * \n"
+        + "  1) Enter the reported time and date (required)\n"
+        + "  2) Fill in additional fields.\n"
+        + "  3) Fill in propulsion and trailer details\n"
+        + "  4) Upload available images.\n"
+        + "  5) Add a video link (if available)\n"
+        + "  6) FIll in the summery.\n"
+        + "  7) Click the 'Preview' Button to make sure you have added everything.\n"
+        + "  8) Click 'Back to Create BOLO' to go back to the BOLO.\n"
+        + "  9) Repeat Steps 2 - 7 until all information is complete.\n"
+        + "  10) Click 'Submit' to submit your BOLO.\n"
+        + "  11) Goto to your registered email and click on the confirmation link.\n"
+        + "  * * Select General BOLO * *\n"
+        + "  1) Enter the reported time and date (required)\n"
+        + "  2) Select a category (required)\n"
         + "  3) Fill in additional fields.\n"
         + "  4) Upload available images.\n"
         + "  5) Add a video link (if available)\n"
@@ -110,30 +140,6 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  9) Repeat Steps 2 - 7 until all information is complete.\n"
         + "  10) Click 'Submit' to submit your BOLO.\n"
         + "  11) Goto to your registered email and click on the confirmation link.\n";
-        + "  * * * Select BOAT BOLO\n"
-        + "  2) Enter the reported time and date (required)\n"
-        + "  3) Fill in additional fields.\n"
-        + "  4) Fill in propulsion and trailer details\n"
-        + "  5) Upload available images.\n"
-        + "  6) Add a video link (if available)\n"
-        + "  7) FIll in the summery.\n"
-        + "  8) Click the 'Preview' Button to make sure you have added everything.\n"
-        + "  9) Click 'Back to Create BOLO' to go back to the BOLO.\n"
-        + "  10) Repeat Steps 2 - 7 until all information is complete.\n"
-        + "  11) Click 'Submit' to submit your BOLO.\n"
-        + "  12) Goto to your registered email and click on the confirmation link.\n";
-        + "  * * * Select General BOLO\n"
-        + "  2) Enter the reported time and date (required)\n"
-        + "  3) Select a category (required)\n"
-        + "  4) Fill in additional fields.\n"
-        + "  5) Upload available images.\n"
-        + "  6) Add a video link (if available)\n"
-        + "  7) FIll in the summery.\n"
-        + "  8) Click the 'Preview' Button to make sure you have added everything.\n"
-        + "  9) Click 'Back to Create BOLO' to go back to the BOLO.\n"
-        + "  10) Repeat Steps 2 - 7 until all information is complete.\n"
-        + "  11) Click 'Submit' to submit your BOLO.\n"
-        + "  12) Goto to your registered email and click on the confirmation link.\n";
 
     var EDIT =  "  * You can only see this option if you created the BOLO\n"
         + "  1) Click on 'Edit'\n"
@@ -146,58 +152,75 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  7) Confirmation email will be sent to your email\n"
         + "  8) Go to our email and confirm the BOLO\n";
 
-    var DETAILS = "  1) Click on 'Details'\n"
+    var DETAILS_OFFICER = "  1) Click on 'Details'\n"
         + "  2) Review details of a selected BOLO\n"
-        + "  3) Select 'Generate PDF' \n"
-        + "  4) Select 'Deatils'\n"
-        + "  * details shows who has edit this BOLO in the past\n"
-        + "  5) Click 'Back' to go back to the BOLOs\n"
+        + "  3) Select 'Generate PDF' to download\n"
+        + "  4) Click 'Back' to go back to the BOLOs\n";
 
-    var FILTER_BY_ME = "  1) Click 'Filter By'\n"
+    var DETAILS_ADMIN = "  1) Click on 'Details'\n"
+        + "  2) Review details of a selected BOLO\n"
+        + "  3) Select 'Generate PDF' to download\n"
+        + "  4) Click 'Back' to go back to the BOLOs\n"
+        + "  * * View a detailed record of who has edit this BOLO * *\n"
+        + "  5) Select 'View Record'\n"
+        + "  6) Click 'Back' to go back to the BOLO details\n";
+
+    var FILTER_BY_ME = "  1) Click 'Filter BOLO'\n"
         + "  2) Select filter:\n"
         + "     * My BOLO\n"
         + "     * My Agency\n"
         + "     * All BOLOs\n"
-        + "  3) Results BOLOs will display";
+        + "  3) Results BOLOs will display\n";
 
     var FILTER_BY_AGENCY = "  1) Click 'Select Agencies'\n"
-        + "  2) Select one or several agencies\n"
+        + "  2) Select one or more agencies\n"
         + "  3) Click 'Submit'\n"
-        + "  4) Results BOLOs will display";
+        + "  4) Results BOLOs will display\n";
 
-    var ARCHIVE_ALL = "  You may view archived BOLOs just in case "
-        + "you are looking for someone who fits the description of "
-        + "another crime.\n";
+    var ARCHIVE_OFFICER = " * * having access to view archived BOLOs might assist you are looking for "
+        + "someone who fits the description of another crime. * *\n"
+        + "  1) Click 'Archive'\n"
+        + "  2) Select a BOLO\n"
+        + "  3) Click 'View' to view the datails\n";
 
-    var ARCHIVE_ADMIN = "  1) Click on 'Archive'\n"
-        + "  2) The Bolo will be moved into the archived BOLOs\n"
-        + "  3) At this point you may 'Restore', 'Delete' or 'Purge' the BOLO\n";
+    var ARCHIVE_ADMIN = "  1) Click 'Archive'\n"
+        + "  * * At the top of the page * * \n"
+        + "  2) Select a BOLO\n"
+        + "  3) Click: \n"
+        + "     * 'View' to view details\n"
+        + "     * 'Restore' to restore the BOLO\n"
+        + "     * 'Delete' to delete a BOLO\n"
+        + "  * * On the BOLO * *\n"
+        + "  Send the BOLO to the archive files\n";
 
-    var DATA_SUBSCRIBER = "Each BOLO has three options that you may change'\n"
-        + "  1) Status'\n"
-        + "  2) Restore'\n"
-        + "  3) Delete'\n";
+    var ARCHIVE_ROOT = "  1) Click 'Archive'\n"
+        + "  * * At the top of the page* *\n"
+        + "  2) Select a BOLO\n"
+        + "  3) Click: \n"
+        + "     * 'View' to view details\n"
+        + "     * 'Restore' to restore the BOLO\n"
+        + "     * 'Delete' to delete a BOLO\n"
+        + "     * 'Purge' to delete all the BOLOs at once\n"
+        + "  ( * * * On the BOLO * * * )\n"
+        + "  Send the BOLO to the archive files\n";
 
-    var AGENCY_VIEW = "  1) Click on agency to view a list of partnering agencies.\n"
-        + "  2) Select an agency and view contact information or verify the"
-        + " agency's 'Logo' and 'Shield.'\n";
+    var AGENCY_VIEW = "  1) Click on 'Agencgy Directory'\n"
+        + "  2) Select an agency by clicking their name\n"
+        + "     * View contact information\n"
+        + "     * Verify an agency's 'Logo' and 'Shields'\n";
 
-     var SEARCH = "  1) Select any field(s) you wish to search.\n"
-        + "  2) Enter information value of field(s).\n"
-        + "  3) Wild card search is for something you can not search with an"
-        + " optional search.\n"
+     var SEARCH = "  1) Click 'Search'\n"
+        + "  2) Select any field(s) you wish to search\n"
+        + "  3) Enter information value of field(s)\n"
+        + "  * * Wild card search is for something you can not search with an optional search * *\n"
         + "  4) Click 'Search'\n";
-
-    var FILTER = "  1) Click on 'Details'\n"
-    + "  2) Review details of a selected BOLO\n"
-    + "  3) Click 'Home' to go back to the BOLOs\n";
 
     var NOTIFICATIONS = "  1) Click on your 'Username'\n"
         + "  2) Click on 'Settings' from the dropdown\n"
         + "  3) Click on 'Notifications'\n"
         + "  4) Click on 'Subscribe to other Agencies at the bottom left'\n"
         + "  5) Select agencies to recieve notifications\n"
-        + "  *** You may also unsubribe from an angency ***\n"
+        + "  * * You may also unsubribe from an angency * *\n"
         + "  6) Select agencies to remove from your list of Agencies\n"
         + "  7) Click 'Unscribe Selected'\n";
 
@@ -253,7 +276,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         doc.fontSize(12).text(SYSTEM_SETTING, {align: 'left'}).moveDown();
     }
 
-    // print for root and admin
+    // Print for root and admin
     if ( user.tier === 4  || user.tier === 3 ){
 
         // User management
@@ -270,44 +293,58 @@ PDFService.prototype.genUserGuide = function(user, doc) {
     doc.fontSize(15).text("Edit a BOLO").moveDown(0.25);
     doc.fontSize(12).text(EDIT, {align: 'left'}).moveDown();
 
-    // Details (link at bottom of BOLO)
-    doc.fontSize(15).text("View Details of a BOLO").moveDown(0.25);
-    doc.fontSize(12).text(DETAILS, {align: 'left'}).moveDown();
+    // Details for an officer and supervisor
+    if( user.tier === 1  || user.tier === 2 ){
+        // Details (link at bottom of BOLO)
+        doc.fontSize(15).text("View Details of a BOLO").moveDown(0.25);
+        doc.fontSize(12).text(DETAILS_OFFICER, {align: 'left'}).moveDown();
+    }
+
+    // Details for an admin and root
+    if( user.tier === 3  || user.tier === 4 ){
+        // Details (link at bottom of BOLO)
+        doc.fontSize(15).text("View Details of a BOLO").moveDown(0.25);
+        doc.fontSize(12).text(DETAILS_ADMIN, {align: 'left'}).moveDown();
+    }
 
     // Filter by Me
-    doc.fontSize(15).text("Filter By Me").moveDown(0.25);
+    doc.fontSize(15).text("Filter By (Me)").moveDown(0.25);
     doc.fontSize(12).text(FILTER_BY_ME, {align: 'left'}).moveDown();
 
     // Filter by Agency
     doc.fontSize(15).text("Filter by Agency").moveDown(0.25);
     doc.fontSize(12).text(FILTER_BY_AGENCY, {align: 'left'}).moveDown();
 
-    // Archive (link at the top)
-    doc.fontSize(15).text("Archive").moveDown(0.25);
-    doc.fontSize(12).text(ARCHIVE_ALL, {align: 'left'}).moveDown();
+    // Archive for an officer and supervisor
+    if( user.tier === 1 || user.tier === 2 ){
+        doc.fontSize(15).text("Archive BOLOs").moveDown(0.25);
+        doc.fontSize(12).text(ARCHIVE_OFFICER, {align: 'left'}).moveDown();
+    }
 
-    // print for admin and root
-    if ( user.tier === 4 || user.tier === 3 ){
-
-        // Archive (link at bottom of BOLO)
-        doc.fontSize(15).text("Archive (Admin)").moveDown(0.25);
+    // Archive for an Admin
+    if( user.tier === 3 ){
+        doc.fontSize(15).text("Archive BOLOs").moveDown(0.25);
         doc.fontSize(12).text(ARCHIVE_ADMIN, {align: 'left'}).moveDown();
     }
 
+    // Archive for root
+    if ( user.tier === 4 ){
+
+        // Archive (link at bottom of BOLO)
+        doc.fontSize(15).text("Archive BOLOs").moveDown(0.25);
+        doc.fontSize(12).text(ARCHIVE_ROOT, {align: 'left'}).moveDown();
+    }
+
     // Agency
-    doc.fontSize(15).text("Agency").moveDown(0.25);
+    doc.fontSize(15).text("Agency Directory").moveDown(0.25);
     doc.fontSize(12).text(AGENCY_VIEW, {align: 'left'}).moveDown();
 
     // Search
-    doc.fontSize(15).text("Search").moveDown(0.25);
+    doc.fontSize(15).text("Search BOLOs by a field(s)").moveDown(0.25);
     doc.fontSize(12).text(SEARCH, {align: 'left'}).moveDown();
 
-    // Filter by Agency
-    doc.fontSize(15).text("FIlter by Agency").moveDown(0.25);
-    doc.fontSize(12).text(FILTER, {align: 'left'}).moveDown();
-
     // Notifications
-    doc.fontSize(15).text("Notifications").moveDown(0.25);
+    doc.fontSize(15).text("Get Notifications").moveDown(0.25);
     doc.fontSize(12).text(NOTIFICATIONS, {align: 'left'}).moveDown();
 
     // Password Reset

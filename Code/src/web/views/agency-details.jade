@@ -5,12 +5,9 @@ block jumbo
     .jumbotron
         .container
             p Agency Details
+            button.btn.btn-default(onclick='history.go(-1);') Go Back
 
 block content
-    .row
-        .col-md-12
-            a( href='/agency' ) < Agency Directory
-
     .row
         .col-md-12
             .page-header
