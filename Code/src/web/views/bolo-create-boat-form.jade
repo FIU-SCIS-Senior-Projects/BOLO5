@@ -33,9 +33,9 @@ block content
         +input_text( "boatHullIdNumber", "Hull Identification Number", "", false, "" )
         .row
             .col-md-4
-                +select_options( "boatRegistrationNumberSt", "Registration Number", states, false, "" )
+                +select_options( "boatRegistrationNumberSt", "Registration State", states, false, "" )
             .col-md-8
-                +input_text( "boatRegistrationNumberNu", "", "", false, "" )
+                +input_text( "boatRegistrationNumberNu", "Registration Number", "", false, "" )
 
         div.text-danger.strong.h4 Propulsion
 
@@ -45,14 +45,14 @@ block content
 
         div.text-danger.strong.h4 Trailer
 
-        +select_options( "trailer", "Trailer", v_trailer, false, "" )
+            +select_options( "trailer", "Trailer", v_trailer, false, "" )
         +input_text( "trailerManufacturer", "Manufacturer", "", false, "" )
         +input_text( "trailerVIN", "Vehicle Identification Number", "", false, "" )
         .row
             .col-md-4
-                +select_options( "trailerTagLicenseState", "Tag License Plate", states, false, "" )
+                +select_options( "trailerTagLicenseState", "License Plate State", states, false, "" )
             .col-md-8
-                +input_text( "trailerTagLicenseNumber", "", "", false, "" )
+                +input_text( "trailerTagLicenseNumber", "License Plate Number", "", false, "" )
 
         .form-group.row
             .col-md-4

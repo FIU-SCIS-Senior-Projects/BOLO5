@@ -6,6 +6,7 @@ block jumbo
     .jumbotron
         .container
             p Update BOLO Details
+            button.btn.btn-primary(onclick='history.go(-1);') Go Back
 
 
 block content
@@ -93,5 +94,4 @@ block content
 
         .form-group
             button.btn.btn-primary( type="submit" value="save" id= "buttonClickEdit" disabled = false) Publish
-            button.btn.btn-default( type="submit" disabled=true value="preview" ) Preview
-            button.btn.btn-default( type="submit" disabled=true value="pdf" ) PDF
+            button.btn.btn-default( type="submit" disabled=false value="preview" ) Preview

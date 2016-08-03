@@ -17,8 +17,12 @@ function BoloAuthorize ( bolo, author, user ) {
     this.user = user;
 }
 
-BoloAuthorize.prototype.isAdmin = function () {
+BoloAuthorize.prototype.isRoot = function () {
     return 4 === this.user.tier;
+};
+
+BoloAuthorize.prototype.isAdmin = function () {
+    return 3 === this.user.tier;
 };
 
 BoloAuthorize.prototype.sameUser = function () {
@@ -34,7 +38,8 @@ BoloAuthorize.prototype.canSupervise = function () {
 };
 
 BoloAuthorize.prototype.authorizedToEdit = function () {
-    if ( this.isAdmin() ) return true;
+    if ( this.isRoot() ) return true;
+    if ( this.isAdmin() && this.sameAgency() ) return true;
     if ( this.canSupervise() && this.sameAgency() ) return true;
     if ( this.sameUser() && this.sameAgency() ) return true;
 
@@ -42,14 +47,16 @@ BoloAuthorize.prototype.authorizedToEdit = function () {
 };
 
 BoloAuthorize.prototype.authorizedToDelete  = function () {
-    if ( this.isAdmin() ) return true;
+    if ( this.isRoot() ) return true;
+    if ( this.isAdmin() && this.sameAgency() ) return true;
     if ( this.canSupervise() && this.sameAgency() ) return true;
 
     throw new Error( 'Unauthorized request to delete bolo: ' + this.bolo.id );
 };
 
 BoloAuthorize.prototype.authorizedToArchive = function () {
-    if ( this.isAdmin() ) return true;
+    if ( this.isRoot() ) return true;
+    if ( this.isAdmin() && this.sameAgency() ) return true;
     if ( this.canSupervise() && this.sameAgency() ) return true;
 
     throw new Error( 'Unauthorized request to archive bolo: ' + this.bolo.id );
