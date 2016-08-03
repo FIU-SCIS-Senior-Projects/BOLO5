@@ -35,7 +35,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     userService.authenticate(username, password)
       .then(function(account) {
-          console.log(account)
+        console.log(account)
 
         // check the status of the account
         if (account.status) {
@@ -48,7 +48,7 @@ passport.use(new LocalStrategy(
             if (account.user.passwordLifetime <= Date.now()) {
 
               // send email for password change
-              sendPasswordExpiredEmail(account)
+              sendPasswordExpiredEmail(account.user)
 
               // deny logon
               return done(null, false, {
@@ -62,7 +62,7 @@ passport.use(new LocalStrategy(
               var timeLeft = account.passwordLifetime - Date.now();
 
               // send email notification to change password
-              sendExpirationReminder(account, timeLeft);
+              sendExpirationReminder(account.user, timeLeft);
               // continue with authentication
             }
 
@@ -84,10 +84,10 @@ passport.use(new LocalStrategy(
 
           } else if (account.found === false) {
 
-              return done(null, false, {
+            return done(null, false, {
 
-                'message': 'Unknown username'
-              })
+              'message': 'Unknown username'
+            })
           } else {
             return done(null, false, {
               'message': 'Invalid login credentials. You have ' + account.attemptsLeft + ' attempts left before your account is locked'
@@ -96,22 +96,21 @@ passport.use(new LocalStrategy(
         } else {
 
           /* Check wether account has been suspended or the user has just locked himself out of the system */
-          if(account.locked){
+          if (account.locked) {
 
             return done(null, false, {
               'message': 'You account has been suspended. Please contact your agency administrator'
             });
 
-          }
-          else{
+          } else {
 
-          // send email to user and admins
-          sendAccountLockedEmail(account);
-          sendAccountLockedEmailToAdmins(account);
+            // send email to user and admins
+            sendAccountLockedEmail(account);
+            sendAccountLockedEmailToAdmins(account);
 
-          return done(null, false, {
-            'message': 'You account has been locked. You have been sent an email to reset your password'
-          });
+            return done(null, false, {
+              'message': 'You account has been locked. You have been sent an email to reset your password'
+            });
 
           }
         }
@@ -143,29 +142,35 @@ var sendExpirationReminder = function(user, timeLeft) {
     user.resetPasswordToken = token;
     // token expires in 1 day
     user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000;
-    userService.updateUser(user.id, user);
+    userService.updateUser(user.id, user).then(function(user) {
 
-    var daysLeft;
 
-    //
-    if (timeLeft / 86400000 < 1) {
-      daysLeft = "1 day";
-    } else {
-      daysLeft = Math.floor(timeLeft / 86400000).toString() + ' days';
-    }
+      var daysLeft;
 
-    emailService.send({
-      'to': user.email,
-      'from': config.email.from,
-      'fromName': config.email.fromName,
-      'subject': 'BOLO Alert: Password Expiration',
-      'text': 'Your password will expire in less than ' + daysLeft + '. Change it to avoid a password reset. \n' +
-        'To change your password, follow this link: \n\n' +
-        config.appURL + '/expiredpassword/' + token + '\n\n'
+      //
+      if (timeLeft / 86400000 < 1) {
+        daysLeft = "1 day";
+      } else {
+        daysLeft = Math.floor(timeLeft / 86400000).toString() + ' days';
+      }
+
+      emailService.send({
+        'to': user.email,
+        'from': config.email.from,
+        'fromName': config.email.fromName,
+        'subject': 'BOLO Alert: Password Expiration',
+        'text': 'Your password will expire in less than ' + daysLeft + '. Change it to avoid a password reset. \n' +
+          'To change your password, follow this link: \n\n' +
+          config.appURL + '/expiredpassword/' + token + '\n\n'
+      })
+
     })
+
+
   });
 }
 var sendPasswordExpiredEmail = function(user) {
+  console.log("SENT EMAIL")
   // create token to send to user
   crypto.randomBytes(20, function(err, buf) {
 
@@ -174,17 +179,21 @@ var sendPasswordExpiredEmail = function(user) {
     user.resetPasswordToken = token;
     // Token will expire in 24 hours
     user.resetPasswordExpires = Date.now() + 24 * 60 * 60;
-    userService.updateUser(user.id, user);
+    userService.updateUser(user.id, user).then(function(user) {
 
-    emailService.send({
-      'to': user.email,
-      'from': config.email.from,
-      'fromName': config.email.fromName,
-      'subject': 'BOLO Alert: Password Expiration',
-      'text': 'Your password has expired. \n' +
-        'To change your password, follow this link: \n\n' +
-        config.appURL + '/expiredpassword/' + token + '\n\n'
+
+    }).then(function(){
+      emailService.send({
+        'to': user.email,
+        'from': config.email.from,
+        'fromName': config.email.fromName,
+        'subject': 'BOLO Alert: Password Expiration',
+        'text': 'Your password has expired. \n' +
+          'To change your password, follow this link: \n\n' +
+          config.appURL + '/expiredpassword/' + token + '\n\n'
+      })
     })
+
   });
 }
 
@@ -307,12 +316,12 @@ router.post('/login',
  *
  * Destory any sessions belonging to the requesting client.
  */
- router.get('/logout', function (req, res){
+router.get('/logout', function(req, res) {
 
-   req.session.destroy(function (err) {
-     res.redirect('/login');
-   });
- });
+  req.session.destroy(function(err) {
+    res.redirect('/login');
+  });
+});
 
 router.get('/forgotPassword',
   function(req, res) {
@@ -336,7 +345,7 @@ router.post('/forgotPassword',
           req.flash(FERR, 'Error: Unregistered email address.');
           return res.redirect('back');
         }
-        if(user.accountStatus2 === false){
+        if (user.accountStatus2 === false) {
           req.flash(FERR, 'Your account has been suspended. Please contact your agency administrator');
           return res.redirect('back');
         }
