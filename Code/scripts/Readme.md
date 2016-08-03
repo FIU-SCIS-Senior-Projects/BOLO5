@@ -20,3 +20,6 @@ create-agency-helper.js - Creates sample Agencies
 create-jasons.js - Creates sample Jason users
 
 create-user-helper.js - Creates sample users
+
+create-subscriber-helper.js - Creates initial data subscribers to receive JSON feed
+create-settings.js  - Creates initial System Settings for Session timeout and login attempts.

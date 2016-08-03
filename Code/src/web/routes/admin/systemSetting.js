@@ -62,6 +62,7 @@ module.exports.postSystemSetting = function (req, res) {
 
       else {
           if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
+          config.setSystemSettings();
           req.flash(GFMSG, 'Settings registration successful.');
           res.redirect('/admin/systemSetting');
       }

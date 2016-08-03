@@ -280,6 +280,24 @@ var dataSubscriber_indexer = function (doc) {
     }
 };
 
+var systemSettings_indexer = function (doc) {
+
+    index("default", doc._id);
+    if (typeof(doc.name) !== 'undefined') {
+        index("name", doc.name );
+    }
+    if (typeof(doc.loginAttempts) !== 'undefined') {
+        index("loginAttempts", doc.loginAttempts );
+    }
+    if (typeof(doc.sessionMinutes) !== 'undefined') {
+        index("sessionMinutes", doc.sessionMinutes );
+    }
+    if (typeof(doc.Type) !== 'undefined') {
+        index("Type", doc.Type);
+    }
+};
+
+
 var BOLO_DB = 'bolo';
 
 var BOLO_DESIGN_DOC = {
@@ -404,6 +422,30 @@ var DATASUBSCRIBER_DESIGN_DOC = {
     }
 };
 
+var SYSTEMSETTINGS_DESIGN_DOC = {
+    "views": {
+      "by_systemSettings": {
+        "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc.name, null ); }"
+      },
+      "all": {
+          "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc._id, 1 ); }"
+      },
+      "all_active": {
+            "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( doc.name, null ); }"
+        },
+      "revs": {
+            "map": "function ( doc ) { if ( 'systemSettings' === doc.Type ) emit( null, doc._rev ); }"
+        }
+    },
+
+    indexes: {
+        systemSettings: {
+            analyzer: {name: 'standard'},
+            index: systemSettings_indexer
+        }
+    }
+};
+
 
 function destroyDB(dbname) {
   return new Promise(function(resolve, reject) {
@@ -482,7 +524,8 @@ function resetDB() {
       var ad = createDesign(BOLO_DB, 'agency', AGENCY_DESIGN_DOC);
       var bd = createDesign(BOLO_DB, 'bolo', BOLO_DESIGN_DOC);
       var ud = createDesign(BOLO_DB, 'users', USERS_DESIGN_DOC);
-	  var dd=createDesign(BOLO_DB, 'dataSubscriber', DATASUBSCRIBER_DESIGN_DOC)
+	    var dd=createDesign(BOLO_DB, 'dataSubscriber', DATASUBSCRIBER_DESIGN_DOC)
+      var ss=createDesign(BOLO_DB, 'systemSettings', SYSTEMSETTINGS_DESIGN_DOC)
 
       return Promise.all([ad, bd, ud, dd]);
     })

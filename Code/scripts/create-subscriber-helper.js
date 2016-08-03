@@ -19,7 +19,7 @@ var dataSubscriberService = new dataSubscriberService( new dataSubscriberReposit
 var dataSubscriberDTO = dataSubscriberService.formatDTO({
     "name": "County",
     "dataSubscriber_id": 123,
-    "email": "jmedi116@fiu.edu",
+    "email": "test@test.com",
     "isActive": true
 });
 
