@@ -28,6 +28,10 @@ config.UserRepository   = require( path.join( core, 'adapters/persistence/clouda
 config.dataSubscriberService    = require( path.join( core, 'service/dataSubscriber-service') );
 config.dataSubscriberRepository = require( path.join( core, 'adapters/persistence/cloudant-dataSubscriber-repository' ) );
 
+config.systemSettingsService    = require( path.join( core, 'service/systemSettings-service') );
+config.systemSettingsRepository = require( path.join( core, 'adapters/persistence/Cloudant-systemSettings-repository' ) );
+
+
 config.EmailService     = require( path.join( core, 'service/email-service' ) );
 
 config.PDFService       = require( path.join( core, 'service/pdf-service' ) );
@@ -70,14 +74,31 @@ config.days = 30;
 
 config.unconfirmedBoloLifetime = config.days * 24 * 60 * 60 * 1000;
 
+function setSystemSettings(){
+  var systemSettingsRepository    = new config.systemSettingsRepository();
+  var systemSettingsService       = new config.systemSettingsService( systemSettingsRepository );
+  return systemSettingsService.getSessionMinutes().then(function(sessionMinutes){
+    config.max_age=parseInt(sessionMinutes);
+    return systemSettingsService.getLoginAttempts()
+  }).then(function(loginAttempts){
+    config.MAX_INCORRECT_LOGINS=parseInt(loginAttempts);
+  })
+};
+
+
+setSystemSettings();
+
+config.setSystemSettings=function(){
+  return setSystemSettings();
+}
 /**
  * System timeout
  * @Author John Burke
  */
-config.max_age = 1000 * 10 * 6000;
+
 
 // # of tries a user can attempt a login without being locked out of the system.
-config.MAX_INCORRECT_LOGINS = 10;
+
 /**
  * This configuration is a good candidate for a system admin controlled
  * system configuation property.

@@ -51,7 +51,7 @@ module.exports.parseFormData = function ( req, filterFn ) {
 
         form.on( 'field', addFormField );
         form.on( 'file' , addFormFile );
-        form.on( 'error', function ( error ) { reject( error ); } );
+        form.on( 'error', function ( error ) { console.log(error);reject( error ); } );
         form.on( 'close', function () { resolve( result ); } );
 
         form.parse( req );
@@ -79,4 +79,3 @@ function FormError ( message ) {
 FormError.prototype = Object.create( Error.prototype );
 FormError.prototype.contructor = FormError;
 module.exports.FormError = FormError;
-
