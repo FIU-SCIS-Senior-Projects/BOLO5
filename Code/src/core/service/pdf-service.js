@@ -89,17 +89,17 @@ PDFService.prototype.genUserGuide = function(user, doc) {
 
      var USER_MANAGENT = "  1) Click on 'Admin'\n"
          + "  2) Click on 'User Management'\n"
-         + "  * * * Add a new user's profile\n"
+         + "  * * Add a new user's profile * *\n"
          + "  3) Click on 'Add New User'\n"
          + "  4) Fill in the empty fields\n"
          + "  5) Click 'Submit'\n";
-         + "  * * * Update a user's profile '\n"
+         + "  * * Update a user's profile * *\n"
          + "  3) Click on blue 'Astric' on the right of the user\n"
          + "  4) Update required fields\n"
          + "  5) Click 'Submit'\n";
 
     var CREATE_BOLO = "  1) Click 'Create' and select Auto, Boat or General BOLO.\n"
-        + "  * * * Select Auto BOLO\n"
+        + "  * * Select Auto BOLO * *\n"
         + "  2) Enter the reported time and date (required)\n"
         + "  3) Fill in additional fields.\n"
         + "  4) Upload available images.\n"
@@ -110,7 +110,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  9) Repeat Steps 2 - 7 until all information is complete.\n"
         + "  10) Click 'Submit' to submit your BOLO.\n"
         + "  11) Goto to your registered email and click on the confirmation link.\n";
-        + "  * * * Select BOAT BOLO\n"
+        + "  * * Select BOAT BOLO * *\n"
         + "  2) Enter the reported time and date (required)\n"
         + "  3) Fill in additional fields.\n"
         + "  4) Fill in propulsion and trailer details\n"
@@ -122,7 +122,7 @@ PDFService.prototype.genUserGuide = function(user, doc) {
         + "  10) Repeat Steps 2 - 7 until all information is complete.\n"
         + "  11) Click 'Submit' to submit your BOLO.\n"
         + "  12) Goto to your registered email and click on the confirmation link.\n";
-        + "  * * * Select General BOLO\n"
+        + "  * * Select General BOLO * *\n"
         + "  2) Enter the reported time and date (required)\n"
         + "  3) Select a category (required)\n"
         + "  4) Fill in additional fields.\n"
