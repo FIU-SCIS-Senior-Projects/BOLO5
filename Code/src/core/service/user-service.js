@@ -82,6 +82,10 @@ UserService.prototype.authenticate = function(username, password) {
         account.attemptsLeft = config.MAX_INCORRECT_LOGINS - (user.incorrectLogins + 1);
 
       }
+      // if account locked === true dont allow user to log in
+      if(account.locked){
+        account.status = false;
+      }
 
       // check username and password
       if (user && user.matchesCurrentPassword(password)) {

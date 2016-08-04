@@ -345,7 +345,7 @@ router.post('/forgotPassword',
           req.flash(FERR, 'Error: Unregistered email address.');
           return res.redirect('back');
         }
-        if (user.accountStatus2 === false) {
+        if (user.accountStatus2 === true) {
           req.flash(FERR, 'Your account has been suspended. Please contact your agency administrator');
           return res.redirect('back');
         }
