@@ -73,15 +73,15 @@ config.const = config.constants = {
 config.days = 30;
 
 config.unconfirmedBoloLifetime = config.days * 24 * 60 * 60 * 1000;
+config.max_age = 1000 * 15 * 60;
 
 function setSystemSettings(){
   var systemSettingsRepository    = new config.systemSettingsRepository();
   var systemSettingsService       = new config.systemSettingsService( systemSettingsRepository );
-  return systemSettingsService.getSessionMinutes().then(function(sessionMinutes){
-    config.max_age=parseInt(sessionMinutes);
-    return systemSettingsService.getLoginAttempts()
-  }).then(function(loginAttempts){
+  return systemSettingsService.getLoginAttempts()
+  .then(function(loginAttempts){
     config.MAX_INCORRECT_LOGINS=parseInt(loginAttempts);
+    console.log('max login set to '+config.MAX_INCORRECT_LOGINS);
   })
 };
 
