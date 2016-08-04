@@ -29,7 +29,7 @@ config.dataSubscriberService    = require( path.join( core, 'service/dataSubscri
 config.dataSubscriberRepository = require( path.join( core, 'adapters/persistence/cloudant-dataSubscriber-repository' ) );
 
 config.systemSettingsService    = require( path.join( core, 'service/systemSettings-service') );
-config.systemSettingsRepository = require( path.join( core, 'adapters/persistence/Cloudant-systemSettings-repository' ) );
+config.systemSettingsRepository = require( path.join( core, 'adapters/persistence/cloudant-systemSettings-repository' ) );
 
 
 config.EmailService     = require( path.join( core, 'service/email-service' ) );
