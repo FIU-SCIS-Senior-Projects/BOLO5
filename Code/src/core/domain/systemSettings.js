@@ -19,8 +19,8 @@ var schema = {
         'type'      : 'string'
     },
     'sessionMinutes': {
-        'required'  : true,
-        'type'      : 'boolean'
+        'required'  : false,
+        'type'      : 'string'
     }
 };
 

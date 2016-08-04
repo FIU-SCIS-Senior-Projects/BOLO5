@@ -35,7 +35,9 @@ var GFMSG               = config.const.GFMSG;
 
 
 module.exports.getSystemSetting = function (req, res, next) {
-  systemSettingsService.getsystemSettings().then(function(systemSettings){
+  config.setSystemSettings().then(function(){
+  return systemSettingsService.getsystemSettings()
+}).then(function(systemSettings){
     console.log(JSON.stringify(systemSettings.rows[0].doc));
       res.render('system-setting',{systemSettings: systemSettings.rows[0].doc});//pending
   }).catch( function ( error ) {
@@ -62,10 +64,9 @@ module.exports.postSystemSetting = function (req, res) {
 
       else {
           if (pData[1].files.length) cleanTemporaryFiles(pData[1].files);
-          config.setSystemSettings();
           req.flash(GFMSG, 'Settings registration successful.');
           res.redirect('/admin/systemSetting');
-      }
+      }     
   }).catch( function ( error ) {
     console.log(error);
       req.flash(GFERR, 'Settings Creation unsuccessful ' + error);

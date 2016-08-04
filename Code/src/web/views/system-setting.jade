@@ -17,9 +17,6 @@ block admin-content
                 label Brute Force Login (3 - 10) Attempts&nbsp;&nbsp;
                 input(type='number', name='loginAttempts', min='3', max='10', value=systemSettings.loginAttempts)
             .form-group
-                label System Timeout (10 - 240) Minutes&nbsp;&nbsp;
-                input(type='number', name='sessionMinutes', min='10', max='240', value=systemSettings.sessionMinutes)
-            .form-group
                 button.btn.btn-primary( type="submit" value="submit" ) Submit
 
 
