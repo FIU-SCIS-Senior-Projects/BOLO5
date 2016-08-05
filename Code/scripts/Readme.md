@@ -3,7 +3,7 @@ initialize the database automatically make sure you are in the scripts folder
 and run the command "gulp initdb". This will create your db with sample Agencies
 and Users.
 
-To run the scripts individually rune "node filename"
+To run the scripts individually run "node filename"
 
 
 Descriptions:
