@@ -17,7 +17,7 @@ The current application stack consists of:
 
 ## How to use
 
-This app is designed to be used in a Node.js environment. Version 4 of the BOLO
+This app is designed to be used in a Node.js environment. Version 5 of the BOLO
 
 Flier Creator is designed to be used in conjunction with the Bluemix PaaS and
 CloudFoundry.
